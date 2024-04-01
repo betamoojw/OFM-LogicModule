@@ -576,7 +576,7 @@
             <ChannelIndependentBlock>
               <choose ParamRefId="%AID%_UP-%TT%00164_R-%TT%0016401">
                 <when test="&gt;=%C%">
-                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%Logic" Text="Logik %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" Icon="gate-nand" ShowInComObjectTree="true">
+                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%C%Logic" Text="Logik %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%001_R-%TT%%CC%00101" Icon="gate-nand" HelpContext="Empty" ShowInComObjectTree="true">
                     <!-- Any input active (hidden) -->
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%133_R-%TT%%CC%13301" />
                     <!-- Input 1 active as full or delta (hidden) -->
@@ -1488,7 +1488,6 @@
                               </choose>
                             </when>
                           </choose>
-
                           <!-- Wert für AUS senden -->
                           <choose ParamRefId="%AID%_UP-%TT%00035_R-%TT%0003501">
                             <when test="0">
