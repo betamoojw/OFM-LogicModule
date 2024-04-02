@@ -1067,117 +1067,120 @@
           <Dynamic>
             <ChannelIndependentBlock>
               <ParameterBlock Id="%AID%_PB-nnn" Name="Logic" Text="Logiken" Icon="blur" HelpContext="Empty" ShowInComObjectTree="true">
-                <!-- Hope this is enough for activating the following parameter -->
-                <ParameterBlock Name="Init" Id="%AID%_PB-nnn" Inline="true">
-                  <ParameterRefRef RefId="%AID%_P-%TT%00163_R-%TT%0016301" />
-                  <!-- Buzzer installed? -->
-                  <ParameterRefRef RefId="%AID%_UP-%TT%00035_R-%TT%0003501" />
-                  <!-- RGB-LED installed? -->
-                  <ParameterRefRef RefId="%AID%_UP-%TT%00036_R-%TT%0003601" />
-                  <!-- Enable Save? -->
-                  <ParameterRefRef RefId="%AID%_UP-%TT%00165_R-%TT%0016501" />
-                </ParameterBlock>
-                <ParameterRefRef RefId="%AID%_P-%TT%00163_R-%TT%0016301" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" />
-                <ParameterSeparator Id="%AID%_PS-52" Text="" UIHint="HorizontalRuler" />
-                <ParameterSeparator Id="%AID%_PS-50" Text="Urlaub" UIHint="Headline" />
-                <ParameterSeparator Id="%AID%_PS-51" Text="Zeitschaltuhren können auch Urlaubszeiten berücksichtigen. Damit das funktioniert, muss eine Urlaubszeit über das KO 4 dem Gerät mitgeteilt werden." />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00138_R-%TT%0013801" HelpContext="%DOC%" IndentLevel="1" />
-                <choose ParamRefId="%AID%_UP-%TT%00138_R-%TT%0013801">
-                  <when test="1">
-                    <ParameterRefRef RefId="%AID%_UP-%TT%00140_R-%TT%0014001" HelpContext="%DOC%" IndentLevel="1" />
-                    <ComObjectRefRef RefId="%AID%_O-%TT%00004_R-%TT%0000401" />
-                  </when>
-                </choose>
-                <ParameterSeparator Id="%AID%_PS-52" Text="" UIHint="HorizontalRuler" />
-                <ParameterSeparator Id="%AID%_PS-53" Text="Feiertage" UIHint="Headline" />
-                <ParameterSeparator Id="%AID%_PS-54" Text="Das Gerät kann die berechneten Feiertage auch auf den Bus senden. Über das KO 5 wird mitgeteilt, welcher Feiertag 'Heute' ist, über KO 6 welcher Feiertag 'Morgen' ist. 0 bedeutet 'kein Feiertag'." />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00139_R-%TT%0013901" HelpContext="%DOC%" IndentLevel="1" />
-                <choose ParamRefId="%AID%_UP-%TT%00139_R-%TT%0013901">
-                  <when test="1">
-                    <ParameterRefRef RefId="%AID%_UP-%TT%00141_R-%TT%0014101" HelpContext="%DOC%" IndentLevel="1" />
-                    <ComObjectRefRef RefId="%AID%_O-%TT%00005_R-%TT%0000501" />
-                    <ComObjectRefRef RefId="%AID%_O-%TT%00006_R-%TT%0000601" />
-                  </when>
-                </choose>
-                <ParameterSeparator Id="%AID%_PS-55" Text="Im folgenden kann bestimmt werden, welche Feiertage berechnet werden sollen. Diese Feiertage werden auch von den Zeitschaltuhren berücksichtigt." />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00152_R-%TT%0015201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00110_R-%TT%0011001" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00111_R-%TT%0011101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00112_R-%TT%0011201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00113_R-%TT%0011301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00114_R-%TT%0011401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00153_R-%TT%0015301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00115_R-%TT%0011501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00116_R-%TT%0011601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00117_R-%TT%0011701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00118_R-%TT%0011801" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00119_R-%TT%0011901" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00120_R-%TT%0012001" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00121_R-%TT%0012101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00122_R-%TT%0012201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00123_R-%TT%0012301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00124_R-%TT%0012401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00125_R-%TT%0012501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00126_R-%TT%0012601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00154_R-%TT%0015401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00127_R-%TT%0012701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00128_R-%TT%0012801" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00129_R-%TT%0012901" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00155_R-%TT%0015501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00130_R-%TT%0013001" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00131_R-%TT%0013101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00132_R-%TT%0013201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00133_R-%TT%0013301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00134_R-%TT%0013401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00135_R-%TT%0013501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00136_R-%TT%0013601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <ParameterRefRef RefId="%AID%_UP-%TT%00137_R-%TT%0013701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
-                <choose ParamRefId="%AID%_P-%TT%00163_R-%TT%0016301">
-                  <when test="%LOG_EnableHardware%">
-                    <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Installierte Hardware" UIHint="Headline" />
-                    <ParameterSeparator Id="%AID%_PS-11" Text="Im folgenden wird die verwendete bzw. installierte Hardware angegeben." />
-                    <ParameterSeparator Id="%AID%_PS-12" Text="Die hier getroffenen Angaben beeinflussen das Verhalten der Applikation und der Firmware und müssen zur vorhandenen Hardware passen!" />
-                    <!-- RGB-LED installed? -->
-                    <ParameterRefRef RefId="%AID%_UP-%TT%00036_R-%TT%0003601" HelpContext="%DOC%" IndentLevel="1" />
+                <ParameterBlock Name="Global" Text="Zentral" Id="%AID%_PB-nnn" Inline="true" ShowInComObjectTree="true">
+                  <!-- ParameterBlock in inline Block is invisible, so also all its contents -->
+                  <ParameterBlock Id="%AID%_PB-nnn" Name="InitInvisible">
+                    <!-- Hope this is enough for activating the following parameter -->
+                    <ParameterRefRef RefId="%AID%_P-%TT%00163_R-%TT%0016301" />
                     <!-- Buzzer installed? -->
-                    <ParameterRefRef RefId="%AID%_UP-%TT%00035_R-%TT%0003501" HelpContext="%DOC%" IndentLevel="1" />
-                    <!-- We implement here also led/buzzer lock KO -->
-                    <choose ParamRefId="%AID%_UP-%TT%00036_R-%TT%0003601">
-                      <when test="1">
-                        <!-- show lock KO for LED -->
-                        <ComObjectRefRef RefId="%AID%_O-%TT%00008_R-%TT%0000801" />
-                        <!-- show extra settings for LED-->
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="RGB-LED" UIHint="Headline" />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Damit die LED in korrekten Farben leuchtet, muss hier angegeben werden, welcher Treiberausgang mit welchem LED-Beinchen verbunden ist." />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Die Platine liegt so, dass von den 4 Lötpads für die LED das ganz linke +5V ist. Die folgenden 3 Lötpads sind A, B und C." />
-                        <ParameterRefRef RefId="%AID%_UP-%TT%00151_R-%TT%0015101" HelpContext="%DOC%" IndentLevel="1" />
-                      </when>
-                    </choose>
-                    <choose ParamRefId="%AID%_UP-%TT%00035_R-%TT%0003501">
-                      <when test="1">
-                        <!-- show lock KO for Buzzer -->
-                        <ComObjectRefRef RefId="%AID%_O-%TT%00009_R-%TT%0000901" />
-                        <!-- show extra settings for Buzzer-->
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Buzzer" UIHint="Headline" />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Die beim Buzzer verwendeten Frequenzen für leise, normal und laut können hier eingestellt werden" />
-                        <ParameterRefRef RefId="%AID%_UP-%TT%00148_R-%TT%0014801" HelpContext="LOG-Buzzer" IndentLevel="1" />
-                        <ParameterRefRef RefId="%AID%_UP-%TT%00149_R-%TT%0014901" HelpContext="LOG-Buzzer" IndentLevel="1" />
-                        <ParameterRefRef RefId="%AID%_UP-%TT%00150_R-%TT%0015001" HelpContext="LOG-Buzzer" IndentLevel="1" />
-                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Der Buzzer kann nur 'AN' oder 'AUS'. Die Lautstärke wird durch Frequenz wählt, die niicht im optimalen Arbeitsbereich liegt. Die Standardwerte meinen also 'leise und tief', 'normal und hoch', 'laut und mittel'." />
-                      </when>
-                    </choose>
-                  </when>
-                </choose>
+                    <ParameterRefRef RefId="%AID%_UP-%TT%00035_R-%TT%0003501" />
+                    <!-- RGB-LED installed? -->
+                    <ParameterRefRef RefId="%AID%_UP-%TT%00036_R-%TT%0003601" />
+                    <!-- Enable Save? -->
+                    <ParameterRefRef RefId="%AID%_UP-%TT%00165_R-%TT%0016501" />
+                  </ParameterBlock>
+                  <ParameterRefRef RefId="%AID%_P-%TT%00163_R-%TT%0016301" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Logikmodul Version %ModuleVersion%" UIHint="Headline" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" />
+                  <ParameterSeparator Id="%AID%_PS-52" Text="" UIHint="HorizontalRuler" />
+                  <ParameterSeparator Id="%AID%_PS-50" Text="Urlaub" UIHint="Headline" />
+                  <ParameterSeparator Id="%AID%_PS-51" Text="Zeitschaltuhren können auch Urlaubszeiten berücksichtigen. Damit das funktioniert, muss eine Urlaubszeit über das KO 4 dem Gerät mitgeteilt werden." />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00138_R-%TT%0013801" HelpContext="%DOC%" IndentLevel="1" />
+                  <choose ParamRefId="%AID%_UP-%TT%00138_R-%TT%0013801">
+                    <when test="1">
+                      <ParameterRefRef RefId="%AID%_UP-%TT%00140_R-%TT%0014001" HelpContext="%DOC%" IndentLevel="1" />
+                      <ComObjectRefRef RefId="%AID%_O-%TT%00004_R-%TT%0000401" />
+                    </when>
+                  </choose>
+                  <ParameterSeparator Id="%AID%_PS-52" Text="" UIHint="HorizontalRuler" />
+                  <ParameterSeparator Id="%AID%_PS-53" Text="Feiertage" UIHint="Headline" />
+                  <ParameterSeparator Id="%AID%_PS-54" Text="Das Gerät kann die berechneten Feiertage auch auf den Bus senden. Über das KO 5 wird mitgeteilt, welcher Feiertag 'Heute' ist, über KO 6 welcher Feiertag 'Morgen' ist. 0 bedeutet 'kein Feiertag'." />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00139_R-%TT%0013901" HelpContext="%DOC%" IndentLevel="1" />
+                  <choose ParamRefId="%AID%_UP-%TT%00139_R-%TT%0013901">
+                    <when test="1">
+                      <ParameterRefRef RefId="%AID%_UP-%TT%00141_R-%TT%0014101" HelpContext="%DOC%" IndentLevel="1" />
+                      <ComObjectRefRef RefId="%AID%_O-%TT%00005_R-%TT%0000501" />
+                      <ComObjectRefRef RefId="%AID%_O-%TT%00006_R-%TT%0000601" />
+                    </when>
+                  </choose>
+                  <ParameterSeparator Id="%AID%_PS-55" Text="Im folgenden kann bestimmt werden, welche Feiertage berechnet werden sollen. Diese Feiertage werden auch von den Zeitschaltuhren berücksichtigt." />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00152_R-%TT%0015201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00110_R-%TT%0011001" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00111_R-%TT%0011101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00112_R-%TT%0011201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00113_R-%TT%0011301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00114_R-%TT%0011401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00153_R-%TT%0015301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00115_R-%TT%0011501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00116_R-%TT%0011601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00117_R-%TT%0011701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00118_R-%TT%0011801" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00119_R-%TT%0011901" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00120_R-%TT%0012001" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00121_R-%TT%0012101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00122_R-%TT%0012201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00123_R-%TT%0012301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00124_R-%TT%0012401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00125_R-%TT%0012501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00126_R-%TT%0012601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00154_R-%TT%0015401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00127_R-%TT%0012701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00128_R-%TT%0012801" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00129_R-%TT%0012901" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00155_R-%TT%0015501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00130_R-%TT%0013001" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00131_R-%TT%0013101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00132_R-%TT%0013201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00133_R-%TT%0013301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00134_R-%TT%0013401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00135_R-%TT%0013501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00136_R-%TT%0013601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%00137_R-%TT%0013701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                  <choose ParamRefId="%AID%_P-%TT%00163_R-%TT%0016301">
+                    <when test="%LOG_EnableHardware%">
+                      <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Installierte Hardware" UIHint="Headline" />
+                      <ParameterSeparator Id="%AID%_PS-11" Text="Im folgenden wird die verwendete bzw. installierte Hardware angegeben." />
+                      <ParameterSeparator Id="%AID%_PS-12" Text="Die hier getroffenen Angaben beeinflussen das Verhalten der Applikation und der Firmware und müssen zur vorhandenen Hardware passen!" />
+                      <!-- RGB-LED installed? -->
+                      <ParameterRefRef RefId="%AID%_UP-%TT%00036_R-%TT%0003601" HelpContext="%DOC%" IndentLevel="1" />
+                      <!-- Buzzer installed? -->
+                      <ParameterRefRef RefId="%AID%_UP-%TT%00035_R-%TT%0003501" HelpContext="%DOC%" IndentLevel="1" />
+                      <!-- We implement here also led/buzzer lock KO -->
+                      <choose ParamRefId="%AID%_UP-%TT%00036_R-%TT%0003601">
+                        <when test="1">
+                          <!-- show lock KO for LED -->
+                          <ComObjectRefRef RefId="%AID%_O-%TT%00008_R-%TT%0000801" />
+                          <!-- show extra settings for LED-->
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="RGB-LED" UIHint="Headline" />
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Damit die LED in korrekten Farben leuchtet, muss hier angegeben werden, welcher Treiberausgang mit welchem LED-Beinchen verbunden ist." />
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Die Platine liegt so, dass von den 4 Lötpads für die LED das ganz linke +5V ist. Die folgenden 3 Lötpads sind A, B und C." />
+                          <ParameterRefRef RefId="%AID%_UP-%TT%00151_R-%TT%0015101" HelpContext="%DOC%" IndentLevel="1" />
+                        </when>
+                      </choose>
+                      <choose ParamRefId="%AID%_UP-%TT%00035_R-%TT%0003501">
+                        <when test="1">
+                          <!-- show lock KO for Buzzer -->
+                          <ComObjectRefRef RefId="%AID%_O-%TT%00009_R-%TT%0000901" />
+                          <!-- show extra settings for Buzzer-->
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Buzzer" UIHint="Headline" />
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Die beim Buzzer verwendeten Frequenzen für leise, normal und laut können hier eingestellt werden" />
+                          <ParameterRefRef RefId="%AID%_UP-%TT%00148_R-%TT%0014801" HelpContext="LOG-Buzzer" IndentLevel="1" />
+                          <ParameterRefRef RefId="%AID%_UP-%TT%00149_R-%TT%0014901" HelpContext="LOG-Buzzer" IndentLevel="1" />
+                          <ParameterRefRef RefId="%AID%_UP-%TT%00150_R-%TT%0015001" HelpContext="LOG-Buzzer" IndentLevel="1" />
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="Der Buzzer kann nur 'AN' oder 'AUS'. Die Lautstärke wird durch Frequenz wählt, die niicht im optimalen Arbeitsbereich liegt. Die Standardwerte meinen also 'leise und tief', 'normal und hoch', 'laut und mittel'." />
+                        </when>
+                      </choose>
+                    </when>
+                  </choose>
+                </ParameterBlock>
                 <ParameterBlock Name="Docu" Text="Dokumentation" Id="%AID%_PB-nnn" Icon="information-outline" HelpContext="LOG-Dokumentation">
                   <ParameterSeparator Id="%AID%_PS-nnn" Text="Dokumentation" UIHint="Headline" />
                   <ParameterSeparator Id="%AID%_PS-nnn" Text="Die Dokumentation ist als Kontextsensitive Hilfe verfügbar, siehe den Text im unteren Bereich des Bildschirms." />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Version des Logikmoduls: %ModuleVersion%" UIHint="Headline" />
                 </ParameterBlock>
                 <ParameterBlock Id="%AID%_PB-nnn" Name="KoOverview" Text="Übersicht interne KO" Icon="view-list-outline" HelpContext="Empty" ShowInComObjectTree="false">
                   <ParameterSeparator Id="%AID%_PS-nnn" Text="Übersicht interne KO-Verknüpfungen" UIHint="Headline" />
