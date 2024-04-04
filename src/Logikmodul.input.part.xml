@@ -10,14 +10,14 @@
             <Parameters>
               <!-- Input E1 -->
               <Parameter Id="%AID%_P-%TT%%CC%%PPP1+128%" Name="f%C%NameInput%En%" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung Eingang" Value="" />
-              <Parameter Id="%AID%_P-%TT%%CC%%PPP8+146%" Name="f%C%E%En%Low0Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="Eingang %En% ist EIN bei Szene" Value="0" />
+              <!-- <Parameter Id="%AID%_P-%TT%%CC%%PPP8+146%" Name="f%C%E%En%Low0Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="Eingang %En% ist EIN bei Szene" Value="0" />
               <Parameter Id="%AID%_P-%TT%%CC%%PPP8+147%" Name="f%C%E%En%Low1Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" />
               <Parameter Id="%AID%_P-%TT%%CC%%PPP8+148%" Name="f%C%E%En%Low2Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" />
               <Parameter Id="%AID%_P-%TT%%CC%%PPP8+149%" Name="f%C%E%En%Low3Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" />
               <Parameter Id="%AID%_P-%TT%%CC%%PPP8+150%" Name="f%C%E%En%Low4Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" />
               <Parameter Id="%AID%_P-%TT%%CC%%PPP8+151%" Name="f%C%E%En%Low5Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" />
               <Parameter Id="%AID%_P-%TT%%CC%%PPP8+152%" Name="f%C%E%En%Low6Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" />
-              <Parameter Id="%AID%_P-%TT%%CC%%PPP8+153%" Name="f%C%E%En%Low7Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" />
+              <Parameter Id="%AID%_P-%TT%%CC%%PPP8+153%" Name="f%C%E%En%Low7Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" /> -->
               <Union SizeInBit="56">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="%ParamOffset+6%" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+008%" Name="f%C%E%En%" ParameterType="%AID%_PT-InputEnable" Offset="0" BitOffset="4" Text="Eingang %En%" Value="0" />
@@ -56,7 +56,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+285%" Name="f%C%E%En%Low4Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="4" Text="Nächste Zeile auswerten?" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+286%" Name="f%C%E%En%Low5Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="5" Text="Nächste Zeile auswerten?" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+287%" Name="f%C%E%En%Low6Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="6" Text="Nächste Zeile auswerten?" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+288%" Name="f%C%E%En%Low7Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="7" Text="Nächste Zeile auswerten?" Value="0" />
+                <!-- <Parameter Id="%AID%_UP-%TT%%CC%%PPP44+288%" Name="f%C%E%En%Low7Valid" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="7" Text="Nächste Zeile auswerten?" Value="0" /> -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+010%" Name="f%C%E%En%Low0Dpt2" ParameterType="%AID%_PT-ValueDpt2" Offset="0" BitOffset="0" Text="Eingang ist EIN, wenn Wert gleich" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP-3+098%" Name="f%C%E%En%Low1Dpt2" ParameterType="%AID%_PT-ValueDpt2" Offset="1" BitOffset="0" Text="... oder wenn Wert gleich " Value="4" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP-3+099%" Name="f%C%E%En%Low2Dpt2" ParameterType="%AID%_PT-ValueDpt2" Offset="2" BitOffset="0" Text="... oder wenn Wert gleich " Value="4" />
@@ -133,14 +133,14 @@
             <ParameterRefs>
               <!-- There are absolute references to these parts in intko.templ !!! Be careful changing the offsets -->
               <ParameterRef Id="%AID%_P-%TT%%CC%%PPP1+128%_R-%TT%%CC%%PPP1+128%01" RefId="%AID%_P-%TT%%CC%%PPP1+128%" />
-              <ParameterRef Id="%AID%_P-%TT%%CC%%PPP8+146%_R-%TT%%CC%%PPP8+146%01" RefId="%AID%_P-%TT%%CC%%PPP8+146%" />
-              <ParameterRef Id="%AID%_P-%TT%%CC%%PPP8+147%_R-%TT%%CC%%PPP8+147%01" RefId="%AID%_P-%TT%%CC%%PPP8+147%" />
-              <ParameterRef Id="%AID%_P-%TT%%CC%%PPP8+148%_R-%TT%%CC%%PPP8+148%01" RefId="%AID%_P-%TT%%CC%%PPP8+148%" />
-              <ParameterRef Id="%AID%_P-%TT%%CC%%PPP8+149%_R-%TT%%CC%%PPP8+149%01" RefId="%AID%_P-%TT%%CC%%PPP8+149%" />
-              <ParameterRef Id="%AID%_P-%TT%%CC%%PPP8+150%_R-%TT%%CC%%PPP8+150%01" RefId="%AID%_P-%TT%%CC%%PPP8+150%" />
-              <ParameterRef Id="%AID%_P-%TT%%CC%%PPP8+151%_R-%TT%%CC%%PPP8+151%01" RefId="%AID%_P-%TT%%CC%%PPP8+151%" />
-              <ParameterRef Id="%AID%_P-%TT%%CC%%PPP8+152%_R-%TT%%CC%%PPP8+152%01" RefId="%AID%_P-%TT%%CC%%PPP8+152%" />
-              <ParameterRef Id="%AID%_P-%TT%%CC%%PPP8+153%_R-%TT%%CC%%PPP8+153%01" RefId="%AID%_P-%TT%%CC%%PPP8+153%" />
+              <!-- <ParameterRef Id="%AID%_P-%TT%%CC%%PPP8+146%_R-%TT%%CC%%PPP8+146%01" RefId="%AID%_P-%TT%%CC%%PPP8+146%" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%TT%%CC%%PPP8+147%_R-%TT%%CC%%PPP8+147%01" RefId="%AID%_P-%TT%%CC%%PPP8+147%" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%TT%%CC%%PPP8+148%_R-%TT%%CC%%PPP8+148%01" RefId="%AID%_P-%TT%%CC%%PPP8+148%" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%TT%%CC%%PPP8+149%_R-%TT%%CC%%PPP8+149%01" RefId="%AID%_P-%TT%%CC%%PPP8+149%" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%TT%%CC%%PPP8+150%_R-%TT%%CC%%PPP8+150%01" RefId="%AID%_P-%TT%%CC%%PPP8+150%" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%TT%%CC%%PPP8+151%_R-%TT%%CC%%PPP8+151%01" RefId="%AID%_P-%TT%%CC%%PPP8+151%" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%TT%%CC%%PPP8+152%_R-%TT%%CC%%PPP8+152%01" RefId="%AID%_P-%TT%%CC%%PPP8+152%" /> -->
+              <!-- <ParameterRef Id="%AID%_P-%TT%%CC%%PPP8+153%_R-%TT%%CC%%PPP8+153%01" RefId="%AID%_P-%TT%%CC%%PPP8+153%" /> -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP20+008%_R-%TT%%CC%%PPP20+008%01" RefId="%AID%_UP-%TT%%CC%%PPP20+008%" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+093%_R-%TT%%CC%%PPP1+093%01" RefId="%AID%_UP-%TT%%CC%%PPP1+093%" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+446%_R-%TT%%CC%%PPP1+446%01" RefId="%AID%_UP-%TT%%CC%%PPP1+446%" />
@@ -175,7 +175,7 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP44+285%_R-%TT%%CC%%PPP44+285%01" RefId="%AID%_UP-%TT%%CC%%PPP44+285%" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP44+286%_R-%TT%%CC%%PPP44+286%01" RefId="%AID%_UP-%TT%%CC%%PPP44+286%" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP44+287%_R-%TT%%CC%%PPP44+287%01" RefId="%AID%_UP-%TT%%CC%%PPP44+287%" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP44+288%_R-%TT%%CC%%PPP44+288%01" RefId="%AID%_UP-%TT%%CC%%PPP44+288%" />
+              <!-- <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP44+288%_R-%TT%%CC%%PPP44+288%01" RefId="%AID%_UP-%TT%%CC%%PPP44+288%" /> -->
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP20+010%_R-%TT%%CC%%PPP20+010%01" RefId="%AID%_UP-%TT%%CC%%PPP20+010%" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP-3+098%_R-%TT%%CC%%PPP-3+098%01" RefId="%AID%_UP-%TT%%CC%%PPP-3+098%" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP-3+099%_R-%TT%%CC%%PPP-3+099%01" RefId="%AID%_UP-%TT%%CC%%PPP-3+099%" />
@@ -359,11 +359,11 @@
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingangswert vorbelegen" UIHint="Headline" />
                         <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
                           <when test="0">
-                            <choose ParamRefId="%AID%_UP-%TT%00165_R-%TT%0016501">
-                              <when test="0">
+                            <choose ParamRefId="%AID%_P-%TT%00167_R-%TT%0016701">
+                              <when test="%LOG_EnableSave%">
                                 <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+393%_R-%TT%%CC%%PPP1+393%01" HelpContext="%DOC%" IndentLevel="1" />
                               </when>
-                              <when test="1">
+                              <when test="!=%LOG_EnableSave%">
                                 <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+130%_R-%TT%%CC%%PPP1+130%01" HelpContext="%DOC%" IndentLevel="1" />
                                 <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP20+026%_R-%TT%%CC%%PPP20+026%01" HelpContext="%DOC%" IndentLevel="1" />
                               </when>
@@ -1025,11 +1025,11 @@
                             <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingangswert vorbelegen" UIHint="Headline" />
                             <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
                               <when test="0">
-                                <choose ParamRefId="%AID%_UP-%TT%00165_R-%TT%0016501">
-                                  <when test="0">
+                                <choose ParamRefId="%AID%_P-%TT%00167_R-%TT%0016701">
+                                  <when test="%LOG_EnableSave%">
                                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+393%_R-%TT%%CC%%PPP1+393%01" HelpContext="%DOC%" IndentLevel="1" />
                                   </when>
-                                  <when test="1">
+                                  <when test="!=%LOG_EnableSave%">
                                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+130%_R-%TT%%CC%%PPP1+130%01" HelpContext="%DOC%" IndentLevel="1" />
                                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP20+026%_R-%TT%%CC%%PPP20+026%01" HelpContext="%DOC%" IndentLevel="1" />
                                   </when>

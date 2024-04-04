@@ -264,7 +264,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%401" Name="f%C%OOnDpt14" ParameterType="%AID%_PT-ValueDpt14" Offset="1" BitOffset="0" Text="    Wert für EIN senden als" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%074" Name="f%C%OOnDpt16" ParameterType="%AID%_PT-ValueText" Offset="1" BitOffset="0" Text="    Wert für EIN senden als " Value="Ein" />
                 <Parameter Id="%AID%_UP-%TT%%CC%075" Name="f%C%OOnDpt17" ParameterType="%AID%_PT-ValueSceneOut" Offset="1" BitOffset="0" Text="    Wert für EIN senden als " Value="2" />
-                <Parameter Id="%AID%_UP-%TT%%CC%076" Name="f%C%OOnRGB" ParameterType="%AID%_PT-ValueColor" Offset="1" BitOffset="0" Text="    Wert für EIN senden als (3-Byte-RGB)" Value="FFFFFF" />
+                <Parameter Id="%AID%_UP-%TT%%CC%076" Name="f%C%OOnRGB" ParameterType="%AID%_PT-ValueColor" Offset="1" BitOffset="0" Text="    Wert für EIN senden als (3-Byte-RGB)" Value="#FFFFFF" />
                 <Parameter Id="%AID%_UP-%TT%%CC%121" Name="f%C%OOnPAArea" ParameterType="%AID%_PT-PALine" Offset="1" BitOffset="0" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%122" Name="f%C%OOnPALine" ParameterType="%AID%_PT-PALine" Offset="1" BitOffset="4" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%123" Name="f%C%OOnPADevice" ParameterType="%AID%_PT-PADevice" Offset="2" BitOffset="0" Text="" Value="1" />
@@ -294,7 +294,7 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%404" Name="f%C%OOffDpt14" ParameterType="%AID%_PT-ValueDpt14" Offset="1" BitOffset="0" Text="    Wert für AUS senden als" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%086" Name="f%C%OOffDpt16" ParameterType="%AID%_PT-ValueText" Offset="1" BitOffset="0" Text="    Wert für AUS senden als" Value="Aus" />
                 <Parameter Id="%AID%_UP-%TT%%CC%087" Name="f%C%OOffDpt17" ParameterType="%AID%_PT-ValueSceneOut" Offset="1" BitOffset="0" Text="    Wert für AUS senden als " Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%088" Name="f%C%OOffRGB" ParameterType="%AID%_PT-ValueColor" Offset="1" BitOffset="0" Text="    Wert für AUS senden als (3-Byte-RGB)" Value="000000" />
+                <Parameter Id="%AID%_UP-%TT%%CC%088" Name="f%C%OOffRGB" ParameterType="%AID%_PT-ValueColor" Offset="1" BitOffset="0" Text="    Wert für AUS senden als (3-Byte-RGB)" Value="#000000" />
                 <Parameter Id="%AID%_UP-%TT%%CC%124" Name="f%C%OOffPAArea" ParameterType="%AID%_PT-PALine" Offset="1" BitOffset="0" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%125" Name="f%C%OOffPALine" ParameterType="%AID%_PT-PALine" Offset="1" BitOffset="4" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%126" Name="f%C%OOffPADevice" ParameterType="%AID%_PT-PADevice" Offset="2" BitOffset="0" Text="" Value="1" />
@@ -552,7 +552,7 @@
             </ParameterRefs>
             <ComObjectTable>
               <op:usePart name="INPUT" xpath="//ComObjectTable/*" />
-              <ComObject Id="%AID%_O-%TT%%CC%002" Name="KOf%C%O"  Text="Ausgang"   Number="%K2%" FunctionText="Logik %C%, Ausgang"   ObjectSize="4 Bytes" ReadFlag="Enabled"  WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled"  UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%002" Name="KOf%C%O" Text="Ausgang" Number="%K2%" FunctionText="Logik %C%, Ausgang" ObjectSize="14 Bytes" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
             </ComObjectTable>
             <ComObjectRefs>
               <ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Ausgang}}" ObjectSize="1 Bit" DatapointType="DPST-1-1" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" />

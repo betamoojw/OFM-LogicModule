@@ -33,7 +33,7 @@
               </ParameterType>
               <!-- This type is necessary to allow op:config-parameters beeing changed in future -->
               <ParameterType Id="%AID%_PT-EnableSave" Name="EnableSave">
-                <TypeNumber SizeInBit="1" Type="unsignedInt" minInclusive="%LOG_EnableSave%" maxInclusive="%LOG_EnableSave%" />
+                <TypeNumber SizeInBit="1" Type="unsignedInt" minInclusive="0" maxInclusive="1" />
               </ParameterType>
               <!-- buzzer frequencies in Hz -->
               <ParameterType Id="%AID%_PT-BuzzerFrequency" Name="BuzzerFrequency">
@@ -901,6 +901,7 @@
             <Parameters>
               <Parameter Id="%AID%_P-%TT%00163" Name="EnableHardware" ParameterType="%AID%_PT-OnOffYesNo" Text="Enable Hardware" Value="1" Access="None" />
               <Parameter Id="%AID%_P-%TT%00166" Name="OverviewFilter" ParameterType="%AID%_PT-CheckBox" Text="Nur Kanäle mit internen Verknüpfungen anzeigen" Value="1" />
+              <Parameter Id="%AID%_P-%TT%00167" Name="EnableSave" ParameterType="%AID%_PT-EnableSave" Text="Speichern von Werten in Hardware möglich?" Value="0" Access="None" />
               <Union SizeInBit="8">
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
                 <!-- <Parameter Id="%AID%_UP-%TT%00034" Name="ReadTimeDate" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="0" Text="Uhrzeit und Datum nach einem Neustart vom Bus lesen" Value="1" /> -->
@@ -912,8 +913,7 @@
                 <Parameter Id="%AID%_UP-%TT%00139" Name="HolidayKo" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="3" Text="Feiertage auf dem Bus verfügbar machen?" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00140" Name="VacationRead" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="4" Text="Nach Neustart Urlaubsinfo lesen?" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00141" Name="HolidaySend" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="5" Text="Nach Neuberechnung Feiertagsinfo senden?" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%00165" Name="EnableSave" ParameterType="%AID%_PT-EnableSave" Offset="0" BitOffset="6" Text="Speichern von Werten in Hardware möglich?" Value="%LOG_EnableSave%" Access="None" />
-                <!-- 1 Bit free -->
+                <!-- 2 Bit free -->
               </Union>
               <Union SizeInBit="32">
                 <Memory CodeSegment="%MID%" Offset="1" BitOffset="0" />
@@ -1033,8 +1033,9 @@
               <!-- <ParameterRef Id="%AID%_UP-%TT%00162_R-%TT%0016201" RefId="%AID%_UP-%TT%00162" /> -->
               <ParameterRef Id="%AID%_P-%TT%00163_R-%TT%0016301" RefId="%AID%_P-%TT%00163" />
               <ParameterRef Id="%AID%_UP-%TT%00164_R-%TT%0016401" RefId="%AID%_UP-%TT%00164" />
-              <ParameterRef Id="%AID%_UP-%TT%00165_R-%TT%0016501" RefId="%AID%_UP-%TT%00165" />
+              <!-- <ParameterRef Id="%AID%_UP-%TT%00165_R-%TT%0016501" RefId="%AID%_UP-%TT%00165" /> -->
               <ParameterRef Id="%AID%_P-%TT%00166_R-%TT%0016601" RefId="%AID%_P-%TT%00166" />
+              <ParameterRef Id="%AID%_P-%TT%00167_R-%TT%0016701" RefId="%AID%_P-%TT%00167" />
             </ParameterRefs>
             <ComObjectTable>
               <!-- <ComObject Id="%AID%_O-%TT%00001" Name="Heartbeat" Text="In Betrieb" Number="1" FunctionText="Zyklisch" ObjectSize="1 Bit" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-2" />
@@ -1077,7 +1078,7 @@
                     <!-- RGB-LED installed? -->
                     <ParameterRefRef RefId="%AID%_UP-%TT%00036_R-%TT%0003601" />
                     <!-- Enable Save? -->
-                    <ParameterRefRef RefId="%AID%_UP-%TT%00165_R-%TT%0016501" />
+                    <ParameterRefRef RefId="%AID%_P-%TT%00167_R-%TT%0016701" />
                   </ParameterBlock>
                   <ParameterRefRef RefId="%AID%_P-%TT%00163_R-%TT%0016301" />
                   <ParameterSeparator Id="%AID%_PS-nnn" Text="Logikmodul Version %ModuleVersion%" UIHint="Headline" />
