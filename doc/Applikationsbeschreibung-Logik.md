@@ -2838,6 +2838,8 @@ Der Ausgang ist als Treppenlicht definiert, das von der Duscherkennung auf EIN g
 
 Sollte dieses Beispiel übernommen werden, müssen einige Parameter eventuell angepasst werden. Falls z.B. im Normalverlauf die Luftfeuchte schon um 2% steigen kann, sollte man hier 3% wählen. Die Nachlaufzeit vom Treppenlicht kann auch an eigene Bedürfnisse angepasst werden.
 
+
+
 ## **Weitere Beispiele**
 
 Die folgenden Beispiele müssen noch ausgearbeitet werden. Die gegebenen Überschriften zeigen aber bereits jetzt eine Liste der möglichen Funktionen.
