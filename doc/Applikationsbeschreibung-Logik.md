@@ -2767,6 +2767,76 @@ Wird, nachdem der Zähler seinen maximalwert erreicht hat, erneut ein EIN-Signal
 
 Um das Gerät wieder einschalten zu können, muss man den Zähler auf 0 setzen. Das kann man z.B. durch eine Zeitschaltuhr machen, die eine 0 auf die GA 31/6/120 schickt.
 
+### **Duscherkennung über kurzfristig stark ansteigende Luftfeuchte**
+
+Hier wird eine Art der Duscherkennung gezeigt, die nicht auf der Erhöhung der Temperatur des Zu- oder Ablaufrohres basiert, sondern auf der relativen Luftfeuchte.
+
+Da relative Luftfeuchte aber jeglichen Wert bis 100% haben kann, ohne dass geduscht wird, muss nicht auf den absoluten Wert, sondern auf eine starke Steigung der Luftfeuchte innerhalb kurzer Zeit geachtet werden.
+
+Der Luftfeuchte-Sensor wird so programmiert, dass er bei einer Änderung der Luftfeuchte um 1% sendet.
+
+Im Logikmodul wird überprüft, ob innerhalb einer Minute die Luftfeuchte um mehr als 2% steigt.
+
+Man kann (und sollte) die einzelnen Grenzwerte an die eigenen Bedürfnisse anpassen.
+
+#### Vergleichswert für die Duscherkennung ermitteln
+
+Da wir für die Duscherkennung vergleichen wollen, ob die Luftfeuchte innerhalb einer Minute um 2% gestiegen ist, müssen wir erstmal dafür sorgen, dass wir jede Minute den aktuellen Wert für eine Minute speichern.
+
+Dies erfolgt klassischerweise durch ein TOR, dass jede Minute kurz geöffnet wird. Dadurch wird der Wert vom Eingang auf den Ausgang geschickt. Da das TOR danach sofort wieder geschlossen wird, bleibt der Wert am Ausgang für eine Minute erhalten.
+
+Im folgenden Bild wird die Logik für das TOR definiert.
+
+<kbd>![Duscherkennung Vergleichswert](examples/bsp04/bsp04a-duscherkennung-vergleichswert.png)</kbd>
+
+Das folgende Bild definiert den Eingang 1, als DPT9. Die Einstellungen führen dazu, dass nach einem Neustart der zuletzt gespeicherte Wert wieder am Eingang anliegt.
+
+<kbd>![Aktuelle Luftfeuchte](examples/bsp04/bsp04a-e1-aktuelle-luftfeuchte.png)</kbd>
+
+Der Eingang 2 dient nur dazu, das TOR kurz zu öffnen und durchzuschalten. Dieser Eingang wird jede Minute durch ein EIN-Telegramm getriggert.
+
+<kbd>![Minutentrigger](examples/bsp04/bsp04a-e2-minutentrigger.png)</kbd>
+
+Der Ausgang ist so definiert, dass er mit jedem Trigger den Wert vom Eingang 1 übernimmt.
+
+<kbd>![Ausgang Duscherkennung Vergleichswert](examples/bsp04/bsp04a-a-duscherkennung-vergleichswert.png)</kbd>
+
+#### Minutentrigger bereitstellen
+
+Damit das TOR jede Minute getriggert werden kann, wird hier über eine einfache Zeitschaltuhr jede Minute ein Signal ausgelöst. Die Definitionen sprechen (hoffentlich) für sich und brauchen keine weitere Erklärung.
+
+<kbd>![Minutentrigger](examples/bsp04/bsp04b-minutentrigger.png)</kbd>
+
+<kbd>![Schaltzeiten](examples/bsp04/bsp04b-s-schaltzeiten.png)</kbd>
+
+<kbd>![Minütlich triggern](examples/bsp04/bsp04b-a-minuetlich-triggern.png)</kbd>
+
+
+#### Duscherkennung über Luftfeuchte
+
+Dieser Kanal macht die eigentliche Duscherkennung. Über ein Differenzintervall wird herausgefunden, ob der aktuelle Wert für Luftfeuchte vom vorherigen Wert um mehr als 2% abweicht.
+
+Das erste Bild zeigt die Kanaleinstellung, die ein einfaches OR ist.
+
+<kbd>![Duscherkennung](examples/bsp04/bsp04c-duscherkennung.png)</kbd>
+
+Das folgende Bild zeigt den Eingang 1 für das Differenzintervall. Wenn die Differenz >= 3 ist, triggert der Eingang die Logik.
+
+ACHTUNG: Der Eingang ist über ein internes KO mit dem Eingang 1 von Kanal 12 verbunden. Da die KO-Nummern vom Kanal abhängig sind, muss die Nummer angepasst werden, falls dieses Beispiel auf einen anderen Kanal adaptiert wird. Alternativ kann man normal extern über GA verknüpfen.
+
+<kbd>![Aktuelle Luftfeuchte](examples/bsp04/bsp04c-e1-aktuelle-luftfeuchte.png)</kbd>
+
+Der Eingang 2 ist der 2. Wert der Differenz vom Differenzintervall.  
+
+ACHTUNG: Der Eingang ist über ein internes KO mit dem Ausgang von Kanal 12 verbunden. Da die KO-Nummern vom Kanal abhängig sind, muss die Nummer angepasst werden, falls dieses Beispiel auf einen anderen Kanal adaptiert wird. Alternativ kann man normal extern über GA verknüpfen.
+
+<kbd>![Vorherige Luftfeuchte](examples/bsp04/bsp04c-e2-vorherige-luftfeuchte.png)</kbd>
+
+Der Ausgang ist als Treppenlicht definiert, das von der Duscherkennung auf EIN geht und nach 10 Minuten wieder auf 0 geht. 
+
+<kbd>![Duschen hat begonnen](examples/bsp04/bsp04c-a-duschen-hat-begonnen.png)</kbd>
+
+Sollte dieses Beispiel übernommen werden, müssen einige Parameter eventuell angepasst werden. Falls z.B. im Normalverlauf die Luftfeuchte schon um 2% steigen kann, sollte man hier 3% wählen. Die Nachlaufzeit vom Treppenlicht kann auch an eigene Bedürfnisse angepasst werden.
 
 ## **Weitere Beispiele**
 
