@@ -325,6 +325,9 @@ void Logic::processInputKo(GroupObject &iKo)
 
 void Logic::showHelp()
 {
+    if (!knx.configured())
+        return;
+
     openknx.console.printHelpLine("logic chNN", "List logic channel NN, i.e. logic ch05");
     openknx.console.printHelpLine("logic time", "Print current time");
     openknx.console.printHelpLine("logic easter", "Print calculated easter sunday date");

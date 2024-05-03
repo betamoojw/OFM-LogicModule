@@ -897,10 +897,23 @@
                   <Enumeration Text="Bestehendes KO" Value="1" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
+              <ParameterType Id="%AID%_PT-OverviewFilter" Name="OverviewFilter">
+                <TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
+                  <Enumeration Text="Alle Kanäle" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Nur Kanäle mit internen KO" Value="1" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-OverviewDisplay" Name="OverviewDisplay">
+                <TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
+                  <Enumeration Text="Mit Logikbeschriftungen" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Ohne Logikbeschriftungen" Value="1" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
             </ParameterTypes>
             <Parameters>
               <Parameter Id="%AID%_P-%TT%00163" Name="EnableHardware" ParameterType="%AID%_PT-OnOffYesNo" Text="Enable Hardware" Value="1" Access="None" />
-              <Parameter Id="%AID%_P-%TT%00166" Name="OverviewFilter" ParameterType="%AID%_PT-CheckBox" Text="Nur Kanäle mit internen Verknüpfungen anzeigen" Value="1" />
+              <Parameter Id="%AID%_P-%TT%00166" Name="OverviewFilter" ParameterType="%AID%_PT-OverviewFilter" Text="Nur Kanäle mit internen Verknüpfungen anzeigen" Value="1" />
+              <Parameter Id="%AID%_P-%TT%00168" Name="CompactDisplay" ParameterType="%AID%_PT-OverviewDisplay" Text="Übersicht ohne Logikbeschriftung anzeigen (kompakter)" Value="0" />
               <Parameter Id="%AID%_P-%TT%00167" Name="EnableSave" ParameterType="%AID%_PT-EnableSave" Text="Speichern von Werten in Hardware möglich?" Value="0" Access="None" />
               <Union SizeInBit="8">
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
@@ -1036,6 +1049,7 @@
               <!-- <ParameterRef Id="%AID%_UP-%TT%00165_R-%TT%0016501" RefId="%AID%_UP-%TT%00165" /> -->
               <ParameterRef Id="%AID%_P-%TT%00166_R-%TT%0016601" RefId="%AID%_P-%TT%00166" />
               <ParameterRef Id="%AID%_P-%TT%00167_R-%TT%0016701" RefId="%AID%_P-%TT%00167" />
+              <ParameterRef Id="%AID%_P-%TT%00168_R-%TT%0016801" RefId="%AID%_P-%TT%00168" />
             </ParameterRefs>
             <ComObjectTable>
               <!-- <ComObject Id="%AID%_O-%TT%00001" Name="Heartbeat" Text="In Betrieb" Number="1" FunctionText="Zyklisch" ObjectSize="1 Bit" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-2" />
@@ -1078,7 +1092,7 @@
                 <!-- Enable Save? -->
                 <ParameterRefRef RefId="%AID%_P-%TT%00167_R-%TT%0016701" />
               </ParameterBlock>
-              <ParameterBlock Id="%AID%_PB-nnn" Name="Settings" Text="Einstellungen" ShowInComObjectTree="true" Icon="cog-outline" HelpContext="Empty">
+              <ParameterBlock Id="%AID%_PB-nnn" Name="Settings" Text="Allgemein" ShowInComObjectTree="true" Icon="cog-outline" HelpContext="Empty">
                 <ParameterRefRef RefId="%AID%_P-%TT%00163_R-%TT%0016301" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Logikmodul Version %ModuleVersion%" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
@@ -1185,7 +1199,19 @@
               <ParameterBlock Id="%AID%_PB-nnn" Name="KoOverview" Text="Übersicht interne KO" Icon="view-list-outline" HelpContext="Empty" ShowInComObjectTree="false">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Übersicht interne KO-Verknüpfungen" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Die folgende Liste kann leer sein, falls noch keine Logikkanäle definiert wurden oder noch keine internen KO-Verknüpfungen genutzt werden." />
-                <ParameterRefRef RefId="%AID%_P-%TT%00166_R-%TT%0016601" />
+                <ParameterBlock Id="%AID%_PB-nnn" Name="fIntKoOverviewFilter" Inline="true" Layout="Grid" HelpContext="Empty">
+                  <Rows>
+                    <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
+                  </Rows>
+                  <Columns>
+                    <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="11%" />
+                    <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="37%" />
+                    <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="37%" />
+                  </Columns>
+                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Anzeige" Cell="1,1" />
+                  <ParameterRefRef RefId="%AID%_P-%TT%00168_R-%TT%0016801" Cell="1,2" />
+                  <ParameterRefRef RefId="%AID%_P-%TT%00166_R-%TT%0016601" Cell="1,3" />
+                </ParameterBlock>
                 <ParameterBlock Id="%AID%_PB-nnn" Name="fIntKoOverview" Inline="true" Layout="Grid" HelpContext="Empty">
                   <Rows>
                     <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
@@ -1197,7 +1223,14 @@
                     <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="37%" />
                     <Column Id="%AID%_PB-nnn_C-5" Name="Col4" Width="27%" />
                   </Columns>
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang" UIHint="Headline" Cell="1,2" />
+                  <choose ParamRefId="%AID%_P-%TT%00168_R-%TT%0016801">
+                    <when test="0">
+                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Logiktext / Eingang" UIHint="Headline" Cell="1,2" />
+                    </when>
+                    <when test="1">
+                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang" UIHint="Headline" Cell="1,2" />
+                    </when>
+                  </choose>
                   <ParameterSeparator Id="%AID%_PS-nnn" Text="KO" UIHint="Headline" Cell="1,3" />
                   <ParameterSeparator Id="%AID%_PS-nnn" Text="Ausgang" UIHint="Headline" Cell="1,4" />
                   <ParameterSeparator Id="%AID%_PS-nnn" Text="zusätzliche KO" UIHint="Headline" Cell="1,5" />
