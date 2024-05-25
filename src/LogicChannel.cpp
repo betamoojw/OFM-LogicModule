@@ -1099,9 +1099,9 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
                 // lDptResult = (lDpt == VAL_DPT_9 || lDptValue2 == VAL_DPT_9) ? VAL_DPT_9 : lDpt;
                 if (lDpt != VAL_DPT_9 && lDpt != VAL_DPT_14)
                     lDpt = VAL_DPT_13;
-                if (lValue1In <= getParamByDpt(lDpt, lParamLow + 0))
+                if (lDiff <= getParamByDpt(lDpt, lParamLow + 0))
                     lValueOut = false;
-                if (lValue1In >= getParamByDpt(lDpt, lParamLow + 4))
+                if (lDiff >= getParamByDpt(lDpt, lParamLow + 4))
                     lValueOut = true;
                     // if (uValueLessThanOrEquals(lDiff, getParamByDpt(lDpt, lParamLow + 0), lDptResult, lDpt))
                     //     lValueOut = false;
@@ -1151,31 +1151,48 @@ void LogicChannel::processConvertInput(uint8_t iIOIndex)
 
 void LogicChannel::startLogic(uint8_t iIOIndex, bool iValue)
 {
-    // invert input
-    bool lValue = iValue;
-    uint16_t lParamBase = (iIOIndex == BIT_EXT_INPUT_1) ? LOG_fE1 : (iIOIndex == BIT_EXT_INPUT_2) ? LOG_fE2
-                                                                : (iIOIndex == BIT_INT_INPUT_1)   ? LOG_fI1
-                                                                                                  : LOG_fI2;
-    uint8_t lInput = getByteParam(lParamBase);
-    if (iIOIndex == BIT_INT_INPUT_1)
-        lInput >>= 4;
-    if ((lInput & BIT_INPUT_MASK) == 2)
-        lValue = !iValue;
-    // set according input bit
-    pCurrentIn &= ~iIOIndex;
-    pCurrentIn |= iIOIndex * lValue;
-    // // set the validity bit
-    // pValidActiveIO |= iIOIndex;
-    // set the trigger bit
-    pTriggerIO |= iIOIndex;
-    // finally set the pipeline bit
-    pCurrentPipeline |= PIP_LOGIC_EXECUTE;
-#if LOGIC_TRACE
-    if (debugFilter())
+    // try to catch endless loops caused by logic itself
+    // in case, start was called to often per second, wie stop this channel
+    if (pLoadCounter < LOAD_COUNTER_MAX)
     {
-        logChannel("startLogic: Input %s%i; Value %i", (iIOIndex & (BIT_EXT_INPUT_1 | BIT_EXT_INPUT_2)) ? "E" : "I", (iIOIndex & (BIT_EXT_INPUT_1 | BIT_INT_INPUT_1)) ? 1 : 2, lValue);
-    }
+        // reset counter every second
+        if (delayCheck(pLoadCounterDelay, 1000))
+        {
+            pLoadCounterDelay = delayTimerInit();
+            pLoadCounter = 0;
+        }
+        pLoadCounter++;
+        if (pLoadCounter > pLoadCounterMax)
+        {
+            pLoadCounterMax = pLoadCounter;
+            pLoadChannel = _channelIndex;
+        }
+        // invert input
+        bool lValue = iValue;
+        uint16_t lParamBase = (iIOIndex == BIT_EXT_INPUT_1) ? LOG_fE1 : (iIOIndex == BIT_EXT_INPUT_2) ? LOG_fE2
+                                                                    : (iIOIndex == BIT_INT_INPUT_1)   ? LOG_fI1
+                                                                                                      : LOG_fI2;
+        uint8_t lInput = getByteParam(lParamBase);
+        if (iIOIndex == BIT_INT_INPUT_1)
+            lInput >>= 4;
+        if ((lInput & BIT_INPUT_MASK) == 2)
+            lValue = !iValue;
+        // set according input bit
+        pCurrentIn &= ~iIOIndex;
+        pCurrentIn |= iIOIndex * lValue;
+        // // set the validity bit
+        // pValidActiveIO |= iIOIndex;
+        // set the trigger bit
+        pTriggerIO |= iIOIndex;
+        // finally set the pipeline bit
+        pCurrentPipeline |= PIP_LOGIC_EXECUTE;
+#if LOGIC_TRACE
+        if (debugFilter())
+        {
+            logChannel("startLogic: Input %s%i; Value %i", (iIOIndex & (BIT_EXT_INPUT_1 | BIT_EXT_INPUT_2)) ? "E" : "I", (iIOIndex & (BIT_EXT_INPUT_1 | BIT_INT_INPUT_1)) ? 1 : 2, lValue);
+        }
 #endif
+    }
 }
 
 // Processing parametrized logic
@@ -1195,6 +1212,7 @@ void LogicChannel::processLogic()
 #endif
     // first deactivate execution in pipeline
     pCurrentPipeline &= ~PIP_LOGIC_EXECUTE;
+
     // we have to delete all trigger if output pipeline is not started
     if (ParamLOG_fCalculate == 0 || lValidInputs == lActiveInputs)
     {
@@ -1843,7 +1861,7 @@ bool LogicChannel::processCommand(const std::string iCmd, bool iDebugKo)
     if (iCmd.substr(0, 8) != "logic ch" || iCmd.length() < 9)
         return lResult;
 
-    if (iCmd.length() > 9)
+    if (iCmd.length() == 10)
     {
         char v[5];
         // here we find the last IO state
@@ -1882,6 +1900,28 @@ bool LogicChannel::processCommand(const std::string iCmd, bool iDebugKo)
         }
         lResult = true;
     }
+    else if (iCmd.length() > 11 && iCmd.substr(11, 1) == "l")
+    {
+        logInfoP("This channel is %sdisabled", (pLoadCounter < LOAD_COUNTER_MAX) ? "not " : "");
+        if (iDebugKo)
+        {
+            openknx.console.writeDiagenoseKo("Disabled: %s", (pLoadCounter < LOAD_COUNTER_MAX) ? "no" : "yes");
+        }
+        lResult = true;
+    }
+    else if (iCmd.length() > 11 && iCmd.substr(11, 1) == "r")
+    {
+        pLoadCounter = 0;
+        pLoadCounterMax = 0;
+        pLoadChannel = 0;
+        logInfoP("All call counters were reset!");
+        if (iDebugKo)
+        {
+            openknx.console.writeDiagenoseKo("Reset success");
+        }
+        lResult = true;
+    }
+
     return lResult;
 }
 

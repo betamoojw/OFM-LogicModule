@@ -328,11 +328,15 @@ void Logic::showHelp()
     if (!knx.configured())
         return;
 
-    openknx.console.printHelpLine("logic chNN", "List logic channel NN, i.e. logic ch05");
     openknx.console.printHelpLine("logic time", "Print current time");
     openknx.console.printHelpLine("logic easter", "Print calculated easter sunday date");
     openknx.console.printHelpLine("logic sun", "Print sunrise and sunset times");
     openknx.console.printHelpLine("logic sun+DDMM", "Print sunrise/sunset at elevation +/- degree/minute");
+
+    openknx.console.printHelpLine("logic limit", "Show call limit counter max value and channel");
+    openknx.console.printHelpLine("logic chNN", "List logic channel NN, i.e. logic ch05");
+    openknx.console.printHelpLine("logic chNN lim", "Show if this cannel reached call limit");
+    openknx.console.printHelpLine("logic chNN res", "Resets call counter for this channel");
 }
 
 bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
@@ -345,7 +349,7 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
     if (iCmd.substr(0, 6) != "logic " || iCmd.length() < 7)
         return lResult;
 
-    if (iCmd.length() == 10 && iCmd.substr(6, 2) == "ch")
+    if (iCmd.length() >= 10 && iCmd.substr(6, 2) == "ch")
     {
         // Command ch<nn>: Logic inputs and output of last execution
         // find channel and dispatch
@@ -428,21 +432,36 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
             openknx.console.writeDiagenoseKo("O%02d.%02d", sTimer.getEaster()->day, sTimer.getEaster()->month);
         lResult = true;
     }
+    else if (iCmd.length() >= 7 && iCmd.substr(6, 1) == "l") // limit
+    {
+        // display max call limit and according channel
+        logInfoP("Call limit %02d on channel %02d", LogicChannel::pLoadCounterMax, LogicChannel::pLoadChannel + 1);
+        if (iDebugKo)
+            openknx.console.writeDiagenoseKo("LIM %02d, CH %02d", LogicChannel::pLoadCounterMax, LogicChannel::pLoadChannel + 1);
+        lResult = true;
+    }
     else if (iCmd.length() >= 7 && iCmd.substr(6, 1) == "h") // help
     {
         showHelp();
         if (iDebugKo)
         {
-            openknx.console.writeDiagenoseKo("-> chNN");
-            openknx.console.writeDiagenoseKo(""); // workaround, on mass output each 2nd line ist skipped
             openknx.console.writeDiagenoseKo("-> time");
-            openknx.console.writeDiagenoseKo("");
+            openknx.console.writeDiagenoseKo(""); // workaround, on mass output each 2nd line ist skipped
             openknx.console.writeDiagenoseKo("-> easter");
             openknx.console.writeDiagenoseKo("");
             openknx.console.writeDiagenoseKo("-> sun");
             openknx.console.writeDiagenoseKo("");
             openknx.console.writeDiagenoseKo("-> sun[+-]DDMM");
+            openknx.console.writeDiagenoseKo("");
+            openknx.console.writeDiagenoseKo("-> limit");
+            openknx.console.writeDiagenoseKo("");
+            openknx.console.writeDiagenoseKo("-> chNN");
+            openknx.console.writeDiagenoseKo("");
+            openknx.console.writeDiagenoseKo("-> chNN lim");
+            openknx.console.writeDiagenoseKo("");
+            openknx.console.writeDiagenoseKo("-> chNN res");
         }
+        lResult = true;
     }
     return lResult;
 }

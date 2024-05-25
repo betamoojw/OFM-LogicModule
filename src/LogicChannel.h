@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define LOAD_COUNTER_MAX 50 // number of call per second allowed per logic channel
+
 #define SAVE_BUFFER_START_PAGE 0 // All stored KO data begin at this page and takes 40 pages,
 #define SAVE_BUFFER_NUM_PAGES 41 // so next store should start at page 41
 
@@ -333,6 +335,8 @@ class LogicChannel : public OpenKNX::Channel
     uint32_t pOnDelay;
     uint32_t pOffDelay;
     uint32_t pRepeatOnOffDelay;
+    uint8_t pLoadCounter = 0;
+    uint32_t pLoadCounterDelay = 0;
 
   public:
     // Constructors
@@ -340,6 +344,8 @@ class LogicChannel : public OpenKNX::Channel
     ~LogicChannel();
 
     // static
+    inline static uint8_t pLoadCounterMax = 0;
+    inline static uint8_t pLoadChannel = 0;
     static uint16_t calcKoNumber(uint8_t iIOIndex, uint8_t iChannelId);
     static GroupObject *getKoForChannel(uint8_t iIOIndex, uint8_t iChannelId);
     // static float getFloat(uint8_t *data);

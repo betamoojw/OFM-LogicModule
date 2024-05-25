@@ -33,6 +33,7 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 * [Update der Applikation](#update-der-applikation)
 * [Unterstützte Hardware](#unterstützte-hardware)
 * Fortgeschrittene Funktionen
+  * [Endlosschleifen-Erkennung](#endlosschleifen-erkennung)
   * [Diagnoseobjekt](#diagnoseobjekt)
   * [Benutzerfunktionen](#benutzerfunktionen)
 
@@ -81,8 +82,12 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 
 26.03.2024: Firmware 3.2, Applikation 3.2
 
+* NEU: Durch die Logik verursachte Endlosschleifen werden jetzt erkannt und die entsprechenden Logikkanäle deaktiviert (siehe [Endlosschleifen-Erkennung](#endlosschleifen-erkennung))
 * NEU: Übersichtsseite mit allen internen KO-Verknüpfungen hinzugefügt
-* FIX: TOR
+* FIX: TOR wurde nicht korrekt getriggert, wenn nur Eingang 2 als Trigger ausgewählt worden ist
+* FIX: Differenzhysterese funktionierte seit der Einführung von DPT12, DPT13 und DPT14 nicht mehr
+
+* Logik verwendet jetzt den neusten KNX-Stack, der auch bei hoher momentaner Buslast keine Telegramme mehr verpassen kann. Somit ist die Robustheit der Logik nochmal verbessert worden
 
 Um in der ETS ein Update der Logik von einer Version vor 3.1 auf die 3.2 vornehmen zu können, muss man erst ein Update auf die 3.1 machen. Anschließend funktioniert ein Update auf die 3.2. Die Firmware kann gleich auf die 3.2 aktualisiert werden.
 
@@ -2339,6 +2344,38 @@ Auf diese Weise bekommt man die Funktionalität des früheren Logikmoduls wieder
 
 Anlog für "Feiertag morgen".
 
+## **Endlosschleifen-Erkennung**
+
+Man kann mit dem Logikmodul relativ einfach Endlosschleifen bauen, indem man Ausgänge von Logikkanälen auf Eingänge zurückführt, die wiederum den den sendenden Logikkanal beeinflussen. 
+
+Beispiel:
+
+    Kanal 1, Eingang 1: 1/1/1
+    Kanal 1, Ausgang:   1/1/2
+    Kanal 2, Eingang 1: 1/1/2
+    Kanal 2, Ausgang:   1/1/1
+
+Sobald im obigen Beispiel auf 1/1/1 oder 1/1/2 ein Telegramm gesendet wird, sieht man im Gruppenmonitor ein Haufen Telegramme, die nicht aufhören, das Logikmodul ist nicht mehr per KNX zu erreichen und muss manuell mit Reset zurückgesetzt werden.
+Und falls das Logikmodul selbst beim Neustart ein Telegramm auf 1/1/1 oder 1/1/2 schickt, beginnt die Endlosschleife sofort nach dem Neustart vom neuem, bevor man irgendwie das Logikmodul umprogrammieren kann.
+In so einem Falle musste man sogar des Flash löschen und die Firmware neu aufspielen, bevor man wieder was machen konnte.
+
+Ab der Version 3.2 des Logikmoduls gibt es eine Endlosschleifen-Erkennung. Wird ein Logikkanal mehr als 50 mal pro Sekunde aufgerufen, wird er deaktiviert und funktioniert nicht mehr. Alle anderen Logikkanäle funktionieren noch weiter. Der deaktivierte Logikkanal wird erst nach einem Neustart des Logikmodul wieder aktiv oder indem über das Diagnoseobjekt das Kommando
+
+    logic chNN res
+
+gesendet wurde, wobei NN die Nummer des deaktivierten Kanals ist.
+
+Diese neue Funktion ermöglicht es, gravierende Logikfehler zu korrigieren, ohne dass man das Logikmodul erneut ausbauen oder gar neu Flashen muss. Es wird nur der fehlerhaft parametrisierte Kanal deaktiviert, alle anderen Funktionen bleiben erhalten. Vor allem ist es möglich, das Logikmodul neu zu programmieren.
+
+Ob ein Kanal durch die Endlosschleifen-Erkennung deaktiviert wurde, kann man erkennen, indem man über das Diagnoseobjekt das Kommando
+ 
+    logic limit
+
+sendet. Fall die Antwort 'LIM 50, CHnn' ist, dann ist Kanal nn deaktiviert, weil er mehr als 50 mal pro Sekunde aufgerufen worden ist. Es können auch mehr als dieser eine Kanal deaktiviert sein, man sieht nur den Kanal, der zuerst deaktiviert wurde.
+
+Im Kapitel Diagnoseobjekt sind weitere Diagnosemöglichkeiten für die Endlosschleifen-Erkennung beschrieben.
+
+
 ## **Diagnoseobjekt**
 
 Das Diagnoseobjekt dient primär zu Debug-Zwecken, kann aber auch vom Enduser genutzt werden, um bestimmte interne Zustände vom Logikmodul zu überprüfen. 
@@ -2351,11 +2388,14 @@ Gibt die verfügbaren Befehle für die Logik aus. Da im Diagnoseobjekt nur 14 Ze
 
 Auf KO 7 (Diagnoseobjekt) muss der Befehl 'logic help' (klein) gesendet werden. Die Antwort erfolgt auf KO 7 (Diagnoseobjekt). Folgende Liste wird sichtbar:
 
-    -> chNN
     -> time
     -> easter
     -> sun
     -> sun[+-]DDMM
+    -> limit
+    -> chNN
+    -> chNN lim
+    -> chNN res
 
 
 ### **Kommando 'logic time' - interne Zeit**
@@ -2363,6 +2403,12 @@ Auf KO 7 (Diagnoseobjekt) muss der Befehl 'logic help' (klein) gesendet werden. 
 Gibt die interne Zeit aus. Eine Zeit kann jederzeit von außen über die KO 2 (Uhrzeit) und KO 3 (Datum) gesetzt werden und läuft dann intern weiter. Die Genauigkeit der internen Uhr ist nicht besonders hoch, ein erneutes senden der Uhrzeit auf KO 2 korrigiert die interne Uhrzeit wieder. Die interne Uhrzeit kann mit diesem Kommando abgefragt werden.
 
 Auf KO 7 (Diagnoseobjekt) muss der Befehl 'logic time' (klein) gesendet werden. Die Antwort erfolgt auf KO 7 (Diagnoseobjekt) im Format 'HH:MM:SS DD.MM', also als 'Stunden:Minuten:Sekunden Tag.Monat'.
+
+### **Kommando 'logic easter' - Ostern**
+
+Gibt das intern berechnete Datum für den Ostersonntag aus. Das Datum wird erst berechnet, nachdem mindestens einmal das Datum auf KO 3 gesetzt worden ist, dann bei jedem Jahreswechsel, egal ob dieser Wechsel intern ermittelt oder durch ein neues von extern gesetztes Datum erfolgt.
+
+Auf KO 7 (Diagnoseobjekt) muss der Befehl 'logic easter' (klein) gesendet werden. Die Antwort erfolgt auf KO 7 (Diagnoseobjekt) im Format 'ODD.MM'. Dabei steht "O" für **O**stern, gefolgt von Tag.Monat. Alle anderen Feiertage, die von Ostern abhängig sind, werden in Abhängigkeit von diesem Datum errechnet.
 
 ### **Kommando 'logic sun' - Sonnenauf-/-untergang**
 
@@ -2380,11 +2426,15 @@ gibt somit die Uhrzeit (=Schaltzeit) aus, an der der Sonnenmittelpunkt 6° unter
 
 Auf KO 7 (Diagnoseobjekt) muss der Befehl 'logic sun' oder 'logic sun+DDMM' oder 'logic sun-DDMM' (alle Buchstaben klein) gesendet werden. Die Antwort erfolgt auf KO 7 (Diagnoseobjekt) im Format 'RHH:MM SHH:MM'. Dabei bedeutet "R" den Sonnenaufgang (Sun**R**ise), gefolgt von Stunden:Minuten, und "S" den Sonnenuntergang (Sun**S**et), gefolgt von Stunden:Minuten.
 
-### **Kommando 'logic easter' - Ostern**
+### **Kommando 'logic limit' - Endlosschleifen-Erkennung**
 
-Gibt das intern berechnete Datum für den Ostersonntag aus. Das Datum wird erst berechnet, nachdem mindestens einmal das Datum auf KO 3 gesetzt worden ist, dann bei jedem Jahreswechsel, egal ob dieser Wechsel intern ermittelt oder durch ein neues von extern gesetztes Datum erfolgt.
+Gibt den Kanal aus, der am Häufigsten pro Sekunde aufgerufen wurde und die dessen maximale Anzahl der Aufrufe pro Sekunde. Das Kommando
 
-Auf KO 7 (Diagnoseobjekt) muss der Befehl 'logic easter' (klein) gesendet werden. Die Antwort erfolgt auf KO 7 (Diagnoseobjekt) im Format 'ODD.MM'. Dabei steht "O" für **O**stern, gefolgt von Tag.Monat. Alle anderen Feiertage, die von Ostern abhängig sind, werden in Abhängigkeit von diesem Datum errechnet.
+    logic limit
+
+gibt den Wert im Format 'LIM NN, CH CC' aus, wobei CC der Kanal mit den meisten Aufrufen und NN die Anzahl der Aufrufe darstellt.
+
+Solange noch kein einziger Kanal aufgerufen wurde, ist der Wert 'LIM 00, CH 01'. Falls der Wert 50 ist, bedeutet das, dass eine Endlosschleife erkannt wurde und der Kanal deaktiviert worden ist. Es können noch weitere Kanäle deaktiviert worden sein, hier wird nur der erste deaktivierte Kanal angezeigt.
 
 ### **Kommando 'logic ch\<nn>' - interner Zustand vom Logikkanal \<nn>**
 
@@ -2403,6 +2453,35 @@ ist. Die möglichen Werte a, b, c, d und q sind:
 * 0 für den logischen Wert AUS
 * 1 für den logischen Wert EIN
 * X für den Wert "undefiniert" bzw. "inaktiv"
+
+### **Kommando 'logic ch\<nn> lim' - Deaktiviert durch Endlosschleifen-Erkennung**
+
+Mit dem Kommando
+
+    logic chNN lim
+
+kann man abfragen, ob Kanal NN durch die Endlosschleifen-Erkennung deaktiviert wurde. Die Antwort ist
+
+    Disabled: no
+
+wenn der Kanal noch aktiv ist oder
+
+    Disabled: yes
+
+falls er deaktiviert wurde.
+
+### **Kommando 'logic ch\<nn> res' - Übersteuern der Endlosschleifen-Erkennung**
+
+Mit dem Kommando
+
+    logic chNN res
+
+kann man den Kanal NN, der von der Endlosschleifen-Erkennung deaktiviert wurde, erneut aktivieren. Dabei wird der Aufrufzähler für diesen Kanal und auch der Max-Zähler für alle Kanäle zurückgesetzt.
+
+Sollte der Kanal erneut 50 Aufrufe pro Sekunde überschreiten, wird er erneut deaktiviert. Falls noch weitere Kanäle deaktiviert sind, müssen diese einzeln über das entsprechende Kommando zurückgesetzt werden.
+
+Einen Kanal wieder zu aktivieren macht Sinn, wenn man im Gruppenmonitor verfolgen möchte, welche Kanäle an der Endlosschleife beteiligt sind und dient somit der Ursachenfindung. Es macht keinen Sinn, periodisch das Zurücksetzen aufzurufen, um fehlerhaft konfigurierte Kanäle aktiv zu halten.
+
 
 ## **DPT Konverter**
 
