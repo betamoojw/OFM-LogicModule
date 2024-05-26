@@ -335,7 +335,6 @@ class LogicChannel : public OpenKNX::Channel
     uint32_t pOnDelay;
     uint32_t pOffDelay;
     uint32_t pRepeatOnOffDelay;
-    uint8_t pLoadCounter = 0;
     uint32_t pLoadCounterDelay = 0;
 
   public:
@@ -351,6 +350,7 @@ class LogicChannel : public OpenKNX::Channel
     // static float getFloat(uint8_t *data);
 
     // instance
+    uint8_t pLoadCounter = 0;
     bool checkDpt(uint8_t iIOIndex, uint8_t iDpt);
     void processInput(uint8_t iIOIndex);
     void processInternalInputs(uint8_t iChannelId, bool iValue);

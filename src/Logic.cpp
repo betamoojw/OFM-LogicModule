@@ -333,10 +333,11 @@ void Logic::showHelp()
     openknx.console.printHelpLine("logic sun", "Print sunrise and sunset times");
     openknx.console.printHelpLine("logic sun+DDMM", "Print sunrise/sunset at elevation +/- degree/minute");
 
-    openknx.console.printHelpLine("logic limit", "Show call limit counter max value and channel");
+    openknx.console.printHelpLine("logic lim", "Show call limit counter max value and channel");
+    openknx.console.printHelpLine("logic lim res", "Reset all call limit counter");
     openknx.console.printHelpLine("logic chNN", "List logic channel NN, i.e. logic ch05");
     openknx.console.printHelpLine("logic chNN lim", "Show if this cannel reached call limit");
-    openknx.console.printHelpLine("logic chNN res", "Resets call counter for this channel");
+    openknx.console.printHelpLine("logic chNN res", "Resets call limit counter for this channel");
 }
 
 bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
@@ -432,12 +433,20 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
             openknx.console.writeDiagenoseKo("O%02d.%02d", sTimer.getEaster()->day, sTimer.getEaster()->month);
         lResult = true;
     }
-    else if (iCmd.length() >= 7 && iCmd.substr(6, 1) == "l") // limit
+    else if (iCmd.length() >= 7 && iCmd.length() <= 9 && iCmd.substr(6, 1) == "l") // limit
     {
         // display max call limit and according channel
         logInfoP("Call limit %02d on channel %02d", LogicChannel::pLoadCounterMax, LogicChannel::pLoadChannel + 1);
         if (iDebugKo)
             openknx.console.writeDiagenoseKo("LIM %02d, CH %02d", LogicChannel::pLoadCounterMax, LogicChannel::pLoadChannel + 1);
+        lResult = true;
+    }
+    else if (iCmd.length() >= 7 && iCmd.substr(6, 5) == "lim r") // limit
+    {
+        initLoadCounter(true);
+        logInfoP("All call counters were reset!");
+        if (iDebugKo)
+            openknx.console.writeDiagenoseKo("Reset all");
         lResult = true;
     }
     else if (iCmd.length() >= 7 && iCmd.substr(6, 1) == "h") // help
@@ -453,7 +462,9 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
             openknx.console.writeDiagenoseKo("");
             openknx.console.writeDiagenoseKo("-> sun[+-]DDMM");
             openknx.console.writeDiagenoseKo("");
-            openknx.console.writeDiagenoseKo("-> limit");
+            openknx.console.writeDiagenoseKo("-> lim");
+            openknx.console.writeDiagenoseKo("");
+            openknx.console.writeDiagenoseKo("-> lim res");
             openknx.console.writeDiagenoseKo("");
             openknx.console.writeDiagenoseKo("-> chNN");
             openknx.console.writeDiagenoseKo("");
@@ -464,6 +475,26 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
         lResult = true;
     }
     return lResult;
+}
+
+void Logic::initLoadCounter(bool iAll)
+{
+    LogicChannel::pLoadCounterMax = 0;
+    LogicChannel::pLoadChannel = 0;
+    uint8_t lChannel;
+    for (lChannel = 0; lChannel < mNumChannels; lChannel++)
+    {
+        if (iAll)
+        {
+            mChannel[lChannel]->pLoadCounter = 0;
+        }
+        else if (mChannel[lChannel]->pLoadCounter >= LOAD_COUNTER_MAX)
+        {
+            LogicChannel::pLoadCounterMax = LOAD_COUNTER_MAX;
+            LogicChannel::pLoadChannel = lChannel;
+            break;
+        }
+    }
 }
 
 void Logic::debug()

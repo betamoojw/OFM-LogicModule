@@ -58,6 +58,7 @@ class Logic : public OpenKNX::Module
     void processInputKo(GroupObject &iKo);
     void showHelp() override;
     bool processCommand(const std::string cmd, bool debugKo) override;
+    void initLoadCounter(bool iAll);
     void debug();
     void setup();
     void loop();

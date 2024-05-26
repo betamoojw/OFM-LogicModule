@@ -1904,21 +1904,16 @@ bool LogicChannel::processCommand(const std::string iCmd, bool iDebugKo)
     {
         logInfoP("This channel is %sdisabled", (pLoadCounter < LOAD_COUNTER_MAX) ? "not " : "");
         if (iDebugKo)
-        {
             openknx.console.writeDiagenoseKo("Disabled: %s", (pLoadCounter < LOAD_COUNTER_MAX) ? "no" : "yes");
-        }
         lResult = true;
     }
     else if (iCmd.length() > 11 && iCmd.substr(11, 1) == "r")
     {
         pLoadCounter = 0;
-        pLoadCounterMax = 0;
-        pLoadChannel = 0;
-        logInfoP("All call counters were reset!");
+        openknxLogic.initLoadCounter(false);
+        logInfoP("Current counter was reset");
         if (iDebugKo)
-        {
-            openknx.console.writeDiagenoseKo("Reset success");
-        }
+            openknx.console.writeDiagenoseKo("Reset current");
         lResult = true;
     }
 

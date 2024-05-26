@@ -2392,7 +2392,8 @@ Auf KO 7 (Diagnoseobjekt) muss der Befehl 'logic help' (klein) gesendet werden. 
     -> easter
     -> sun
     -> sun[+-]DDMM
-    -> limit
+    -> lim
+    -> lim res
     -> chNN
     -> chNN lim
     -> chNN res
@@ -2426,15 +2427,25 @@ gibt somit die Uhrzeit (=Schaltzeit) aus, an der der Sonnenmittelpunkt 6° unter
 
 Auf KO 7 (Diagnoseobjekt) muss der Befehl 'logic sun' oder 'logic sun+DDMM' oder 'logic sun-DDMM' (alle Buchstaben klein) gesendet werden. Die Antwort erfolgt auf KO 7 (Diagnoseobjekt) im Format 'RHH:MM SHH:MM'. Dabei bedeutet "R" den Sonnenaufgang (Sun**R**ise), gefolgt von Stunden:Minuten, und "S" den Sonnenuntergang (Sun**S**et), gefolgt von Stunden:Minuten.
 
-### **Kommando 'logic limit' - Endlosschleifen-Erkennung**
+### **Kommando 'logic lim' - Endlosschleifen-Erkennung**
 
-Gibt den Kanal aus, der am Häufigsten pro Sekunde aufgerufen wurde und die dessen maximale Anzahl der Aufrufe pro Sekunde. Das Kommando
+Gibt den Kanal aus, der am Häufigsten pro Sekunde aufgerufen wurde und wie häufig er aufgerufen wurde. Das Kommando
 
-    logic limit
+    logic lim
 
 gibt den Wert im Format 'LIM NN, CH CC' aus, wobei CC der Kanal mit den meisten Aufrufen und NN die Anzahl der Aufrufe darstellt.
 
 Solange noch kein einziger Kanal aufgerufen wurde, ist der Wert 'LIM 00, CH 01'. Falls der Wert 50 ist, bedeutet das, dass eine Endlosschleife erkannt wurde und der Kanal deaktiviert worden ist. Es können noch weitere Kanäle deaktiviert worden sein, hier wird nur der erste deaktivierte Kanal angezeigt.
+
+### **Kommando 'logic lim res' - Endlosschleifen-Erkennung zurücksetzen**
+
+Mit dem Kommando
+
+    logic lim res
+
+kann man alle Kanäle, die durch die Endlosschleifen-Erkennung deaktiviert wurden, erneut aktivieren. Sobald wieder eine Endlosschleife auftritt, werden die Kanäle erneut deaktiviert. 
+
+Kanäle wieder zu aktivieren macht Sinn, wenn man im Gruppenmonitor verfolgen möchte, welche Kanäle an der Endlosschleife beteiligt sind und dient somit der Ursachenfindung. Es macht keinen Sinn, periodisch das Zurücksetzen aufzurufen, um fehlerhaft konfigurierte Kanäle aktiv zu halten.
 
 ### **Kommando 'logic ch\<nn>' - interner Zustand vom Logikkanal \<nn>**
 
@@ -2476,9 +2487,9 @@ Mit dem Kommando
 
     logic chNN res
 
-kann man den Kanal NN, der von der Endlosschleifen-Erkennung deaktiviert wurde, erneut aktivieren. Dabei wird der Aufrufzähler für diesen Kanal und auch der Max-Zähler für alle Kanäle zurückgesetzt.
+kann man den Kanal NN, der von der Endlosschleifen-Erkennung deaktiviert wurde, erneut aktivieren. Dabei wird der Aufrufzähler für diesen Kanal zurückgesetzt. Der Zähler für "logic lim" wird auf den nächsten deaktivierten Kanal gesetzt, falls es noch einen gibt, sonst wird er auch gelöscht.
 
-Sollte der Kanal erneut 50 Aufrufe pro Sekunde überschreiten, wird er erneut deaktiviert. Falls noch weitere Kanäle deaktiviert sind, müssen diese einzeln über das entsprechende Kommando zurückgesetzt werden.
+Sollte der Kanal erneut 50 Aufrufe pro Sekunde überschreiten, wird er erneut deaktiviert. Falls noch weitere Kanäle deaktiviert sind, müssen diese einzeln über das entsprechende Kommando zurückgesetzt werden oder alternativ mit "logic lim res" alle gleichzeitig zurückgesetzt werden.
 
 Einen Kanal wieder zu aktivieren macht Sinn, wenn man im Gruppenmonitor verfolgen möchte, welche Kanäle an der Endlosschleife beteiligt sind und dient somit der Ursachenfindung. Es macht keinen Sinn, periodisch das Zurücksetzen aufzurufen, um fehlerhaft konfigurierte Kanäle aktiv zu halten.
 
