@@ -3060,7 +3060,7 @@ Hier ist es besonders wichtig, dass in der Spalte "zusätzliche KO" alle KO-Numm
 
 #### **Zuordnung von Gruppenadressen**
 
-Das folgende Bild zeigt konzeptionell, wie man jetzt einzelen DPT1-GA den Eingangs-KO der Konverter zuordnen kann und so den Farbring des Fingerprints steuern kann:
+Das folgende Bild zeigt konzeptionell, wie man jetzt einzelnen DPT1-GA den Eingangs-KO der Konverter zuordnen kann und so den Farbring des Fingerprints steuern kann:
 
 <kbd>![GA-Zuordnung](examples/bsp06/bsp06-ko-uebersicht.png)</kbd>
 
