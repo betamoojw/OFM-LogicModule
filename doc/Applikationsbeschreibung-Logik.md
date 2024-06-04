@@ -2968,7 +2968,7 @@ Für diese Logik erscheint nur ein KO für Eingang 1. Diesem KO muss eine GA zug
 
 Nach einem Neustart des Moduls wird dieser Kanal normal ausgeführt und versucht, den Eingang 1 mit einem gültigen Wert zu versorgen, indem er alle 5 Sekunden die zugeordnete GA liest. Sobald die erste Antwort kommt, hört der Eingang auf zu lesen. Das wars, mehr macht er nicht.
 
-Warum ist das eine Lösung für fehlende Reads eines anderen KO? Weil der Kanal am Eingang 1 die GA zugeordnet bekommt, die auch das andere KO zugeordnet hat. Das Antworttelegramm empfangen nämlich beide KO, so wird auch das KO ohne eingene Leselogik mit initialisiert.
+Warum ist das eine Lösung für fehlende Reads eines anderen KO? Weil der Kanal am Eingang 1 die GA zugeordnet bekommt, die auch das andere KO zugeordnet hat. Das Antworttelegramm empfangen nämlich beide KO, so wird auch das KO ohne eigene Leselogik mit initialisiert.
 
 
 ### **Vervielfacher/Sequenzer (am Beispiel einer Farbringsteuerung für den OpenKNX-Fingerprint)**
