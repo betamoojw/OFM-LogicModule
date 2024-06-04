@@ -30,6 +30,8 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
   * [Zeitschaltuhr soll jeden n-ten Tag schalten](#zeitschaltuhr-soll-jeden-n-ten-tag-schalten)
   * [Einfacher Szenen-Controller](#einfacher-szenen-controller)
   * [Betriebszeitzähler](#betriebszeitzähler-mit-maximaler-betriebszeit-pro-tag)
+  * [Wert von einem KO nach einem Neustart lesen](#wert-von-einem-ko-nach-einem-neustart-lesen)
+  * [Vervielfacher/Sequenzer am Beispiel einer Farbring-Steuerung für den OpenKNX-Fingerprint](#vervielfachersequenzer-am-beispiel-einer-farbringsteuerung-für-den-openknx-fingerprint)
 * [Update der Applikation](#update-der-applikation)
 * [Unterstützte Hardware](#unterstützte-hardware)
 * Fortgeschrittene Funktionen
@@ -241,6 +243,13 @@ Um in der ETS ein Update der Logik von einer Version vor 3.1 auf die 3.2 vornehm
 ## **Einleitung**
 
 <!-- DOC HelpContext="Dokumentation" -->
+
+<!-- DOCCONTENT
+Eine vollständige Applikationsbeschreibung ist unter folgendem Link verfügbar: https://github.com/OpenKNX/OFM-LogicModule/blob/v1/doc/Applikationsbeschreibung-Logik.md
+
+Weitere Produktinformationen sind in unserem Wiki verfügbar: https://github.com/OpenKNX/OpenKNX/wiki/Produktinfo-Logikmodul
+DOCCONTENT -->
+
 Es gibt bis zu 99 Logikkanäle (abhängig von der Applikation, in die das Logikmodul integriert ist) mit folgenden Features:
 
 Logikfunktionen mit bis zu 2 externen und 2 internen Eingängen
@@ -338,12 +347,6 @@ Weitere Features:
 
 * Speichern von Werten über einen Stromausfall hinweg 
 * Senden von gespeicherten Werten nach einem Neustart
-
-<!-- DOCCONTENT
-Eine Applikationsbeschreibung ist unter folgendem Link verfügbar: https://github.com/OpenKNX/OFM-LogicModule/blob/v1/doc/Applikationsbeschreibung-Logik.md
-
-Weitere Produktinformationen sind in unserem Wiki verfügbar: https://github.com/OpenKNX/OpenKNX/wiki/Produktinfo-Logikmodul
-DOCCONTENT -->
 
 ## **Allgemein**
 
@@ -2751,7 +2754,6 @@ Vorgehen:
 
 Das normale Einschaltsignal des Gerätes wird durch ein TOR geschickt, dass im AUS-Fall auf jeden Fall auch ein AUS-Signal schickt. Im EIN-Fall wird nur ein EIN-Signal weitergeschickt, wenn der Betriebszeitzähler noch nicht die maximale Einschaltzeit (im Beispiel 30 Sekunden) erreicht hat. Der Ausgang schaltet das Gerät ein und schaltet gleichzeitig einen einfachen Zähler, der weiterzählt, solange ein EIN vorliegt.
 
-
 #### **Schaltsignal auswerten**
 
 <kbd>![Betriebszeitzähler](examples/bsp03/bsp03a-betriebssekundenzaehler.png)</kbd>
@@ -2927,6 +2929,149 @@ Der Ausgang ist als Treppenlicht definiert, das von der Duscherkennung auf EIN g
 <kbd>![Duschen hat begonnen](examples/bsp04/bsp04c-a-duschen-hat-begonnen.png)</kbd>
 
 Sollte dieses Beispiel übernommen werden, müssen einige Parameter eventuell angepasst werden. Falls z.B. im Normalverlauf die Luftfeuchte schon um 2% steigen kann, sollte man hier 3% wählen. Die Nachlaufzeit vom Treppenlicht kann auch an eigene Bedürfnisse angepasst werden.
+
+### **Wert von einem KO nach einem Neustart lesen**
+
+Es gibt Geräte, die können keine Werte von anderen Geräten lesen, müssten es aber tun, um nach einem Neustart den korrekten Zustand haben. Hier kann das Logikmodul helfen. 
+
+Das folgende Beispiel schließt gleichzeitig eine Lücke beim OpenKNX-Fingerprint der Version 0.2. Wird dort eine Aktion definiert, die ein "Umschalten" repräsentiert, bekommt diese Aktion ein Status-KO als Eingang für den "Wert zum Umschalten". Leider fehlt in dieser Version die Möglichkeit, dass dieses KO nach einem Neustart den Wert liest. 
+
+Das Beispiel ist sehr einfach zu realisieren und benötigt nur einen Kanal.
+
+#### **Lesen nach Neustart**
+
+Dieser Logikkanal definiert ein ODER mit einem Eingang. Es geht einfach nur darum, dass der Eingang verfügbar ist.
+
+<kbd>![Lesen nach Neustart](examples/bsp05/bsp05-read-nach-neustart.png)</kbd>
+
+#### **Zyklisch lesen**
+
+Der Eingang 1 wird so definiert, dass er seinen Wert vom Bus liest, und zwar zyklisch alle 5 Sekunden, bis eine Antwort eintrifft.
+
+<kbd>![Zyklisch lesen](examples/bsp05/bsp05-e1-zyklisch-lesen.png)</kbd>
+
+> Achtung: Falls das KO für diesen Eingang keine Antwort erhält, wird alle 5 Sekunden ein Lesetelegramm gesendet. Man sollte das also nur machen, wenn man sich sicher ist, dass eine Antwort kommt.
+
+#### **Ausgang: ohne Funktion**
+
+Der Ausgang tut in diesem Beispiel nichts und muss eigentlich nicht definiert werden. Wenn man aber den Ausgangskonverter auf "nicht senden" stellt, wird für diesen Ausgang auch kein KO dargestellt, was die Übersicht erhöht.
+
+<kbd>![Ausgang: ohne Funktion](examples/bsp05/bsp05-a-ohne-funktion.png)</kbd>
+
+#### **KO-Zuordnung**
+
+Für diese Logik erscheint nur ein KO für Eingang 1. Diesem KO muss eine GA zugewiesen werden, deren Status nach dem Neustart gelesen werden soll. Im Beispiel wird der Status vom "Garage: Tor ist unten" gelesen.
+
+<kbd>![KO-Zuordnung](examples/bsp05/bsp05-ko-belegung.png)</kbd>
+
+#### **Funktionsbeschreibung**
+
+Nach einem Neustart des Moduls wird dieser Kanal normal ausgeführt und versucht, den Eingang 1 mit einem gültigen Wert zu versorgen, indem er alle 5 Sekunden die zugeordnete GA liest. Sobald die erste Antwort kommt, hört der Eingang auf zu lesen. Das wars, mehr macht er nicht.
+
+Warum ist das eine Lösung für fehlende Reads eines anderen KO? Weil der Kanal am Eingang 1 die GA zugeordnet bekommt, die auch das andere KO zugeordnet hat. Das Antworttelegramm empfangen nämlich beide KO, so wird auch das KO ohne eingene Leselogik mit initialisiert.
+
+
+### **Vervielfacher/Sequenzer (am Beispiel einer Farbringsteuerung für den OpenKNX-Fingerprint)**
+
+Der OpenKNX-Fingerprint in der Version 0.2 kann keine Rückmeldung vom Status des geschalteten Gerätes über seinen Farbring. Diese Lücke kann über das Logikmodul geschlossen werden.
+
+Das folgende Beispiel zeigt, die ein Vervielfacher/Sequenzer mit dem Logikmodul aufgebaut werden kann, um aus einem Telegramm mehrere zu machen und so den Farbring vom Fingerprint zu steuern. Damit das Beispiel direkt funktioniert, muss es auf dem Logikmodul im Fingerprint gebaut werden. 
+
+Will man es auf einem anderen OpenKNX-Logikmodul nachbauen, muss man auf die internen KO-Verknüpfungen bei den Ausgängen verzichten und die Ausgänge normal über GA verknüpfen.
+
+#### **Hintergrund**
+
+Der Farbring vom Fingerprint kann über 4 Eigenschaften gesteuert werden, die alle einzeln gesetzt werden können:
+
+1. Farbe mit den Werten 1=Rot, 2=Blau, 3=Violett, 4=Grün, 5=Gelb, 6=Cyan, 7=Weiß
+2. Geschwindigkeit mit den Werten 0-255 (z.B. fürs Blinken oder Pulsieren)
+3. Anzahl der Zyklen mit den Werten von 0-255 (z.B. fürs Blinken oder Pulsieren)
+4. Effekt mit den Werten 1=Pulsieren, 2=Blinken, 3=An, 4=Aus, 5=Fade-In, 6=Fade-Out
+
+1-4 dieser Werte müssen gesetzt werden, damit der LED-Ring aufleuchtet, z.B.
+
+* Farbe=6, Geschwindigkeit=100, Anzahl=10, Effekt=2 erzeugt 10 mal mittelschnelles Blinke in Cyan
+* Farbe=7, Effekt=3 schaltet Weiß ein
+* Effekt=4 schaltet aus
+
+#### **Anforderung**
+
+Die Anforderung ist nun, über ein einfaches Statussignal (ein EIN in DPT1) alle 1-4 Werte nach Wunsch setzen zu können und so eine Wunschfarbe mit Wunscheffekt aufleuchten zu lassen. Ein AUS auf diesem Statussignal schaltet die LED immer aus.
+
+#### **Lösungsidee**
+
+Man baut für jede gewünschte Farbe, Geschwindigkeit, Anzahl und Effekt einen DPT1 zu DPT5 Konverter, der immer, wenn er ein EIN empfängt, den passenden Wert setzt. 
+
+Bei den Konvertern für die Effekte wird auch das AUS-Signal ausgewertet.
+
+Damit **eine** GA dann die Funktionen (lila, pulsieren, langsam, 10 mal) auslöst, muss sie nur den DPT1-Eingängen der entsprechenden Konverter zugeordnet werden.
+
+#### **DPT1 zu DPT5 Konverter**
+
+Ein solcher Konverter ist schnell definiert, hier am Beispiel vom Setzen der Farbe Lila:
+
+<kbd>![Farbe Lila](examples/bsp06/bsp06-1-farbe-lila.png)</kbd>
+
+Die Logik ist ein einfaches ODER mit einem Eingang.
+
+<kbd>![Eingang 1](examples/bsp06/bsp06-1e1-farbe-setzen.png)</kbd>
+
+Der Eingang 1 behält seine Standardeinstellungne, man sollte ihn nur passend benennen.
+
+<kbd>![Ausgang](examples/bsp06/bsp06-1a-farbe-intern.png)</kbd>
+
+Der Ausgang hat die Besonderheit, dass er nur bei EIN etwas ausgibt und diesen Wert direkt in das KO 36 des Fingerprints schreibt, dass die Farbe erwartet. So benötigt man keine GA-Verknüpfung zwischen dem Ausgang des Konverters und dem Farb-KO.
+
+#### **Weitere Konverter erstellen**
+
+Damit das Beispiel Sinn macht, werden weitere DPT1 zu DPT5 Konverter benötigt. 
+Für diese Konverter werden keine Screenshots gezeigt, da diese identisch aussehen, bis auf die Texte, den Wert am Ausgang und die KO-Nummer beim Ausgang:
+
+1. Farbe Gelb, Wert 5, KO-Nummer 36
+2. Farbe Grün, Wert 4, KO-Nummer 36
+3. Anzahl 10, Wert 10, KO-Nummer 39
+4. Geschwindigkeit 255, Wert 255, KO-Nummer 38
+5. Geschwindigkeit 100, Wert 100, KO-Nummer 38
+
+#### **Sonderfall Konverter für Effekte**
+
+Da der Effekt Ein- und Ausschalten soll, sieht seine Definition etwas anders aus, hier am Beispiel von Pulsieren:
+
+<kbd>![Ausgang](examples/bsp06/bsp06-2a-effekt-intern.png)</kbd>
+
+Dieser Konverter muss bei EIN die 1 (Pulsieren) senden, beim AUS die 4 (Aus), beides an KO 37.
+
+Ein kleiner Trick liegt noch bei der Definition "Ausgang schaltet zeitverzögert", die auf 1/10 Sekunde eingestellt ist. Damit wird, obwohl die GA quasi gleichzeitig alle Konverter triggert, das setzen des Effektes und damit das Einschalten der LED um 1/10 Sekunden verzögert. Damit ist sichergestellt, dass alle anderen Parameter für den Effekt sicher im Fingerprint gesetzt sind und es kein nachträgliches Flimmern beim Effekt gibt.
+
+#### **Weitere Effekt-Konverter**
+
+Für dieses Beispiel werden noch weitere Effekt-Konverter gebraucht, die sich alle nur durch deren Text und die Effektnummer bei EIN unterscheiden:
+
+1. Effekt Blinken an/aus, EIN = 2
+2. Effekt Dauerleuchten an/aus, EIN=4
+
+#### **Übersicht der definierten Kanäle**
+
+Wenn man jetzt im Logikmodul auf "Übersicht interne KO" geht, sollte man folgendes Bild sehen:
+
+<kbd>![Interne KO](examples/bsp06/bsp06-iko-uebersicht.png)</kbd>
+
+Hier ist es besonders wichtig, dass in der Spalte "zusätzliche KO" alle KO-Nummern so sind, wie im obigen Bild vorgegeben.
+
+#### **Zuordnung von Gruppenadressen**
+
+Das folgende Bild zeigt konzeptionell, wie man jetzt einzelen DPT1-GA den Eingangs-KO der Konverter zuordnen kann und so den Farbring des Fingerprints steuern kann:
+
+<kbd>![GA-Zuordnung](examples/bsp06/bsp06-ko-uebersicht.png)</kbd>
+
+Man erkennt folgendes:
+
+* GA1 löst 10 mal langsames Pulsieren in Lila aus
+* GA2 löst 20 mal mittelschnelles Blinken in Gelb aus
+* GA3 löst dauerhaftes Leuchten in Grün aus
+* GA4 löst 10 mal mittelschnelles Pulsieren in Gelb aus
+
+Durch weitere Konverter kann man weitere Variationen für den Farbring hinzufügen und so weitere Leuchteffekte erzeugen.
 
 
 
