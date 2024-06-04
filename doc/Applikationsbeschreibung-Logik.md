@@ -2975,7 +2975,7 @@ Warum ist das eine Lösung für fehlende Reads eines anderen KO? Weil der Kanal 
 
 Der OpenKNX-Fingerprint in der Version 0.2 kann keine Rückmeldung vom Status des geschalteten Gerätes über seinen Farbring. Diese Lücke kann über das Logikmodul geschlossen werden.
 
-Das folgende Beispiel zeigt, die ein Vervielfacher/Sequenzer mit dem Logikmodul aufgebaut werden kann, um aus einem Telegramm mehrere zu machen und so den Farbring vom Fingerprint zu steuern. Damit das Beispiel direkt funktioniert, muss es auf dem Logikmodul im Fingerprint gebaut werden. 
+Das folgende Beispiel zeigt, wie ein Vervielfacher/Sequenzer mit dem Logikmodul aufgebaut werden kann, um aus einem Telegramm mehrere zu machen und so den Farbring vom Fingerprint zu steuern. Damit das Beispiel direkt funktioniert, muss es auf dem Logikmodul im Fingerprint gebaut werden. 
 
 Will man es auf einem anderen OpenKNX-Logikmodul nachbauen, muss man auf die internen KO-Verknüpfungen bei den Ausgängen verzichten und die Ausgänge normal über GA verknüpfen.
 
