@@ -450,9 +450,31 @@
                   <Enumeration Text="A = E1 | E2 (Bit-Oder)" Value="10" Id="%ENID%" />
                   <Enumeration Text="A = E1 ^ E2 (Bit-Exklusiv-Oder)" Value="11" Id="%ENID%" />
                   <Enumeration Text="A = E1 &lt;&lt; E2 (Bit-Links-Schieben)" Value="12" Id="%ENID%" />
+                  <Enumeration Text="A = E1 &lt;&lt; 1 (E1 um 1-Bit links verschoben)" Value="32" Id="%ENID%" />
+                  <Enumeration Text="A = E2 &lt;&lt; 1 (E2 um 1-Bit links verschoben)" Value="33" Id="%ENID%" />
+                  <Enumeration Text="A = A &lt;&lt; 1 (A um 1-Bit links verschoben)" Value="34" Id="%ENID%" />
                   <Enumeration Text="A = E1 &gt;&gt; E2 (Bit-Rechts-Schieben)" Value="13" Id="%ENID%" />
+                  <Enumeration Text="A = E1 &gt;&gt; 1 (E1 um 1-Bit rechts verschoben)" Value="35" Id="%ENID%" />
+                  <Enumeration Text="A = E2 &gt;&gt; 1 (E2 um 1-Bit rechts verschoben)" Value="36" Id="%ENID%" />
+                  <Enumeration Text="A = A &gt;&gt; 1 (A um 1-Bit rechts verschoben)" Value="37" Id="%ENID%" />
                   <Enumeration Text="A = Min(E1, E2) (Minimum)" Value="6" Id="%ENID%" />
+                  <Enumeration Text="A = Min(E1, E2, A) (Minimum)" Value="30" Id="%ENID%" />
                   <Enumeration Text="A = Max(E1, E2) (Maximum)" Value="7" Id="%ENID%" />
+                  <Enumeration Text="A = Max(E1, E2, A) (Maximum)" Value="31" Id="%ENID%" />
+                  <Enumeration Text="A = E1 + 1 (Inkrementiere E1)" Value="16" Id="%ENID%" />
+                  <Enumeration Text="A = E2 + 1 (Inkrementiere E2)" Value="17" Id="%ENID%" />
+                  <Enumeration Text="A = A + 1 (Inkrementiere A)" Value="18" Id="%ENID%" />
+                  <Enumeration Text="A = E1 - 1 (Dekrementiere E1)" Value="19" Id="%ENID%" />
+                  <Enumeration Text="A = E2 - 1 (Dekrementiere E2)" Value="20" Id="%ENID%" />
+                  <Enumeration Text="A = A - 1 (Dekrementiere A)" Value="21" Id="%ENID%" />
+                  <Enumeration Text="A = A + E1 (Erhöhe um E1)" Value="22" Id="%ENID%" />
+                  <Enumeration Text="A = A + E2 (Erhöhe um E2)" Value="23" Id="%ENID%" />
+                  <Enumeration Text="A = A + (E1 + E2) (Erhöhe um Eingangssumme)" Value="24" Id="%ENID%" />
+                  <Enumeration Text="A = A + (E1 - E2) (Erhöhe um Eingangsdifferenz)" Value="25" Id="%ENID%" />
+                  <Enumeration Text="A = A - E1 (Erniedrige um E1)" Value="26" Id="%ENID%" />
+                  <Enumeration Text="A = A - E2 (Erniedrige um E2)" Value="27" Id="%ENID%" />
+                  <Enumeration Text="A = A - (E1 + E2) (Erniedr. um Eingangssumme)" Value="28" Id="%ENID%" />
+                  <Enumeration Text="A = A - (E1 - E2) (Erniedr. um Eingangsdifferenz)" Value="29" Id="%ENID%" />
                   <Enumeration Text="A = B2I(E1, E2) (Bool zu Int)" Value="14" Id="%ENID%" />
                   <Enumeration Text="A = Glättung(E1, E2)" Value="15" Id="%ENID%" />
                   <Enumeration Text="A = Benutzerfunktion_01(E1, E2)" Value="201" Id="%ENID%" />

@@ -82,9 +82,17 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
-26.03.2024: Firmware 3.2, Applikation 3.2
+09.06.2024: Firmware 3.3, Applikation 3.3
 
 * NEU: Durch die Logik verursachte Endlosschleifen werden jetzt erkannt und die entsprechenden Logikkanäle deaktiviert (siehe [Endlosschleifen-Erkennung](#endlosschleifen-erkennung))
+* NEU: Es sind neue mathematische Funktionen hinzugekommen, die Logikkanäle vereinfachen können (siehe [Standardformeln](#standardformeln))
+  * Inkrementieren und Dekrementieren, damit der Aufbau von Zählern einfacher wird.
+  * Erhöhen und erniedrigen des Ausgangs um Eingangswerte
+  * Bit-Shifts um 1-Bit
+  * Min/Max unter Einbeziehung des Ausgangs
+
+26.03.2024: Firmware 3.2, Applikation 3.2
+
 * NEU: Übersichtsseite mit allen internen KO-Verknüpfungen hinzugefügt
 * FIX: TOR wurde nicht korrekt getriggert, wenn nur Eingang 2 als Trigger ausgewählt worden ist
 * FIX: Differenzhysterese funktionierte seit der Einführung von DPT12, DPT13 und DPT14 nicht mehr
@@ -2127,13 +2135,9 @@ Wir benutzen eine UND-Logik und senden nur bei Wertänderungen. Die Eingangskonv
 
 Das Logikmodul enthält wenige bereits implementierte Standardformeln. In Zukunft können noch weitere Standardformeln hinzukommen.
 
-<kbd>![Standardformeln](pics/Standardformeln.PNG)</kbd>
+<kbd>![Standardformeln](pics/Standardformeln.PNG)</kbd> | <kbd>![Standardformeln](pics/Standardformeln2.PNG)</kbd>
 
 Man kann Eingänge auch auf einen konstanten Wert setzen, um anschließend mit diesem Wert zu rechnen. Will man z.B. nur 10% eines Wertes haben, kann man am Eingang 1 den entsprechenden Wert empfangen, den Eingang 2 konstant auf 10 setzen und dann Eingang 1 / Eingang 2 rechnen.
-
-Die Eingangswerte werden für Formeln immer in eine Fließkommazahl konvertiert, dann verrechnet und anschließend wird das (Fließkomma-)Ergebnis in den DPT des Ausgangs konvertiert.
-
-Es empfiehlt sich, die Ergebnisse einer Formel immer durch Tests zu überprüfen, da die Genauigkeit von Fließkommazahlen oberhalb vom Zahlenwert von ca. 500 nachlässt. Rechnet man aber im Bereich von einem Byte (0 bis 255 bzw. -128 bis 127), so ist die Genauigkeit erwartungskonform.
 
 Will man in einer Formel das Ergebnis einer anderen Formel nutzen, so geht das über die Verwendung von bestehenden KO. So kann man verhindern, dass für Formelkaskaden Zwischenergebnisse auf den Bus geschickt werden müssen.
 
@@ -2205,6 +2209,25 @@ Ist nur Eingang 1 aktiv, ist der andere 0 und man bekommt den Wert von Eingang 1
 
 Ist nur Eingang 2 aktiv, ist der andere 0 und man bekommt den  Wert 0 ausgegeben.
 
+#### **A = E1 << 1 (E1 um 1-Bit links verschoben)**
+
+Der Wert vom Eingang 1 wird um 1 Bit nach links verschoben. Das Ergebnis wird am Ausgang ausgegeben.
+
+Ist nur Eingang 2 aktiv, ist der andere 0 und man bekommt den  Wert 0 ausgegeben.
+
+#### **A = E2 << 1 (E2 um 1-Bit links verschoben)**
+
+Der Wert vom Eingang 2 wird um 1 Bit nach links verschoben. Das Ergebnis wird am Ausgang ausgegeben.
+
+Ist nur Eingang 1 aktiv, ist der andere 0 und man bekommt den  Wert 0 ausgegeben.
+
+#### **A = A << 1 (A um 1-Bit links verschoben)**
+
+Der Wert vom Ausgang wird um 1 Bit nach links verschoben. Das Ergebnis wird am Ausgang ausgegeben.
+
+Ist der Ausgang initial, wird 0 angenommen und man bekommt den  Wert 0 ausgegeben.
+
+
 #### **A = E1 >> E2 (Bit-Rechts-Schieben)**
 
 Der Wert vom Eingang 1 wird bitweise nach rechts verschoben, um so viele Stellen wie der Wert vom Eingang 2. Das Ergebnis wird am Ausgang ausgegeben.
@@ -2213,17 +2236,131 @@ Ist nur Eingang 1 aktiv, ist der andere 0 und man bekommt den Wert von Eingang 1
 
 Ist nur Eingang 2 aktiv, ist der andere 0 und man bekommt den  Wert 0 ausgegeben.
 
+#### **A = E1 >> 1 (E1 um 1-Bit rechts verschoben)**
+
+Der Wert vom Eingang 1 wird um 1 Bit nach rechts verschoben. Das Ergebnis wird am Ausgang ausgegeben.
+
+Ist nur Eingang 2 aktiv, ist der andere 0 und man bekommt den  Wert 0 ausgegeben.
+
+#### **A = E2 >> 1 (E2 um 1-Bit rechts verschoben)**
+
+Der Wert vom Eingang 2 wird um 1 Bit nach rechts verschoben. Das Ergebnis wird am Ausgang ausgegeben.
+
+Ist nur Eingang 1 aktiv, ist der andere 0 und man bekommt den  Wert 0 ausgegeben.
+
+#### **A = A >> 1 (A um 1-Bit rechts verschoben)**
+
+Der Wert vom Ausgang wird um 1 Bit nach rechts verschoben. Das Ergebnis wird am Ausgang ausgegeben.
+
+Ist der Ausgang initial, wird 0 angenommen und man bekommt den  Wert 0 ausgegeben.
+
 #### **A = Min(E1, E2) (Minimum)**
 
 Die Werte der beiden Eingänge werden verglichen und der kleinere Wert wird als Ergebnis am Ausgang ausgegeben.
 
 Ist nur ein Eingang aktiv, ist der andere 0 und man bekommt 0, falls der aktive Eingang positiv ist. Falls der aktive Eingang negativ ist, bekommt man den Wert des aktiven Eingangs.
 
+#### **A = Min(E1, E2, A) (Minimum)**
+
+Die Werte der beiden Eingänge und des Ausgangs werden verglichen und der kleinste Wert wird als Ergebnis am Ausgang ausgegeben.
+
+Ist einer der Ausgänge inaktiv oder der Ausgang initial, wird für ihn der Wert 0 angenommen.
+
 #### **A = Max(E1, E2) (Maximum)**
 
 Die Werte der beiden Eingänge werden verglichen und der größere Wert wird als Ergebnis am Ausgang ausgegeben.
 
 Ist nur ein Eingang aktiv, ist der andere 0 und man bekommt 0, falls der aktive Eingang negativ ist. Falls der aktive Eingang positiv ist, bekommt man den Wert des aktiven Eingangs.
+
+#### **A = Max(E1, E2, A) (Maximum)**
+
+Die Werte der beiden Eingänge und des Ausgangs werden verglichen und der größte Wert wird als Ergebnis am Ausgang ausgegeben.
+
+Ist einer der Ausgänge inaktiv oder der Ausgang initial, wird für ihn der Wert 0 angenommen.
+
+#### **A = E1 + 1 (Inkrementiere E1)**
+
+Der Wert vom Eingang 1 wird um 1 erhöht und am Ausgang ausgegeben.
+
+Ist Eingang 1 inaktiv, wird für ihn der Wert 0 angenommen und man erhält eine 1 am Ausgang.
+
+#### **A = E2 + 1 (Inkrementiere E2)**
+
+Der Wert vom Eingang 2 wird um 1 erhöht und am Ausgang ausgegeben.
+
+Ist Eingang 2 inaktiv, wird für ihn der Wert 0 angenommen und man erhält eine 1 am Ausgang.
+
+#### **A = A + 1 (Inkrementiere A)**
+
+Der Wert vom Ausgang wird um 1 erhöht und am Ausgang ausgegeben.
+
+Ist der Ausgang initial, wird für ihn der Wert 0 angenommen und man erhält eine 1 am Ausgang.
+
+#### **A = E1 - 1 (Dekrementiere E1)**
+
+Der Wert vom Eingang 1 wird um 1 erniedrigt und am Ausgang ausgegeben.
+
+Ist Eingang 1 inaktiv, wird für ihn der Wert 0 angenommen und man erhält eine -1 am Ausgang.
+
+#### **A = E2 - 1 (Dekrementiere E2)**
+
+Der Wert vom Eingang 2 wird um 1 erniedrigt und am Ausgang ausgegeben.
+
+Ist Eingang 2 inaktiv, wird für ihn der Wert 0 angenommen und man erhält eine -1 am Ausgang.
+
+#### **A = A - 1 (Dekrementiere A)**
+
+Der Wert vom Ausgang wird um 1 erniedrigt und am Ausgang ausgegeben.
+
+Ist der Ausgang initial, wird für ihn der Wert 0 angenommen und man erhält eine -1 am Ausgang.
+
+#### **A = A + E1 (Erhöhe um E1)**
+
+Der Wert vom Ausgang wird um den Wert vom Eingang 1 erhöht und am Ausgang ausgegeben.
+
+Ist Eingang 1 inaktiv oder der Ausgang initial, wird dafür jeweils eine 0 angenommen.
+
+#### **A = A + E2 (Erhöhe um E2)**
+
+Der Wert vom Ausgang wird um den Wert vom Eingang 2 erhöht und am Ausgang ausgegeben.
+
+Ist Eingang 2 inaktiv oder der Ausgang initial, wird dafür jeweils eine 0 angenommen.
+
+#### **A = A + (E1 + E2) (Erhöhe um Eingangssumme)**
+
+Die Werte von Eingang 1 und Eingang 2 werden addiert und der Wert vom Ausgang wird um diese Summe erhöht und am Ausgang ausgegeben.
+
+Ist einer der Eingänge inaktiv oder der Ausgang initial, wird dafür jeweils eine 0 angenommen.
+
+#### **A = A + (E1 - E2) (Erhöhe um Eingangsdifferenz)**
+
+Die Werte von Eingang 1 und Eingang 2 werden subtrahiert und der Wert vom Ausgang wird um diese Differenz erhöht und am Ausgang ausgegeben.
+
+Ist einer der Eingänge inaktiv oder der Ausgang initial, wird dafür jeweils eine 0 angenommen.
+
+#### **A = A - E1 (Erniedrige um E1)**
+
+Der Wert vom Ausgang wird um den Wert vom Eingang 1 erniedrigt und am Ausgang ausgegeben.
+
+Ist Eingang 1 inaktiv oder der Ausgang initial, wird dafür jeweils eine 0 angenommen.
+
+#### **A = A - E2 (Erniedrige um E2)**
+
+Der Wert vom Ausgang wird um den Wert vom Eingang 2 erniedrigt und am Ausgang ausgegeben.
+
+Ist Eingang 2 inaktiv oder der Ausgang initial, wird dafür jeweils eine 0 angenommen.
+
+#### **A = A - (E1 + E2) (Erniedr. um Eingangssumme)**
+
+Die Werte von Eingang 1 und Eingang 2 werden addiert und der Wert vom Ausgang wird um diese Summe erniedrigt und am Ausgang ausgegeben.
+
+Ist einer der Eingänge inaktiv oder der Ausgang initial, wird dafür jeweils eine 0 angenommen.
+
+#### **A = A - (E1 - E2) (Erniedr. um Eingangsdifferenz)**
+
+Die Werte von Eingang 1 und Eingang 2 werden subtrahiert und der Wert vom Ausgang wird um diese Differenz erniedrigt und am Ausgang ausgegeben.
+
+Ist einer der Eingänge inaktiv oder der Ausgang initial, wird dafür jeweils eine 0 angenommen.
 
 #### **A = B2I(E1, E2) (Bool zu Int)**
 
