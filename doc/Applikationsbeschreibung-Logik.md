@@ -3105,14 +3105,14 @@ Für diese Logik erscheint nur ein KO für Eingang 1. Diesem KO muss eine GA zug
 
 Nach einem Neustart des Moduls wird dieser Kanal normal ausgeführt und versucht, den Eingang 1 mit einem gültigen Wert zu versorgen, indem er alle 5 Sekunden die zugeordnete GA liest. Sobald die erste Antwort kommt, hört der Eingang auf zu lesen. Das wars, mehr macht er nicht.
 
-Warum ist das eine Lösung für fehlende Reads eines anderen KO? Weil der Kanal am Eingang 1 die GA zugeordnet bekommt, die auch das andere KO zugeordnet hat. Das Antworttelegramm empfangen nämlich beide KO, so wird auch das KO ohne eingene Leselogik mit initialisiert.
+Warum ist das eine Lösung für fehlende Reads eines anderen KO? Weil der Kanal am Eingang 1 die GA zugeordnet bekommt, die auch das andere KO zugeordnet hat. Das Antworttelegramm empfangen nämlich beide KO, so wird auch das KO ohne eigene Leselogik mit initialisiert.
 
 
 ### **Vervielfacher/Sequenzer (am Beispiel einer Farbringsteuerung für den OpenKNX-Fingerprint)**
 
 Der OpenKNX-Fingerprint in der Version 0.2 kann keine Rückmeldung vom Status des geschalteten Gerätes über seinen Farbring. Diese Lücke kann über das Logikmodul geschlossen werden.
 
-Das folgende Beispiel zeigt, die ein Vervielfacher/Sequenzer mit dem Logikmodul aufgebaut werden kann, um aus einem Telegramm mehrere zu machen und so den Farbring vom Fingerprint zu steuern. Damit das Beispiel direkt funktioniert, muss es auf dem Logikmodul im Fingerprint gebaut werden. 
+Das folgende Beispiel zeigt, wie ein Vervielfacher/Sequenzer mit dem Logikmodul aufgebaut werden kann, um aus einem Telegramm mehrere zu machen und so den Farbring vom Fingerprint zu steuern. Damit das Beispiel direkt funktioniert, muss es auf dem Logikmodul im Fingerprint gebaut werden. 
 
 Will man es auf einem anderen OpenKNX-Logikmodul nachbauen, muss man auf die internen KO-Verknüpfungen bei den Ausgängen verzichten und die Ausgänge normal über GA verknüpfen.
 
@@ -3197,7 +3197,7 @@ Hier ist es besonders wichtig, dass in der Spalte "zusätzliche KO" alle KO-Numm
 
 #### **Zuordnung von Gruppenadressen**
 
-Das folgende Bild zeigt konzeptionell, wie man jetzt einzelen DPT1-GA den Eingangs-KO der Konverter zuordnen kann und so den Farbring des Fingerprints steuern kann:
+Das folgende Bild zeigt konzeptionell, wie man jetzt einzelnen DPT1-GA den Eingangs-KO der Konverter zuordnen kann und so den Farbring des Fingerprints steuern kann:
 
 <kbd>![GA-Zuordnung](examples/bsp06/bsp06-ko-uebersicht.png)</kbd>
 
