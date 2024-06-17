@@ -90,7 +90,7 @@
               </ParameterType>
               <ParameterType Id="%AID%_PT-GateTrigger" Name="GateTrigger">
                 <TypeRestriction Base="Value" SizeInBit="2">
-                  <Enumeration Text="nichts gesendet" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Nichts gesendet" Value="0" Id="%ENID%" />
                   <Enumeration Text="AUS gesendet" Value="1" Id="%ENID%" />
                   <Enumeration Text="EIN gesendet" Value="2" Id="%ENID%" />
                   <Enumeration Text="Eingangswert gesendet" Value="3" Id="%ENID%" />
@@ -196,7 +196,7 @@
               </ParameterType>
               <ParameterType Id="%AID%_PT-InputDefault" Name="InputDefault">
                 <TypeRestriction Base="Value" SizeInBit="2">
-                  <Enumeration Text="nichts (undefiniert)" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Nichts (undefiniert)" Value="0" Id="%ENID%" />
                   <Enumeration Text="Wert vom Bus lesen" Value="1" Id="%ENID%" />
                   <Enumeration Text="AUS (0)" Value="2" Id="%ENID%" />
                   <Enumeration Text="EIN (1)" Value="3" Id="%ENID%" />
@@ -204,7 +204,7 @@
               </ParameterType>
               <ParameterType Id="%AID%_PT-InputDefaultExt" Name="InputDefaultExt">
                 <TypeRestriction Base="Value" SizeInBit="2">
-                  <Enumeration Text="nichts (undefiniert)" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Nichts (undefiniert)" Value="0" Id="%ENID%" />
                   <Enumeration Text="AUS (0)" Value="2" Id="%ENID%" />
                   <Enumeration Text="EIN (1)" Value="3" Id="%ENID%" />
                 </TypeRestriction>
@@ -240,7 +240,7 @@
               </ParameterType> -->
               <ParameterType Id="%AID%_PT-ValueSceneIn" Name="ValueSceneIn">
                 <TypeRestriction Base="Value" SizeInBit="8">
-                  <Enumeration Text="nicht genutzt" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Nicht genutzt" Value="0" Id="%ENID%" />
                   <Enumeration Text="Szene 1" Value="1" Id="%ENID%" />
                   <Enumeration Text="Szene 2" Value="2" Id="%ENID%" />
                   <Enumeration Text="Szene 3" Value="3" Id="%ENID%" />
