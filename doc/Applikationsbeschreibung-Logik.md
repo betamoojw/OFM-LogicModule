@@ -82,6 +82,11 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+17.06.2024: Firmware 3.x, Applikation 3.x
+
+* NEU: Benutzerformeln sind auch in der ETS-Applikation definierbar
+
+
 09.06.2024: Firmware 3.3, Applikation 3.3
 
 * NEU: Durch die Logik verursachte Endlosschleifen werden jetzt erkannt und die entsprechenden Logikkanäle deaktiviert (siehe [Endlosschleifen-Erkennung](#endlosschleifen-erkennung))
@@ -356,21 +361,18 @@ Weitere Features:
 * Speichern von Werten über einen Stromausfall hinweg 
 * Senden von gespeicherten Werten nach einem Neustart
 
-## **Allgemein**
+## OpenKNX
 
 Das Logikmodul hat auch eine eigene ETS-Applikation, die es erlaubt, das Logikmodul ohne Einbettung in eine andere Applikation zu verwenden. In diesem Fall hat es eine Seite mit allgemeinen Parametern, die unter [Applikationsbeschreibung-Common](https://github.com/OpenKNX/OGM-Common/blob/v1/doc/Applikationsbeschreibung-Common.md) beschrieben sind. 
 
-Hier werden Einstellungen getroffen, die die generelle Arbeitsweise des Gerätes bestimmen.
 
-## **Dokumentation**
-
-Eine stichwortartige Liste der vorhandenen Möglichkeiten ist auch in der Applikation verfügbar. Ferner ist zu jedem Eingabefeld eine Kontextsensitive Hilfe vorhanden.
-
-Auf dieser Seite wird auch die Applikationsversion des Logikmoduls ausgegeben.
-
-## **Basiseinstellung**
+## **Allgemein**
 
 Hier werden Einstellungen vorgenommen, die für das gesamte Logikmodul und alle Kanäle gelten.
+
+### Logikmodulversion
+
+Auf dieser Seite wird die Applikationsversion des Logikmoduls ausgegeben.
 
 <!-- DOC -->
 ### **Verfügbare Kanäle**
@@ -468,6 +470,33 @@ An dieser Stelle kann man die Pinbelegung für Rot/Grün/Blau in verschiedenen P
 
 Das Logikmodul unterstützt 3 verschiedene Töne bzw. Lautstärken für den Buzzer.
 In den Eingabefeldern kann man die Tonfrequenzen für die einzelnen Töne für Laut/Mittel und Leise angeben. Über die Tonhöhe werden indirekt auch die Lautstärken gesteuert.
+
+## **Dokumentation**
+
+Eine stichwortartige Liste der vorhandenen Möglichkeiten ist auch in der Applikation verfügbar. Ferner ist zu jedem Eingabefeld eine Kontextsensitive Hilfe vorhanden.
+
+## **Benutzerformeln**
+
+Bisher war es schon immer möglich, durch Implementierung von [Benutzerfunktionen](#benutzerfunktionen) in C++ komplexere Berechnungen durch das Logikmodul durchführen zu lassen. Das hat aber immer den Nachteil, dass man selber Kompilieren muss, bei Updates sein eigenes Coding immer nachziehen muss und man verliert womöglich die Update-Kompatibilität wegen Eigenänderungen.
+
+Ab sofort ist es möglich, bis zu 30 Benutzerformeln in der ETS-Applikation zu definieren und diese im Ausgangskonverter eines jeden Logikkanals verwenden. Das neue Konzept ist dazu gedacht, die alten Benutzerfunktionen abzulösen, so dass die neuen und die alten Formeln den gleichen Namensraum belegen. Eine Benutzerformel 22 überschreibt somit eine implementierte Benutzerfunktion 22 insofern, weil - wenn beide vorhanden sind - immer die Benutzerformel berechnet wird. 
+
+<!-- DOC -->
+### **Benutzerformel aktiv**
+
+Mit dieser Checkbox aktiviert man die entsprechende Benutzerformel. Eine eventuell in der Firmware implementierte Benutzerfunktion mit der gleichen Nummer wird deaktiviert. Es erscheinen 2 Eingabefelder, eines um die Benutzerformel zu beschreiben und eines, um die Benutzerformel einzugeben.
+
+<!-- DOC -->
+### **Beschreibung der Benutzerformel**
+
+Hier sollte eingetragen werden, was die Benutzerformel macht. Dieser Text dient der reinen Dokumentation und wird nicht zum Logikmodul übertragen.
+
+<!-- DOC -->
+### **Definition der Benutzerformel**
+
+Hier wird die Benutzerformel eingegeben. Es wird normale C Formelsyntax unterstützt. Als Variablen stehen *E1* für Eingang 1, *E2* für Eingang 2 und *A* für Ausgang zur Verfügung. Das Ergebnis der Formel wird immer dem Ausgang zugewiesen.
+
+Benutzerformeln werden immer mit dem Datentyp double (Fließkommazahl) berechnet. Alle Eingangsgrößen werden in double umgewandelt, dann wird gerechnet, anschließend wird das Ergebnis von double im Ausgangskonverter in den Ziel-DPT gewandelt.
 
 ## **Logiken**
 

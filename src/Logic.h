@@ -62,6 +62,8 @@ class Logic : public OpenKNX::Module
     void debug();
     void setup();
     void loop();
+
+    bool processFunctionProperty(uint8_t objectIndex, uint8_t propertyId, uint8_t length, uint8_t *data, uint8_t *resultData, uint8_t &resultLength) override;
     void readFlash(const uint8_t *iBuffer, const uint16_t iSize) override;
     void writeFlash() override;
     uint16_t flashSize() override;

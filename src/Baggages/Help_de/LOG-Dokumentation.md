@@ -1,5 +1,10 @@
 ﻿### Dokumentation
 
+
+Eine vollständige Applikationsbeschreibung ist unter folgendem Link verfügbar: https://github.com/OpenKNX/OFM-LogicModule/blob/v1/doc/Applikationsbeschreibung-Logik.md
+
+Weitere Produktinformationen sind in unserem Wiki verfügbar: https://github.com/OpenKNX/OpenKNX/wiki/Produktinfo-Logikmodul
+
 Es gibt bis zu 99 Logikkanäle (abhängig von der Applikation, in die das Logikmodul integriert ist) mit folgenden Features:
 
 Logikfunktionen mit bis zu 2 externen und 2 internen Eingängen
@@ -97,8 +102,4 @@ Weitere Features:
 
 * Speichern von Werten über einen Stromausfall hinweg 
 * Senden von gespeicherten Werten nach einem Neustart
-
-Eine Applikationsbeschreibung ist unter folgendem Link verfügbar: https://github.com/OpenKNX/OFM-LogicModule/blob/v1/doc/Applikationsbeschreibung-Logik.md
-
-Weitere Produktinformationen sind in unserem Wiki verfügbar: https://github.com/OpenKNX/OpenKNX/wiki/Produktinfo-Logikmodul
 

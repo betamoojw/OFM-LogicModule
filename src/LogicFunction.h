@@ -12,8 +12,17 @@ class LogicFunction
     LogicFunction();
     ~LogicFunction();
 
+    static inline double e1 = 0;
+    static inline double e2 = 0;
+    static inline double out = 0;
+    static inline const char *logPrefix = "Logic:<UserFormula>";
+
     static LogicValue (*nativeFunction[NUM_NATIVE_FUNCTIONS])(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
     static LogicValue (*userFunction[30])(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
+
+    static double myIf(double iCondition, double iTrue, double iFalse);
+    static uint8_t toLower(const char *iSource, char *iTarget);
+    static LogicValue callUserFormula(uint8_t _channelIndex, uint8_t iFormulaIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
 
     // implemented native functions, as an simple example
     static LogicValue nativeAdd(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
@@ -88,4 +97,5 @@ class LogicFunction
 
   public:
     static LogicValue callFunction(uint8_t _channelIndex, uint8_t iId, uint8_t iDptE1, LogicValue iE1, uint8_t iDptE2, LogicValue iE2, uint8_t *cDptOut, LogicValue iOld);
+    static void handleFunctionPropertyCheckFormula(uint8_t *iData, uint8_t *eResultData, uint8_t &eResultLength);
 };

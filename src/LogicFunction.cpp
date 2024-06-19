@@ -1,8 +1,9 @@
 #include "LogicFunction.h"
 #include "KnxHelper.h"
+#include "OpenKNX.h"
 #include "knx.h"
 #include "knxprod.h"
-// #include "LogicValue.h"
+#include "tinyexpr.h"
 
 // native functions, implemented as a simple example how to use user functions
 LogicValue LogicFunction::nativeAdd(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
@@ -296,8 +297,118 @@ LogicValue LogicFunction::callFunction(uint8_t _channelIndex, uint8_t iId, uint8
     }
     else if (iId > 200 && iId <= 230)
     {
-        LogicValue lResult = userFunction[iId - 201](_channelIndex, iDptE1, iE1, iDptE2, iE2, cDptOut, iOld);
+        uint8_t lFormulaIndex = iId - 201;
+        LogicValue lResult = (float)0.0;
+        bool lFormulaActive = knx.paramByte(LOG_UserFormula1Active + lFormulaIndex * (LOG_UserFormula2Active - LOG_UserFormula1Active)) & LOG_UserFormula1ActiveMask;
+        if (lFormulaActive)
+            lResult = callUserFormula(_channelIndex, lFormulaIndex, iDptE1, iE1, iDptE2, iE2, cDptOut, iOld);
+        else
+            lResult = userFunction[iId - 201](_channelIndex, iDptE1, iE1, iDptE2, iE2, cDptOut, iOld);
         return lResult;
     }
     return (uint8_t)0;
+}
+
+double LogicFunction::myIf(double iCondition, double iTrue, double iFalse)
+{
+    return iCondition ? iTrue : iFalse;
+}
+
+uint8_t LogicFunction::toLower(const char *iSource, char *iTarget)
+{
+    uint8_t lCharIndex = 0;
+    for (lCharIndex = 0; lCharIndex < 100 && iSource[lCharIndex] > 0; lCharIndex++)
+    {
+        char lChar = iSource[lCharIndex];
+        if (lChar >= 65 && lChar <= 90) lChar += 32; // convert to lowercase
+        iTarget[lCharIndex] = lChar;
+    }
+    iTarget[100] = 0; // ensure zero termination
+    return lCharIndex;
+}
+
+LogicValue LogicFunction::callUserFormula(uint8_t _channelIndex, uint8_t iFormulaIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+{
+    double lResult = 0;
+    const char *lEtsFormula = (char *)knx.paramData(LOG_UserFormula1 + iFormulaIndex * (LOG_UserFormula2 - LOG_UserFormula1));
+    logDebug(logPrefix, "Evaluating: %s", lEtsFormula);
+    char lFormula[100] = {0};
+    toLower(lEtsFormula, lFormula);
+
+    // bind variables and functions to parser
+    te_variable lVars[] = {
+        {"e1", &e1},
+        {"e2", &e2},
+        {"a", &out},
+        {"if", (double *)myIf, TE_FUNCTION3}};
+
+    // parse formula
+    int lError;
+    te_expr *lParsedFormula = te_compile(lFormula, lVars, 4, &lError);
+
+    if (lParsedFormula)
+    {
+        e1 = E1;
+        e2 = E2;
+        out = iOld;
+        logDebug(logPrefix, "Values: e1=%f, e2=%f, a=%f", e1, e2, out);
+        lResult = te_eval(lParsedFormula);
+        logDebug(logPrefix, "Result: %f", lResult);
+        te_free(lParsedFormula);
+    }
+    else
+    {
+        /* Show the user where the error is at. */
+        const char lErrorChar = lEtsFormula[lError - 1];
+        // lFormula[lError - 1] = 0;
+        logDebug(logPrefix, "Error near '%c': %.*s -->%c<-- %s", lErrorChar, lError - 1, lEtsFormula, lErrorChar, lEtsFormula + lError);
+    }
+
+    return LogicValue((float)lResult);
+}
+
+void LogicFunction::handleFunctionPropertyCheckFormula(uint8_t *iData, uint8_t *eResultData, uint8_t &eResultLength)
+{
+    logInfo(logPrefix, "Function property: Check user formula");
+    logIndentUp();
+
+    uint8_t lFormulaIndex = iData[1] - 1;
+    logDebug(logPrefix, "FormulaIndex: %d", lFormulaIndex);
+    uint8_t lFormulaLength = iData[2];
+    // const char *lEtsFormula = (char *)knx.paramData(LOG_UserFormula1 + lFormulaIndex * (LOG_UserFormula2 - LOG_UserFormula1));
+    const char *lEtsFormula = (char *)iData + 3;
+    logDebug(logPrefix, "Checking: %s", lEtsFormula);
+    char lFormula[100] = {0};
+    uint8_t lReceivedLen = toLower(lEtsFormula, lFormula);
+    if (lReceivedLen == lFormulaLength)
+    {
+        // bind variables and functions to parser
+        te_variable lVars[] = {
+            {"e1", &e1},
+            {"e2", &e2},
+            {"a", &out},
+            {"if", (double *)myIf, TE_FUNCTION3}};
+
+        // parse formula
+        int lError;
+        te_expr *lParsedFormula = te_compile(lFormula, lVars, 4, &lError);
+        if (lParsedFormula)
+        {
+            eResultData[0] = 0;
+            te_free(lParsedFormula);
+            logDebug(logPrefix, "Formula is OK!");
+        }
+        else
+        {
+            eResultData[0] = lError;
+            logDebug(logPrefix, "Error near '%c' at position %d!", lEtsFormula[lError - 1], lError);
+        }
+    }
+    else
+    {
+        eResultData[0] = -1;
+        logDebug(logPrefix, "Received formula is too short - most probably an APDU problem. Got %i, should be %i", lReceivedLen, lFormulaLength);
+    }
+    eResultLength = 1;
+    logIndentDown();
 }

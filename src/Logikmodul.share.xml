@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<?xml-model href="../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<?xml-model href="../../../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/20" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
   <op:config name="%LOG_EnableHardware%" value="0" />
   <op:config name="%LOG_LedAccess%" value="None" />
@@ -13,6 +13,11 @@
     <Manufacturer RefId="M-00FA">
       <ApplicationPrograms>
         <ApplicationProgram Id="%AID%" ApplicationNumber="102" ApplicationVersion="21" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="WP-Logic" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0">
+          <op:part name="FORMULA" href="Logikmodul.userformula.part.xml" instances="30">
+            <op:param name="%ParamOffset%" value="13" increment="80" />
+            <op:param name="%PPP%" value="200" digits="3" increment="3" />
+            <op:param name="%Fn%" value="1" increment="1" />
+          </op:part>
           <Static>
             <ParameterTypes>
               <!-- Number of channels (module specific) -->
@@ -39,6 +44,10 @@
               <ParameterType Id="%AID%_PT-BuzzerFrequency" Name="BuzzerFrequency">
                 <TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="1500" maxInclusive="6000" />
               </ParameterType>
+              <!-- UserFormula support, 99 chars per formula -->
+               <ParameterType Id="%AID%_PT-UserFormula" Name="UserFormula">
+                <TypeText SizeInBit="792" />
+               </ParameterType>
               <!-- LED color mapping -->
               <ParameterType Id="%AID%_PT-RGBMapping" Name="RGBMapping">
                 <TypeRestriction Base="Value" SizeInBit="3">
@@ -477,36 +486,36 @@
                   <Enumeration Text="A = A - (E1 - E2) (Erniedr. um Eingangsdifferenz)" Value="29" Id="%ENID%" />
                   <Enumeration Text="A = B2I(E1, E2) (Bool zu Int)" Value="14" Id="%ENID%" />
                   <Enumeration Text="A = Glättung(E1, E2)" Value="15" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_01(E1, E2)" Value="201" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_02(E1, E2)" Value="202" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_03(E1, E2)" Value="203" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_04(E1, E2)" Value="204" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_05(E1, E2)" Value="205" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_06(E1, E2)" Value="206" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_07(E1, E2)" Value="207" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_08(E1, E2)" Value="208" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_09(E1, E2)" Value="209" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_10(E1, E2)" Value="210" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_11(E1, E2)" Value="211" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_12(E1, E2)" Value="212" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_13(E1, E2)" Value="213" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_14(E1, E2)" Value="214" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_15(E1, E2)" Value="215" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_16(E1, E2)" Value="216" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_17(E1, E2)" Value="217" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_18(E1, E2)" Value="218" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_19(E1, E2)" Value="219" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_20(E1, E2)" Value="220" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_21(E1, E2)" Value="221" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_22(E1, E2)" Value="222" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_23(E1, E2)" Value="223" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_24(E1, E2)" Value="224" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_25(E1, E2)" Value="225" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_26(E1, E2)" Value="226" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_27(E1, E2)" Value="227" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_28(E1, E2)" Value="228" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_29(E1, E2)" Value="229" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerfunktion_30(E1, E2)" Value="230" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_01(E1, E2, A)" Value="201" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_02(E1, E2, A)" Value="202" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_03(E1, E2, A)" Value="203" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_04(E1, E2, A)" Value="204" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_05(E1, E2, A)" Value="205" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_06(E1, E2, A)" Value="206" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_07(E1, E2, A)" Value="207" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_08(E1, E2, A)" Value="208" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_09(E1, E2, A)" Value="209" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_10(E1, E2, A)" Value="210" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_11(E1, E2, A)" Value="211" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_12(E1, E2, A)" Value="212" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_13(E1, E2, A)" Value="213" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_14(E1, E2, A)" Value="214" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_15(E1, E2, A)" Value="215" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_16(E1, E2, A)" Value="216" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_17(E1, E2, A)" Value="217" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_18(E1, E2, A)" Value="218" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_19(E1, E2, A)" Value="219" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_20(E1, E2, A)" Value="220" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_21(E1, E2, A)" Value="221" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_22(E1, E2, A)" Value="222" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_23(E1, E2, A)" Value="223" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_24(E1, E2, A)" Value="224" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_25(E1, E2, A)" Value="225" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_26(E1, E2, A)" Value="226" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_27(E1, E2, A)" Value="227" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_28(E1, E2, A)" Value="228" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_29(E1, E2, A)" Value="229" Id="%ENID%" />
+                  <Enumeration Text="A = Benutzerformel_30(E1, E2, A)" Value="230" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-Delta" Name="Delta">
@@ -1002,6 +1011,8 @@
                 <!-- <Parameter Id="%AID%_UP-%TT%00158" Name="TimezoneValue" ParameterType="%AID%_PT-TimezoneValue" Offset="0" BitOffset="4" Text="Zeitzone-Wert" Value="0" /> -->
                 <!-- 5 Bit free -->
               </Union>
+              <!-- The following starts at Offset=13 !!! -->
+              <op:usePart name="FORMULA" xpath="//Static/Parameters/*" />
             </Parameters>
             <ParameterRefs>
               <!-- General -->
@@ -1072,6 +1083,7 @@
               <ParameterRef Id="%AID%_P-%TT%00166_R-%TT%0016601" RefId="%AID%_P-%TT%00166" />
               <ParameterRef Id="%AID%_P-%TT%00167_R-%TT%0016701" RefId="%AID%_P-%TT%00167" />
               <ParameterRef Id="%AID%_P-%TT%00168_R-%TT%0016801" RefId="%AID%_P-%TT%00168" />
+              <op:usePart name="FORMULA" xpath="//Static/ParameterRefs/*" />
             </ParameterRefs>
             <ComObjectTable>
               <!-- <ComObject Id="%AID%_O-%TT%00001" Name="Heartbeat" Text="In Betrieb" Number="1" FunctionText="Zyklisch" ObjectSize="1 Bit" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-2" />
@@ -1100,6 +1112,9 @@
               <ComObjectRef Id="%AID%_O-%TT%00009_R-%TT%0000901" RefId="%AID%_O-%TT%00009" />
               <!-- <ComObjectRef Id="%AID%_O-%TT%00010_R-%TT%0001001" RefId="%AID%_O-%TT%00010" /> -->
             </ComObjectRefs>
+            <Script>
+              <op:include href="Logikmodul.script.js" type="script" />
+            </Script>
           </Static>
           <Dynamic>
             <Channel Id="%AID%_CH-%PREFIX%" Number="%PREFIX%" Name="Logic" Text="Logiken" Icon="blur" HelpContext="Empty">
@@ -1217,6 +1232,12 @@
               <ParameterBlock Name="Docu" Text="Dokumentation" Id="%AID%_PB-nnn" Icon="information-outline" HelpContext="LOG-Dokumentation">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Dokumentation" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Die Dokumentation ist als Kontextsensitive Hilfe verfügbar, siehe den Text im unteren Bereich des Bildschirms." />
+              </ParameterBlock>
+              <ParameterBlock Name="UserFormulas" Text="Benutzerformeln" Id="%AID%_PB-nnn" Icon="calculator-variant-outline" HelpContext="Empty">
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Benutzerformeln" UIHint="Headline" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Jede Formel kann im Ausgangskonverter eines Logikkanals verwendet werden. Falls eine Benutzerformel in der Firmware implementiert wurde UND eine hier eingegeben wurde, gewinnt die hier eingegebene." />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Formeln können die Variablen E1 (für Eingang 1), E2 (für Eingang 2) und A (für Ausgang) enthalten. Sie werden in C-Schreibweise notiert. Alle Funktionen und Variablen werden ohne Berücksichtigung von Groß- und Kleinschreibung interpretiert." />
+                <op:usePart name="FORMULA" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock/*" />
               </ParameterBlock>
               <ParameterBlock Id="%AID%_PB-nnn" Name="KoOverview" Text="Übersicht interne KO" Icon="view-list-outline" HelpContext="Empty" ShowInComObjectTree="false">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Übersicht interne KO-Verknüpfungen" UIHint="Headline" />
