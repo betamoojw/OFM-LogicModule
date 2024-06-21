@@ -563,8 +563,8 @@ Folgende Funktionen sind verfügbar:
 * 'floor(x)' - Abrunden
 * 'ln(x)' - natürlicher Logarithmus
 * 'log(x)' - Logarithmus zur Basis 10
-* 'ncr(x,y)' - ??
-* 'npr(x,y)' - ??
+* 'ncr(x,y)' - Kombination (nCr)
+* 'npr(x,y)' - Permutation (nPr)
 * 'pow(x,y)' - Potenz
 * 'sin(x)' - Sinus
 * 'sinh(x)' - Sinus hyperbolicus
