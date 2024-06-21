@@ -558,14 +558,14 @@ Folgende Funktionen sind verfügbar:
 * 'ceil(x)' - Aufrunden
 * 'cos(x)' - Cosinus
 * 'cosh(x)' - Cosinus hyperbolicus
-* 'exp(x)' - Exponenentialfunktion e^x 
+* 'exp(x)' - Exponenentialfunktion (e^x) 
 * 'fac(x)' - Fakultät
 * 'floor(x)' - Abrunden
 * 'ln(x)' - natürlicher Logarithmus
 * 'log(x)' - Logarithmus zur Basis 10
 * 'ncr(x,y)' - Kombination (nCr)
 * 'npr(x,y)' - Permutation (nPr)
-* 'pow(x,y)' - Potenz x^y
+* 'pow(x,y)' - Potenz (x^y)
 * 'sin(x)' - Sinus
 * 'sinh(x)' - Sinus hyperbolicus
 * 'sqrt(x)' - Quadratwurzel
