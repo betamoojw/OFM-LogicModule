@@ -28,6 +28,7 @@ class LogicFunction
     static LogicValue (*userFunction[30])(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
 
     static double myIf(double iCondition, double iTrue, double iFalse);
+    static double myRound(double iValue, double iPrecision);
     static double myNan();
     static double myB1(double iE1, double iE2, double iOut);
     static double myB2(double iE1, double iE2, double iOut);

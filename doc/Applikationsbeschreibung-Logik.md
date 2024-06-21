@@ -506,6 +506,14 @@ Eine Formel kann auch mit der Taste "Formel prüfen" auf ihre syntaktische Korre
 
 Groß- und Kleinschreibung ist für die Formelauswertung nicht relevant. Man sollte die Formeln so notieren, dass die Lesbarkeit für einen selbst am höchsten ist.
 
+Wenn eine Formel zur Ausführungszeit einen Fehler enthält, liefert sie den Wert NaN (Not-a-Number). Das Ergebnis einer solchen Formel ändert nicht das Ausgangs-KO und der Wert wird nicht auf den Bus gesendet. Folgende Fehler sind möglich:
+
+* Formel ist syntaktisch falsch (Formel prüfen wurde z.B nicht ausgeführt)
+* Formel enthält eine Division durch 0
+* Formel enthält die Quadratwurzel einer negativen Zahl
+* Formel enthält den Logarithmus einer Zahl <= 0
+* Formel ruft mehr als 10 weitere Formeln auf (z.B. durch Rekursion)
+
 #### **Variable E1 - Eingang 1**
 
 E1 wird in der Formel als der aktuelle Wert vom Eingang 1 interpretiert. Der Wert wird generisch in eine Fließkommazahl gewandelt (double in C++) und dann mit dem Wert weitergerechnet.
@@ -551,29 +559,34 @@ Folgende Operatoren sind verfügbar:
 
 Folgende Funktionen sind verfügbar:
 
-* 'abs(x)' - Absolutwert
-* 'acos(x)' - Arcuscosinus
-* 'asin(x)' - Arcussinus
-* 'atan(x)' - Arcustangens
-* 'ceil(x)' - nächstgrößere Ganzzahl
-* 'cos(x)' - Cosinus
-* 'cosh(x)' - Cosinus hyperbolicus
-* 'exp(x)' - Exponenentialfunktion (e^x) 
-* 'fac(x)' - Fakultät
-* 'floor(x)' - nächstkleinere Ganzzahl
-* 'ln(x)' - natürlicher Logarithmus
-* 'log(x)' - Logarithmus zur Basis 10
-* 'ncr(x,y)' - Kombination (nCr)
-* 'npr(x,y)' - Permutation (nPr)
-* 'pow(x,y)' - Potenz (x^y)
-* 'sin(x)' - Sinus
-* 'sinh(x)' - Sinus hyperbolicus
-* 'sqrt(x)' - Quadratwurzel
-* 'tan(x)' - Tangens
-* 'tanh(x)' - Tangens hyperbolicus
-* 'nan()' - Not-A-Number (liefert ungültigen Funktionswert)
 * 'if(c,a,b)' - Wenn c wahr ist, dann a sonst b
 * 'b*n*(e1,e2,a)' - Benutzerfunktion *n* (für n=1 bis n=30)
+
+* 'abs(x)' - Absolutwert
+* 'sqrt(x)' - Quadratwurzel
+* 'pow(x,y)' - Potenz (x^y)
+* 'exp(x)' - Exponenentialfunktion (e^x) 
+* 'ln(x)' - natürlicher Logarithmus
+* 'log(x)' - Logarithmus zur Basis 10
+* 'fac(x)' - Fakultät
+* 'ncr(x,y)' - Kombination (nCr)
+* 'npr(x,y)' - Permutation (nPr)
+
+* 'round(x,n)' - Runde x an n-ter Stelle hinter dem Komma
+* 'ceil(x)' - nächstgrößere Ganzzahl
+* 'floor(x)' - nächstkleinere Ganzzahl
+
+* 'sin(x)' - Sinus
+* 'sinh(x)' - Sinus hyperbolicus
+* 'cos(x)' - Cosinus
+* 'cosh(x)' - Cosinus hyperbolicus
+* 'tan(x)' - Tangens
+* 'tanh(x)' - Tangens hyperbolicus
+* 'asin(x)' - Arcussinus
+* 'acos(x)' - Arcuscosinus
+* 'atan(x)' - Arcustangens
+
+* 'nan()' - Not-A-Number (liefert ungültigen Funktionswert)
 
 ## **Logiken**
 
