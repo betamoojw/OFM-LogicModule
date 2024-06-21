@@ -555,12 +555,12 @@ Folgende Funktionen sind verfügbar:
 * 'acos(x)' - Arcuscosinus
 * 'asin(x)' - Arcussinus
 * 'atan(x)' - Arcustangens
-* 'ceil(x)' - Aufrunden
+* 'ceil(x)' - nächstgrößere Ganzzahl
 * 'cos(x)' - Cosinus
 * 'cosh(x)' - Cosinus hyperbolicus
 * 'exp(x)' - Exponenentialfunktion (e^x) 
 * 'fac(x)' - Fakultät
-* 'floor(x)' - Abrunden
+* 'floor(x)' - nächstkleinere Ganzzahl
 * 'ln(x)' - natürlicher Logarithmus
 * 'log(x)' - Logarithmus zur Basis 10
 * 'ncr(x,y)' - Kombination (nCr)
