@@ -1,14 +1,15 @@
 function LOG_checkUserFormula(device, online, progress, context) {
     var lFormulaIndex = context.formulaIndex;
-    var parFormula = device.getParameterByName("LOG_UserFormula" + lFormulaIndex);
-    var lFormula = parFormula.value;
 
     progress.setText("Logik: Benutzerformel " + lFormulaIndex + " prüfen...");
+    // first we try to get rid of all '\n' strings
+    newline(device, online, progress, { "textbox": "LOG_UserFormula" + lFormulaIndex })
+
+    var parFormula = device.getParameterByName("LOG_UserFormula" + lFormulaIndex);
+    var lFormula = parFormula.value;
     if (lFormula.length == 0) {
         throw new Error("Logik: Formel ist leer");
     }
-    // first we try to get rid of all '\n' strings
-    newline(device, online, progress, { "textbox": "LOG_UserFormula" + lFormulaIndex })
     online.connect();
     var data = [1]; // check user formula command
 

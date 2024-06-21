@@ -84,7 +84,7 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 
 17.06.2024: Firmware 3.x, Applikation 3.x
 
-* NEU: Benutzerformeln sind auch in der ETS-Applikation definierbar
+* NEU: [Benutzerformeln](#benutzerformeln) sind nun in der ETS-Applikation definierbar, dies löst mittelfristig die bisher verfügbaren [Benutzerfunktionen](#benutzerfunktionen) ab.
 
 
 09.06.2024: Firmware 3.3, Applikation 3.3
@@ -479,7 +479,7 @@ Eine stichwortartige Liste der vorhandenen Möglichkeiten ist auch in der Applik
 
 Bisher war es schon immer möglich, durch Implementierung von [Benutzerfunktionen](#benutzerfunktionen) in C++ komplexere Berechnungen durch das Logikmodul durchführen zu lassen. Das hat aber immer den Nachteil, dass man selber Kompilieren muss, bei Updates sein eigenes Coding immer nachziehen muss und man verliert womöglich die Update-Kompatibilität wegen Eigenänderungen.
 
-Ab sofort ist es möglich, bis zu 30 Benutzerformeln in der ETS-Applikation zu definieren und diese im Ausgangskonverter eines jeden Logikkanals verwenden. Das neue Konzept ist dazu gedacht, die alten Benutzerfunktionen abzulösen, so dass die neuen und die alten Formeln den gleichen Namensraum belegen. Eine Benutzerformel 22 überschreibt somit eine implementierte Benutzerfunktion 22 insofern, weil - wenn beide vorhanden sind - immer die Benutzerformel berechnet wird. 
+Ab sofort ist es möglich, bis zu 30 Benutzerformeln in der ETS-Applikation zu definieren und diese im Ausgangskonverter eines jeden Logikkanals verwenden. Das neue Konzept ist dazu gedacht, die alten Benutzerfunktionen abzulösen, so dass die neuen und die alten Formeln den gleichen Namensraum belegen. Eine Benutzerformel 22 überschreibt somit eine implementierte Benutzerfunktion 22. Das heißt, wenn beide vorhanden sind, wird immer die Benutzerformel berechnet. 
 
 <!-- DOC -->
 ### **Benutzerformel aktiv**
@@ -491,12 +491,89 @@ Mit dieser Checkbox aktiviert man die entsprechende Benutzerformel. Eine eventue
 
 Hier sollte eingetragen werden, was die Benutzerformel macht. Dieser Text dient der reinen Dokumentation und wird nicht zum Logikmodul übertragen.
 
-<!-- DOC -->
-### **Definition der Benutzerformel**
+<!-- DOC HelpContext="Definition der Benutzerformel" -->
+### **Formeldefinition**
 
-Hier wird die Benutzerformel eingegeben. Es wird normale C Formelsyntax unterstützt. Als Variablen stehen *E1* für Eingang 1, *E2* für Eingang 2 und *A* für Ausgang zur Verfügung. Das Ergebnis der Formel wird immer dem Ausgang zugewiesen.
+Hier wird die Benutzerformel eingegeben. Es wird normale C Formelsyntax unterstützt. Es stehen die unten aufgeführten Variablen, Konstanten, Operatoren und Funktionen zur Verfügung. Das Ergebnis der Formel wird immer dem Ausgang zugewiesen.
 
 Benutzerformeln werden immer mit dem Datentyp double (Fließkommazahl) berechnet. Alle Eingangsgrößen werden in double umgewandelt, dann wird gerechnet, anschließend wird das Ergebnis von double im Ausgangskonverter in den Ziel-DPT gewandelt.
+
+Eine Benutzerfunktion kann aus maximal 99 Zeichen bestehen. In einer Benutzerfunktion können auch andere Benutzerfunktionen aufgerufen werden.
+
+Um die Lesbarkeit einer Benutzerfunktion zu erhöhen, können neue Zeilen eingefügt werden. Da die ETS keine mehrzeiligen Eingabefelder zulässt, wird das gleiche Verfahren wie bei Kommentarfeldern verwendet: Die Zeichenfolge *\n*, gefolgt von einem Klick auf die Taste "Neue Zeilen aus '\n' machen".
+
+Eine Formel kann auch mit der Taste "Formel prüfen" auf ihre syntaktische Korrektheit geprüft werden. Dies passiert durch eine Online-Verbindung mit dem Gerät selbst. Damit die Taste "Formel prüfen" verfügbar ist, muss das Gerät der ETS bekannt sein. Dafür muss es mindestens einmal programmiert worden sein.
+
+Groß- und Kleinschreibung ist für die Formelauswertung nicht relevant. Man sollte die Formeln so notieren, dass die Lesbarkeit für einen selbst am höchsten ist.
+
+#### **Variable E1 - Eingang 1**
+
+E1 wird in der Formel als der aktuelle Wert vom Eingang 1 interpretiert. Der Wert wird generisch in eine Fließkommazahl gewandelt (double in C++) und dann mit dem Wert weitergerechnet.
+
+#### **Variable E2 - Eingang 2**
+
+E2 wird in der Formel als der aktuelle Wert vom Eingang 2 interpretiert. Der Wert wird generisch in eine Fließkommazahl gewandelt (double in C++) und dann mit dem Wert weitergerechnet.
+
+#### **Variable A - Ausgang**
+
+A wird in der Formel als der aktuelle Wert vom Ausgang interpretiert. Der Wert wird generisch in eine Fließkommazahl gewandelt (double in C++) und dann mit dem Wert weitergerechnet.
+
+#### **Konstante e - Eulersche Zahl**
+
+Die Konstante e wird mit dem Wert der Eulerschen Zahl belegt.
+
+#### **Konstante pi - Kreiszahl**
+
+Die Konstante pi wird mit dem Wert der Kreiszahl belegt.
+
+#### **Operatoren**
+
+Folgende Operatoren sind verfügbar:
+
+* '+' - Addition
+* '-' - Subtraktion
+* '*' - Multiplikation
+* '/' - Division
+* '*' - Multiplikation
+* '^' - Potenz
+* '%' - Modulo
+* '==' - Gleich
+* '!=' - Ungleich
+* '<' - Kleiner
+* '<=' - Kleiner gleich
+* '>' - Größer
+* '>=' - Größer gleich
+* '!' - Logisches 'Nicht'
+* '&&' - Logisches 'Und'
+* '||' - Logisches 'Oder'
+
+#### **Funktionen**
+
+Folgende Funktionen sind verfügbar:
+
+* 'abs(x)' - Absolutwert
+* 'acos(x)' - Arcuscosinus
+* 'asin(x)' - Arcussinus
+* 'atan(x)' - Arcustangens
+* 'ceil(x)' - Aufrunden
+* 'cos(x)' - Cosinus
+* 'cosh(x)' - Cosinus hyperbolicus
+* 'exp(x)' - Exponent 
+* 'fac(x)' - Fakultät
+* 'floor(x)' - Abrunden
+* 'ln(x)' - natürlicher Logarithmus
+* 'log(x)' - Logarithmus zur Basis 10
+* 'ncr(x,y)' - ??
+* 'npr(x,y)' - ??
+* 'pow(x,y)' - Potenz
+* 'sin(x)' - Sinus
+* 'sinh(x)' - Sinus hyperbolicus
+* 'sqrt(x)' - Quadratwurzel
+* 'tan(x)' - Tangens
+* 'tanh(x)' - Tangens hyperbolicus
+* 'nan()' - Not-A-Number (liefert ungültigen Funktionswert)
+* 'if(c,a,b)' - Wenn c wahr ist, dann a sonst b
+* 'b*n*(e1,e2,a)' - Benutzerfunktion *n* (für n=1 bis n=30)
 
 ## **Logiken**
 
@@ -2426,6 +2503,8 @@ Die Funktion kann zwar mit allen Eingangs-DPT arbeiten, ist aber besonders für 
 Die Funktion liefert 0, wenn nur einer der beiden Eingänge aktiv sein sollte oder E2 = 0 ist.
 
 ### **Benutzerfunktionen**
+
+> ACHTUNG: Benutzerfunktionen sollten nicht mehr verwendet werden, sie wurden durch [Benutzerformeln](#benutzerformeln) ersetzt. Falls Benutzerfunktionen in bisheriger Firmware implementiert worden sind, sollten diese in Benutzerformeln überführt werden. Die neuen Benutzerformeln sind Updatefähig und können benutzt werden, ohne die Firmware zu modifizieren. 
 
 Die eigentliche Stärke des Formelansatzes liegt sicherlich nicht in den implementierten Standardfunktionen, sondern in den 30 zur Verfügung stehenden Benutzerfunktionen.
 

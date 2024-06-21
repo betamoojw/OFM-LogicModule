@@ -3,7 +3,6 @@
 #include "OpenKNX.h"
 #include "knx.h"
 #include "knxprod.h"
-#include "tinyexpr.h"
 
 // native functions, implemented as a simple example how to use user functions
 LogicValue LogicFunction::nativeAdd(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
@@ -298,116 +297,338 @@ LogicValue LogicFunction::callFunction(uint8_t _channelIndex, uint8_t iId, uint8
     else if (iId > 200 && iId <= 230)
     {
         uint8_t lFormulaIndex = iId - 201;
-        LogicValue lResult = (float)0.0;
         bool lFormulaActive = knx.paramByte(LOG_UserFormula1Active + lFormulaIndex * (LOG_UserFormula2Active - LOG_UserFormula1Active)) & LOG_UserFormula1ActiveMask;
         if (lFormulaActive)
-            lResult = callUserFormula(_channelIndex, lFormulaIndex, iDptE1, iE1, iDptE2, iE2, cDptOut, iOld);
+        {
+            // needs to be this way, don't know why
+            LogicValue lResult = callUserFormula(lFormulaIndex, iE1, iE2, iOld);
+            return lResult;
+        }
         else
-            lResult = userFunction[iId - 201](_channelIndex, iDptE1, iE1, iDptE2, iE2, cDptOut, iOld);
-        return lResult;
+        {
+            // needs to be this way, don't know why
+            LogicValue lResult = userFunction[lFormulaIndex](_channelIndex, iDptE1, iE1, iDptE2, iE2, cDptOut, iOld);
+            return lResult;
+        }
     }
     return (uint8_t)0;
 }
+
+// new user formulas
+const uint8_t LogicFunction::sVarsSize = 35;
+// bind variables and functions to parser
+te_variable LogicFunction::sVars[] = {
+    {"e1", &e1},
+    {"e2", &e2},
+    {"a", &out},
+    {"if", (double *)myIf, TE_FUNCTION3},
+    {"nan", (double *)myNan, TE_FUNCTION0},
+    {"b1", (double *)myB1, TE_FUNCTION3},
+    {"b2", (double *)myB2, TE_FUNCTION3},
+    {"b3", (double *)myB3, TE_FUNCTION3},
+    {"b4", (double *)myB4, TE_FUNCTION3},
+    {"b5", (double *)myB5, TE_FUNCTION3},
+    {"b6", (double *)myB6, TE_FUNCTION3},
+    {"b7", (double *)myB7, TE_FUNCTION3},
+    {"b8", (double *)myB8, TE_FUNCTION3},
+    {"b9", (double *)myB9, TE_FUNCTION3},
+    {"b10", (double *)myB10, TE_FUNCTION3},
+    {"b11", (double *)myB11, TE_FUNCTION3},
+    {"b12", (double *)myB12, TE_FUNCTION3},
+    {"b13", (double *)myB13, TE_FUNCTION3},
+    {"b14", (double *)myB14, TE_FUNCTION3},
+    {"b15", (double *)myB15, TE_FUNCTION3},
+    {"b16", (double *)myB16, TE_FUNCTION3},
+    {"b17", (double *)myB17, TE_FUNCTION3},
+    {"b18", (double *)myB18, TE_FUNCTION3},
+    {"b19", (double *)myB19, TE_FUNCTION3},
+    {"b20", (double *)myB20, TE_FUNCTION3},
+    {"b21", (double *)myB21, TE_FUNCTION3},
+    {"b22", (double *)myB22, TE_FUNCTION3},
+    {"b23", (double *)myB23, TE_FUNCTION3},
+    {"b24", (double *)myB24, TE_FUNCTION3},
+    {"b25", (double *)myB25, TE_FUNCTION3},
+    {"b26", (double *)myB26, TE_FUNCTION3},
+    {"b27", (double *)myB27, TE_FUNCTION3},
+    {"b28", (double *)myB28, TE_FUNCTION3},
+    {"b29", (double *)myB29, TE_FUNCTION3},
+    {"b30", (double *)myB30, TE_FUNCTION3}};
 
 double LogicFunction::myIf(double iCondition, double iTrue, double iFalse)
 {
     return iCondition ? iTrue : iFalse;
 }
 
+double LogicFunction::myNan()
+{
+    return NAN;
+}
+
+// wrapper functions for User Formulas
+double LogicFunction::myB1(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(0, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB2(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(1, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB3(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(2, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB4(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(3, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB5(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(4, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB6(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(5, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB7(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(6, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB8(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(7, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB9(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(8, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB10(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(9, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB11(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(10, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB12(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(11, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB13(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(12, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB14(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(13, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB15(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(14, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB16(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(15, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB17(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(16, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB18(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(17, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB19(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(18, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB20(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(19, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB21(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(20, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB22(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(21, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB23(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(22, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB24(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(23, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB25(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(24, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB26(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(25, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB27(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(26, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB28(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(27, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB29(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(28, iE1, iE2, iOut);
+}
+
+double LogicFunction::myB30(double iE1, double iE2, double iOut)
+{
+    return callUserFormula(29, iE1, iE2, iOut);
+}
+
+const std::string LogicFunction::logPrefix(uint8_t iFormulaIndex)
+{
+    static char lPrefix[20] = {0};
+    sprintf(lPrefix, "Logic:<FormulaB%i>", iFormulaIndex + 1);
+    return std::string(lPrefix);
+}
+
 uint8_t LogicFunction::toLower(const char *iSource, char *iTarget)
 {
     uint8_t lCharIndex = 0;
-    for (lCharIndex = 0; lCharIndex < 100 && iSource[lCharIndex] > 0; lCharIndex++)
+    bool lClearNext = false;
+    for (lCharIndex = 0; lCharIndex < 99 && iSource[lCharIndex] > 0; lCharIndex++)
     {
         char lChar = iSource[lCharIndex];
         if (lChar >= 65 && lChar <= 90) lChar += 32; // convert to lowercase
+        // get rid of unreplaced '\n' in formula
+        if (lClearNext)
+        {
+            lChar = 32;
+            lClearNext = false;
+        }
+        if (lChar == 92 && iSource[lCharIndex + 1] == 110)
+        {
+            lChar = 32;
+            lClearNext = true;
+        }
         iTarget[lCharIndex] = lChar;
     }
-    iTarget[100] = 0; // ensure zero termination
+    iTarget[lCharIndex] = 0; // ensure zero termination
     return lCharIndex;
 }
 
-LogicValue LogicFunction::callUserFormula(uint8_t _channelIndex, uint8_t iFormulaIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+LogicValue LogicFunction::callUserFormula(uint8_t iFormulaIndex, double iE1, double iE2, double iOut)
 {
     double lResult = 0;
-    const char *lEtsFormula = (char *)knx.paramData(LOG_UserFormula1 + iFormulaIndex * (LOG_UserFormula2 - LOG_UserFormula1));
-    logDebug(logPrefix, "Evaluating: %s", lEtsFormula);
-    char lFormula[100] = {0};
-    toLower(lEtsFormula, lFormula);
+    bool lFailed = false;
 
-    // bind variables and functions to parser
-    te_variable lVars[] = {
-        {"e1", &e1},
-        {"e2", &e2},
-        {"a", &out},
-        {"if", (double *)myIf, TE_FUNCTION3}};
-
-    // parse formula
-    int lError;
-    te_expr *lParsedFormula = te_compile(lFormula, lVars, 4, &lError);
-
-    if (lParsedFormula)
+    sRecursionCounter++;
+    if (sRecursionCounter <= NUM_RECURSION_DEPTH)
     {
-        e1 = E1;
-        e2 = E2;
-        out = iOld;
-        logDebug(logPrefix, "Values: e1=%f, e2=%f, a=%f", e1, e2, out);
-        lResult = te_eval(lParsedFormula);
-        logDebug(logPrefix, "Result: %f", lResult);
-        te_free(lParsedFormula);
+        const char *lEtsFormula = (char *)knx.paramData(LOG_UserFormula1 + iFormulaIndex * (LOG_UserFormula2 - LOG_UserFormula1));
+        logDebug(logPrefix(iFormulaIndex), "Evaluating: %.99s", lEtsFormula);
+        // char lFormula[100] = {0};
+        toLower(lEtsFormula, sFormulaBuffer);
+
+        // parse formula
+        int lError;
+        te_expr *lParsedFormula = te_compile(sFormulaBuffer, sVars, sVarsSize, &lError);
+
+        if (lParsedFormula)
+        {
+            e1 = iE1;
+            e2 = iE2;
+            out = iOut;
+            logDebug(logPrefix(iFormulaIndex), "Values: e1=%f, e2=%f, a=%f", e1, e2, out);
+            lResult = te_eval(lParsedFormula);
+            logDebug(logPrefix(iFormulaIndex), "Result: %f", lResult);
+            te_free(lParsedFormula);
+        }
+        else
+        {
+            /* Show the user where the error is at. */
+            // const char lErrorChar = lEtsFormula[lError - 1];
+            // lFormula[lError - 1] = 0;
+            logDebug(logPrefix(iFormulaIndex), "Error near '%c': %.*s -->%c<-- %.*s", lEtsFormula[lError - 1], lError - 1, lEtsFormula, lEtsFormula[lError - 1], 99 - lError, lEtsFormula + lError);
+            lFailed = true;
+        }
     }
     else
     {
-        /* Show the user where the error is at. */
-        const char lErrorChar = lEtsFormula[lError - 1];
-        // lFormula[lError - 1] = 0;
-        logDebug(logPrefix, "Error near '%c': %.*s -->%c<-- %s", lErrorChar, lError - 1, lEtsFormula, lErrorChar, lEtsFormula + lError);
+        logDebug(logPrefix(iFormulaIndex), "Error: Recursion limit (%i calls) reached", NUM_RECURSION_DEPTH);
+        lFailed = true;
     }
-
-    return LogicValue((float)lResult);
+    sRecursionCounter--;
+    if (lFailed)
+        return LogicValue(NAN);
+    else
+        return LogicValue(lResult);
 }
 
 void LogicFunction::handleFunctionPropertyCheckFormula(uint8_t *iData, uint8_t *eResultData, uint8_t &eResultLength)
 {
-    logInfo(logPrefix, "Function property: Check user formula");
+    uint8_t lFormulaIndex = iData[1] - 1;
+    logInfo(logPrefix(lFormulaIndex), "Function property: Check user formula");
     logIndentUp();
 
-    uint8_t lFormulaIndex = iData[1] - 1;
-    logDebug(logPrefix, "FormulaIndex: %d", lFormulaIndex);
+    logDebug(logPrefix(lFormulaIndex), "FormulaIndex: %d", lFormulaIndex);
     uint8_t lFormulaLength = iData[2];
     // const char *lEtsFormula = (char *)knx.paramData(LOG_UserFormula1 + lFormulaIndex * (LOG_UserFormula2 - LOG_UserFormula1));
     const char *lEtsFormula = (char *)iData + 3;
-    logDebug(logPrefix, "Checking: %s", lEtsFormula);
-    char lFormula[100] = {0};
-    uint8_t lReceivedLen = toLower(lEtsFormula, lFormula);
+    logDebug(logPrefix(lFormulaIndex), "Checking: %s", lEtsFormula);
+    // char lFormula[100] = {0};
+    uint8_t lReceivedLen = toLower(lEtsFormula, sFormulaBuffer);
     if (lReceivedLen == lFormulaLength)
     {
-        // bind variables and functions to parser
-        te_variable lVars[] = {
-            {"e1", &e1},
-            {"e2", &e2},
-            {"a", &out},
-            {"if", (double *)myIf, TE_FUNCTION3}};
-
         // parse formula
         int lError;
-        te_expr *lParsedFormula = te_compile(lFormula, lVars, 4, &lError);
+        te_expr *lParsedFormula = te_compile(sFormulaBuffer, sVars, sVarsSize, &lError);
         if (lParsedFormula)
         {
             eResultData[0] = 0;
             te_free(lParsedFormula);
-            logDebug(logPrefix, "Formula is OK!");
+            logDebug(logPrefix(lFormulaIndex), "Formula is OK!");
         }
         else
         {
             eResultData[0] = lError;
-            logDebug(logPrefix, "Error near '%c' at position %d!", lEtsFormula[lError - 1], lError);
+            logDebug(logPrefix(lFormulaIndex), "Error near '%c' at position %d!", lEtsFormula[lError - 1], lError);
         }
     }
     else
     {
         eResultData[0] = -1;
-        logDebug(logPrefix, "Received formula is too short - most probably an APDU problem. Got %i, should be %i", lReceivedLen, lFormulaLength);
+        logDebug(logPrefix(lFormulaIndex), "Received formula is too short - most probably an APDU problem. Got %i, should be %i", lReceivedLen, lFormulaLength);
     }
     eResultLength = 1;
     logIndentDown();

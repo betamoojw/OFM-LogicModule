@@ -2,9 +2,12 @@
 
 #include <inttypes.h>
 // #include <KnxHelper.h>
+#include "string"
+#include "tinyexpr.h"
 #include <LogicValue.h>
 
 #define NUM_NATIVE_FUNCTIONS 37
+#define NUM_RECURSION_DEPTH 30
 
 class LogicFunction
 {
@@ -15,14 +18,51 @@ class LogicFunction
     static inline double e1 = 0;
     static inline double e2 = 0;
     static inline double out = 0;
-    static inline const char *logPrefix = "Logic:<UserFormula>";
+    static inline char sFormulaBuffer[100] = {0};
+    // bind variables and functions to parser
+    static const uint8_t sVarsSize;
+    static te_variable sVars[];
+    static inline uint8_t sRecursionCounter = 0;
 
     static LogicValue (*nativeFunction[NUM_NATIVE_FUNCTIONS])(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
     static LogicValue (*userFunction[30])(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
 
     static double myIf(double iCondition, double iTrue, double iFalse);
+    static double myNan();
+    static double myB1(double iE1, double iE2, double iOut);
+    static double myB2(double iE1, double iE2, double iOut);
+    static double myB3(double iE1, double iE2, double iOut);
+    static double myB4(double iE1, double iE2, double iOut);
+    static double myB5(double iE1, double iE2, double iOut);
+    static double myB6(double iE1, double iE2, double iOut);
+    static double myB7(double iE1, double iE2, double iOut);
+    static double myB8(double iE1, double iE2, double iOut);
+    static double myB9(double iE1, double iE2, double iOut);
+    static double myB10(double iE1, double iE2, double iOut);
+    static double myB11(double iE1, double iE2, double iOut);
+    static double myB12(double iE1, double iE2, double iOut);
+    static double myB13(double iE1, double iE2, double iOut);
+    static double myB14(double iE1, double iE2, double iOut);
+    static double myB15(double iE1, double iE2, double iOut);
+    static double myB16(double iE1, double iE2, double iOut);
+    static double myB17(double iE1, double iE2, double iOut);
+    static double myB18(double iE1, double iE2, double iOut);
+    static double myB19(double iE1, double iE2, double iOut);
+    static double myB20(double iE1, double iE2, double iOut);
+    static double myB21(double iE1, double iE2, double iOut);
+    static double myB22(double iE1, double iE2, double iOut);
+    static double myB23(double iE1, double iE2, double iOut);
+    static double myB24(double iE1, double iE2, double iOut);
+    static double myB25(double iE1, double iE2, double iOut);
+    static double myB26(double iE1, double iE2, double iOut);
+    static double myB27(double iE1, double iE2, double iOut);
+    static double myB28(double iE1, double iE2, double iOut);
+    static double myB29(double iE1, double iE2, double iOut);
+    static double myB30(double iE1, double iE2, double iOut);
+
+    static const std::string logPrefix(uint8_t iFormulaIndex);
     static uint8_t toLower(const char *iSource, char *iTarget);
-    static LogicValue callUserFormula(uint8_t _channelIndex, uint8_t iFormulaIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
+    static LogicValue callUserFormula(uint8_t iFormulaIndex, double iE1, double iE2, double iOut);
 
     // implemented native functions, as an simple example
     static LogicValue nativeAdd(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);

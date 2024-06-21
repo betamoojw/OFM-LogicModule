@@ -14,7 +14,7 @@
       <ApplicationPrograms>
         <ApplicationProgram Id="%AID%" ApplicationNumber="102" ApplicationVersion="21" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="WP-Logic" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0">
           <op:part name="FORMULA" href="Logikmodul.userformula.part.xml" instances="30">
-            <op:param name="%ParamOffset%" value="13" increment="80" />
+            <op:param name="%ParamOffset%" value="13" increment="100" />
             <op:param name="%PPP%" value="200" digits="3" increment="3" />
             <op:param name="%Fn%" value="1" increment="1" />
           </op:part>

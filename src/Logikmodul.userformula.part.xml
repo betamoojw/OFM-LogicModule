@@ -7,7 +7,7 @@
         <ApplicationProgram Id="%AID%" ApplicationNumber="102" ApplicationVersion="10" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="WP-Logic" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0">
           <op:partParams name="FORMULA">
             <!-- this ist just for documentation reasons, as an example for the caller -->
-            <op:param name="%ParamOffset%" value="nn" />
+            <op:param name="%ParamOffset%" value="100" />
             <op:param name="%PPP%" value="xx" digits="3" />
             <op:param name="%Fn%" value="1" />
           </op:partParams>
@@ -17,7 +17,7 @@
               <Union SizeInBit="800">
                 <Memory CodeSegment="%MID%" Offset="%ParamOffset%" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%00%PPP+0%" Name="UserFormula%Fn%" Offset="0" BitOffset="0" ParameterType="%AID%_PT-UserFormula" Text="Formeldefinition" Value="" />
-                <Parameter Id="%AID%_UP-%TT%00%PPP+2%" Name="UserFormula%Fn%Active" Offset="79" BitOffset="0" ParameterType="%AID%_PT-CheckBox" Text="Benutzerformel %Fn% aktiv" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00%PPP+2%" Name="UserFormula%Fn%Active" Offset="99" BitOffset="0" ParameterType="%AID%_PT-CheckBox" Text="Benutzerformel %Fn% aktiv" Value="0" />
                 <!-- 7 Bit free -->
               </Union>
             </Parameters>
@@ -43,10 +43,10 @@
                   <ParameterRefRef RefId="%AID%_UP-%TT%00%PPP+2%_R-%TT%00%PPP+2%01" HelpContext="LOG-Benutzerformel-aktiv" Cell="1,3" />
                   <choose ParamRefId="%AID%_UP-%TT%00%PPP+2%_R-%TT%00%PPP+2%01">
                     <when test="0">
-                      <ParameterSeparator Id="%AID%_PS-nnn" Text=" Benutzerformel %Fn%" Cell="1,2" />
+                      <ParameterSeparator Id="%AID%_PS-nnn" Text=" Benutzerformel B%Fn%" Cell="1,2" />
                     </when>
                     <when test="1">
-                      <ParameterSeparator Id="%AID%_PS-nnn" Text=" Benutzerformel %Fn%" Cell="1,2" UIHint="Headline" />
+                      <ParameterSeparator Id="%AID%_PS-nnn" Text=" Benutzerformel B%Fn%" Cell="1,2" UIHint="Headline" />
                       <ParameterRefRef RefId="%AID%_P-%TT%00%PPP+1%_R-%TT%00%PPP+1%01" HelpContext="LOG-Beschreibung-der-Benutzerformel" Cell="1,4" />
                     </when>
                   </choose>
