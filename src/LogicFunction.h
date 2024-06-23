@@ -28,6 +28,8 @@ class LogicFunction
     static LogicValue (*userFunction[30])(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
 
     static double myIf(double iCondition, double iTrue, double iFalse);
+    static double myIf2(double iCondition1, double iTrue1, double iCondition2, double iTrue2, double iFalse);
+    static double myIf3(double iCondition1, double iTrue1, double iCondition2, double iTrue2, double iCondition3, double iTrue3, double iFalse);
     static double myRound(double iValue, double iPrecision);
     static double myNan();
     static double myB1(double iE1, double iE2, double iOut);
@@ -138,5 +140,7 @@ class LogicFunction
 
   public:
     static LogicValue callFunction(uint8_t _channelIndex, uint8_t iId, uint8_t iDptE1, LogicValue iE1, uint8_t iDptE2, LogicValue iE2, uint8_t *cDptOut, LogicValue iOld);
+    static void processFunctionPropertyFormula(std::string iLogPrefix, bool iCalculate, uint8_t *iData, uint8_t *eResultData, uint8_t &eResultLength);
     static void handleFunctionPropertyCheckFormula(uint8_t *iData, uint8_t *eResultData, uint8_t &eResultLength);
+    static void handleFunctionPropertyTestFormula(uint8_t *iData, uint8_t *eResultData, uint8_t &eResultLength);
 };

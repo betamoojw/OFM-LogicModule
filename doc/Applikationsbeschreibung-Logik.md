@@ -85,6 +85,7 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 17.06.2024: Firmware 3.x, Applikation 3.x
 
 * NEU: [Benutzerformeln](#benutzerformeln) sind nun in der ETS-Applikation definierbar, dies löst mittelfristig die bisher verfügbaren [Benutzerfunktionen](#benutzerfunktionen) ab.
+* NEU: Es kann nun in der ETS getestet werden, ob die Ergebnisse von Benutzerformeln korrekt sind.
 
 
 09.06.2024: Firmware 3.3, Applikation 3.3
@@ -482,6 +483,15 @@ Bisher war es schon immer möglich, durch Implementierung von [Benutzerfunktione
 Ab sofort ist es möglich, bis zu 30 Benutzerformeln in der ETS-Applikation zu definieren und diese im Ausgangskonverter eines jeden Logikkanals verwenden. Das neue Konzept ist dazu gedacht, die alten Benutzerfunktionen abzulösen, so dass die neuen und die alten Formeln den gleichen Namensraum belegen. Eine Benutzerformel 22 überschreibt somit eine implementierte Benutzerfunktion 22. Das heißt, wenn beide vorhanden sind, wird immer die Benutzerformel berechnet. 
 
 <!-- DOC -->
+### **Benutzerformel testen**
+
+Mit dieser Checkbox aktiviert man die Möglichkeit, bereits in der ETS vor der Programmierung und vor der Ausführung eigene Formeln zu testen und bereits definierte Benutzerformeln auf das korrekte Ergebnis zu überprüfen.
+
+Hierzu kann eine beliebige Formel im Feld Formeldefinition eingegeben werden. Durch drücken der Taste "Formel rechnen" wird eine Direktverbindung zum Gerät aufgebaut, die Formel dort berechnet und das Ergebnis in der ETS dargestellt.
+
+Um eine bereits definierte Benutzerformel zu berechnen, gibt man z.B. B10(4,7,15) ein. Das führt die Benutzerformel 10 mit den Argumenten E1=4, E2=7 und A=15 aus und präsentiert das Ergebnis.
+
+<!-- DOC -->
 ### **Benutzerformel aktiv**
 
 Mit dieser Checkbox aktiviert man die entsprechende Benutzerformel. Eine eventuell in der Firmware implementierte Benutzerfunktion mit der gleichen Nummer wird deaktiviert. Es erscheinen 2 Eingabefelder, eines um die Benutzerformel zu beschreiben und eines, um die Benutzerformel einzugeben.
@@ -559,7 +569,9 @@ Folgende Operatoren sind verfügbar:
 
 Folgende Funktionen sind verfügbar:
 
-* 'if(c,a,b)' - Wenn c wahr ist, dann a sonst b
+* 'if(c,p,q)' - Wenn c wahr ist, dann p sonst q
+* 'if2(c1,p,c2,q,r)' - Wenn c1 wahr ist, dann p sonst wenn c2 wahr ist, dann q sonst r
+* 'if3(c1,p,c2,q,c3,r,s)' - Wenn c1 wahr ist, dann p sonst wenn c2 wahr ist, dann q sonst wenn c3 wahr ist, dann  r sonst s
 * 'b*n*(e1,e2,a)' - Benutzerfunktion *n* (für n=1 bis n=30)
 
 * 'abs(x)' - Absolutwert

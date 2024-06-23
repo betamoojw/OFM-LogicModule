@@ -656,6 +656,9 @@ bool Logic::processFunctionProperty(uint8_t objectIndex, uint8_t propertyId, uin
         case 1:
             LogicFunction::handleFunctionPropertyCheckFormula(data, resultData, resultLength);
             return true;
+        case 2:
+            LogicFunction::handleFunctionPropertyTestFormula(data, resultData, resultLength);
+            return true;
         default:
             return false;
     }

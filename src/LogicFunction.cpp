@@ -322,6 +322,8 @@ te_variable LogicFunction::sVars[] = {
     {"e2", &e2},
     {"a", &out},
     {"if", (double *)myIf, TE_FUNCTION3},
+    {"if2", (double *)myIf2, TE_FUNCTION5},
+    {"if3", (double *)myIf3, TE_FUNCTION7},
     {"round", (double *)myRound, TE_FUNCTION2},
     {"nan", (double *)myNan, TE_FUNCTION0},
     {"b1", (double *)myB1, TE_FUNCTION3},
@@ -358,6 +360,16 @@ te_variable LogicFunction::sVars[] = {
 double LogicFunction::myIf(double iCondition, double iTrue, double iFalse)
 {
     return iCondition ? iTrue : iFalse;
+}
+
+double LogicFunction::myIf2(double iCondition1, double iTrue1, double iCondition2, double iTrue2, double iFalse)
+{
+    return iCondition1 ? iTrue1 : (iCondition2 ? iTrue2 : iFalse);
+}
+
+double LogicFunction::myIf3(double iCondition1, double iTrue1, double iCondition2, double iTrue2, double iCondition3, double iTrue3, double iFalse)
+{
+    return iCondition1 ? iTrue1 : (iCondition2 ? iTrue2 : (iCondition3 ? iTrue3 : iFalse));
 }
 
 double LogicFunction::myRound(double iValue, double iPrecision)
@@ -601,18 +613,12 @@ LogicValue LogicFunction::callUserFormula(uint8_t iFormulaIndex, double iE1, dou
         return LogicValue(lResult);
 }
 
-void LogicFunction::handleFunctionPropertyCheckFormula(uint8_t *iData, uint8_t *eResultData, uint8_t &eResultLength)
+void LogicFunction::processFunctionPropertyFormula(std::string iLogPrefix, bool iCalculate, uint8_t *iData, uint8_t *eResultData, uint8_t &eResultLength)
 {
-    uint8_t lFormulaIndex = iData[1] - 1;
-    logInfo(logPrefix(lFormulaIndex), "Function property: Check user formula");
-    logIndentUp();
-
-    logDebug(logPrefix(lFormulaIndex), "FormulaIndex: %d", lFormulaIndex);
     uint8_t lFormulaLength = iData[2];
-    // const char *lEtsFormula = (char *)knx.paramData(LOG_UserFormula1 + lFormulaIndex * (LOG_UserFormula2 - LOG_UserFormula1));
     const char *lEtsFormula = (char *)iData + 3;
-    logDebug(logPrefix(lFormulaIndex), "Checking: %s", lEtsFormula);
-    // char lFormula[100] = {0};
+    logIndentUp();
+    logDebug(iLogPrefix, "Formula: %s", lEtsFormula);
     uint8_t lReceivedLen = toLower(lEtsFormula, sFormulaBuffer);
     if (lReceivedLen == lFormulaLength)
     {
@@ -622,20 +628,53 @@ void LogicFunction::handleFunctionPropertyCheckFormula(uint8_t *iData, uint8_t *
         if (lParsedFormula)
         {
             eResultData[0] = 0;
+            if (iCalculate)
+            {
+                e1 = 0;
+                e2 = 0;
+                out = 0;
+                double lResult = te_eval(lParsedFormula);
+                logDebug(iLogPrefix, "Result: %f", lResult);
+                eResultLength = sprintf((char *)eResultData + 1, "%f", lResult) + 1;
+                for (eResultLength--; eResultLength >= 1 && eResultData[eResultLength] == '0'; eResultLength--)
+                    eResultData[eResultLength] = 0;
+                if (eResultData[eResultLength] == '.')
+                    eResultData[eResultLength] = 0;
+                else
+                    eResultLength++;
+            }
+            else
+            {
+                logDebug(iLogPrefix, "Formula is OK!");
+                eResultLength = 1;
+            }
             te_free(lParsedFormula);
-            logDebug(logPrefix(lFormulaIndex), "Formula is OK!");
         }
         else
         {
             eResultData[0] = lError;
-            logDebug(logPrefix(lFormulaIndex), "Error near '%c' at position %d!", lEtsFormula[lError - 1], lError);
+            eResultLength = 1;
+            logDebug(iLogPrefix, "Error near '%c' at position %d!", lEtsFormula[lError - 1], lError);
         }
     }
     else
     {
         eResultData[0] = -1;
-        logDebug(logPrefix(lFormulaIndex), "Received formula is too short - most probably an APDU problem. Got %i, should be %i", lReceivedLen, lFormulaLength);
+        eResultLength = 1;
+        logDebug(iLogPrefix, "Received formula is too short - most probably an APDU problem. Got %i, should be %i", lReceivedLen, lFormulaLength);
     }
-    eResultLength = 1;
     logIndentDown();
+}
+
+void LogicFunction::handleFunctionPropertyCheckFormula(uint8_t *iData, uint8_t *eResultData, uint8_t &eResultLength)
+{
+    uint8_t lFormulaIndex = iData[1];
+    logInfo(logPrefix(lFormulaIndex), "Function property: Check user formula");
+    processFunctionPropertyFormula(logPrefix(lFormulaIndex), false, iData, eResultData, eResultLength);
+}
+
+void LogicFunction::handleFunctionPropertyTestFormula(uint8_t *iData, uint8_t *eResultData, uint8_t &eResultLength)
+{
+    logInfo("Logic<FormulaTest>", "Function property: Test user formula");
+    processFunctionPropertyFormula("Logic<FormulaTest>", true, iData, eResultData, eResultLength);
 }
