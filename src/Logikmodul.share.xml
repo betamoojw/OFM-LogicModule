@@ -455,6 +455,7 @@
                   <Enumeration Text="A = E1 - E2 (Differenz)" Value="2" Id="%ENID%" />
                   <Enumeration Text="A = E1 * E2 (Produkt)" Value="3" Id="%ENID%" />
                   <Enumeration Text="A = E1 / E2 (Quotient)" Value="4" Id="%ENID%" />
+                  <Enumeration Text="A = E1 ^ E2 (Potenz)" Value="38" Id="%ENID%" />
                   <Enumeration Text="A = (E1 + E2) / 2 (Durchschnitt)" Value="5" Id="%ENID%" />
                   <Enumeration Text="A = E1 % E2 (Modulo)" Value="8" Id="%ENID%" />
                   <Enumeration Text="A = E1 &amp; E2 (Bit-Und)" Value="9" Id="%ENID%" />
@@ -488,36 +489,36 @@
                   <Enumeration Text="A = A - (E1 - E2) (Erniedr. um Eingangsdifferenz)" Value="29" Id="%ENID%" />
                   <Enumeration Text="A = B2I(E1, E2) (Bool zu Int)" Value="14" Id="%ENID%" />
                   <Enumeration Text="A = Glättung(E1, E2)" Value="15" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_01(E1, E2, A)" Value="201" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_02(E1, E2, A)" Value="202" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_03(E1, E2, A)" Value="203" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_04(E1, E2, A)" Value="204" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_05(E1, E2, A)" Value="205" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_06(E1, E2, A)" Value="206" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_07(E1, E2, A)" Value="207" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_08(E1, E2, A)" Value="208" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_09(E1, E2, A)" Value="209" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_10(E1, E2, A)" Value="210" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_11(E1, E2, A)" Value="211" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_12(E1, E2, A)" Value="212" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_13(E1, E2, A)" Value="213" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_14(E1, E2, A)" Value="214" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_15(E1, E2, A)" Value="215" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_16(E1, E2, A)" Value="216" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_17(E1, E2, A)" Value="217" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_18(E1, E2, A)" Value="218" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_19(E1, E2, A)" Value="219" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_20(E1, E2, A)" Value="220" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_21(E1, E2, A)" Value="221" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_22(E1, E2, A)" Value="222" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_23(E1, E2, A)" Value="223" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_24(E1, E2, A)" Value="224" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_25(E1, E2, A)" Value="225" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_26(E1, E2, A)" Value="226" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_27(E1, E2, A)" Value="227" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_28(E1, E2, A)" Value="228" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_29(E1, E2, A)" Value="229" Id="%ENID%" />
-                  <Enumeration Text="A = Benutzerformel_30(E1, E2, A)" Value="230" Id="%ENID%" />
+                  <Enumeration Text="A = B1(E1, E2, A)" Value="201" Id="%ENID%" />
+                  <Enumeration Text="A = B2(E1, E2, A)" Value="202" Id="%ENID%" />
+                  <Enumeration Text="A = B3(E1, E2, A)" Value="203" Id="%ENID%" />
+                  <Enumeration Text="A = B4(E1, E2, A)" Value="204" Id="%ENID%" />
+                  <Enumeration Text="A = B5(E1, E2, A)" Value="205" Id="%ENID%" />
+                  <Enumeration Text="A = B6(E1, E2, A)" Value="206" Id="%ENID%" />
+                  <Enumeration Text="A = B7(E1, E2, A)" Value="207" Id="%ENID%" />
+                  <Enumeration Text="A = B8(E1, E2, A)" Value="208" Id="%ENID%" />
+                  <Enumeration Text="A = B9(E1, E2, A)" Value="209" Id="%ENID%" />
+                  <Enumeration Text="A = B10(E1, E2, A)" Value="210" Id="%ENID%" />
+                  <Enumeration Text="A = B11(E1, E2, A)" Value="211" Id="%ENID%" />
+                  <Enumeration Text="A = B12(E1, E2, A)" Value="212" Id="%ENID%" />
+                  <Enumeration Text="A = B13(E1, E2, A)" Value="213" Id="%ENID%" />
+                  <Enumeration Text="A = B14(E1, E2, A)" Value="214" Id="%ENID%" />
+                  <Enumeration Text="A = B15(E1, E2, A)" Value="215" Id="%ENID%" />
+                  <Enumeration Text="A = B16(E1, E2, A)" Value="216" Id="%ENID%" />
+                  <Enumeration Text="A = B17(E1, E2, A)" Value="217" Id="%ENID%" />
+                  <Enumeration Text="A = B18(E1, E2, A)" Value="218" Id="%ENID%" />
+                  <Enumeration Text="A = B19(E1, E2, A)" Value="219" Id="%ENID%" />
+                  <Enumeration Text="A = B20(E1, E2, A)" Value="220" Id="%ENID%" />
+                  <Enumeration Text="A = B21(E1, E2, A)" Value="221" Id="%ENID%" />
+                  <Enumeration Text="A = B22(E1, E2, A)" Value="222" Id="%ENID%" />
+                  <Enumeration Text="A = B23(E1, E2, A)" Value="223" Id="%ENID%" />
+                  <Enumeration Text="A = B24(E1, E2, A)" Value="224" Id="%ENID%" />
+                  <Enumeration Text="A = B25(E1, E2, A)" Value="225" Id="%ENID%" />
+                  <Enumeration Text="A = B26(E1, E2, A)" Value="226" Id="%ENID%" />
+                  <Enumeration Text="A = B27(E1, E2, A)" Value="227" Id="%ENID%" />
+                  <Enumeration Text="A = B28(E1, E2, A)" Value="228" Id="%ENID%" />
+                  <Enumeration Text="A = B29(E1, E2, A)" Value="229" Id="%ENID%" />
+                  <Enumeration Text="A = B30(E1, E2, A)" Value="230" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-Delta" Name="Delta">

@@ -209,6 +209,11 @@ LogicValue LogicFunction::nativeRShiftA(uint8_t _channelIndex, uint8_t DptE1, Lo
     return (int32_t)iOld >> 1;
 }
 
+LogicValue LogicFunction::nativePower(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+{
+    return E1 ^ E2;
+}
+
 // do not touch after this point
 
 LogicFunction::LogicFunction(){};
@@ -252,7 +257,8 @@ LogicValue (*LogicFunction::nativeFunction[NUM_NATIVE_FUNCTIONS])(uint8_t, uint8
     nativeLShiftA,
     nativeRShiftE1,
     nativeRShiftE2,
-    nativeRShiftA};
+    nativeRShiftA,
+    nativePower};
 
 LogicValue (*LogicFunction::userFunction[30])(uint8_t, uint8_t, LogicValue, uint8_t, LogicValue, uint8_t *, LogicValue){
     userFunction01,
@@ -669,12 +675,12 @@ void LogicFunction::processFunctionPropertyFormula(std::string iLogPrefix, bool 
 void LogicFunction::handleFunctionPropertyCheckFormula(uint8_t *iData, uint8_t *eResultData, uint8_t &eResultLength)
 {
     uint8_t lFormulaIndex = iData[1];
-    logInfo(logPrefix(lFormulaIndex), "Function property: Check user formula");
+    logDebug(logPrefix(lFormulaIndex), "Function property: Check user formula");
     processFunctionPropertyFormula(logPrefix(lFormulaIndex), false, iData, eResultData, eResultLength);
 }
 
 void LogicFunction::handleFunctionPropertyTestFormula(uint8_t *iData, uint8_t *eResultData, uint8_t &eResultLength)
 {
-    logInfo("Logic<FormulaTest>", "Function property: Test user formula");
+    logDebug("Logic<FormulaTest>", "Function property: Test user formula");
     processFunctionPropertyFormula("Logic<FormulaTest>", true, iData, eResultData, eResultLength);
 }

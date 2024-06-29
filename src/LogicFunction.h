@@ -6,7 +6,7 @@
 #include "tinyexpr.h"
 #include <LogicValue.h>
 
-#define NUM_NATIVE_FUNCTIONS 37
+#define NUM_NATIVE_FUNCTIONS 38
 #define NUM_RECURSION_DEPTH 30
 
 class LogicFunction
@@ -105,6 +105,7 @@ class LogicFunction
     static LogicValue nativeRShiftE1(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
     static LogicValue nativeRShiftE2(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
     static LogicValue nativeRShiftA(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
+    static LogicValue nativePower(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
 
     // user functions (empty, implemented by user)
     static LogicValue userFunction01(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);

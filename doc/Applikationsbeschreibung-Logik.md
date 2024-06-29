@@ -86,7 +86,7 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 
 * NEU: [Benutzerformeln](#benutzerformeln) sind nun in der ETS-Applikation definierbar, dies löst mittelfristig die bisher verfügbaren [Benutzerfunktionen](#benutzerfunktionen) ab.
 * NEU: Es kann nun in der ETS getestet werden, ob die Ergebnisse von Benutzerformeln korrekt sind.
-
+* NEU: Die mathematische Funktion "Potenz" ist jetzt bei den Standardformeln auch verfügbar.
 
 09.06.2024: Firmware 3.3, Applikation 3.3
 
@@ -2299,6 +2299,14 @@ Ist nur ein Eingang aktiv, ist der andere 0 und man bekommt 0 als Ergebnis.
 Der Wert von Eingang 1 wird durch den Wert von Eingang 2 dividiert und als Ergebnis am Ausgang ausgegeben.
 
 Ist nur Eingang 1 aktiv, ist der andere 0 und man bekommt keinen Wert ausgegeben.
+
+Ist nur Eingang 2 aktiv, ist der andere 0 und man bekommt den  Wert 0 ausgegeben.
+
+#### **A = E1 ^ E2 (Potenz)**
+
+Der Wert von Eingang 1 wird mit dem Wert von Eingang 2 potenziert und als Ergebnis am Ausgang ausgegeben.
+
+Ist nur Eingang 1 aktiv, ist der andere 0 und man bekommt den Wert 1 ausgegeben.
 
 Ist nur Eingang 2 aktiv, ist der andere 0 und man bekommt den  Wert 0 ausgegeben.
 
