@@ -15,7 +15,7 @@ class LogicValue
     LogicValue(int16_t value);
     LogicValue(int32_t value);
     // LogicValue(int64_t value);
-    // LogicValue(double value);
+    LogicValue(double value);
     LogicValue(float value);
     LogicValue(const char* value);
 
@@ -28,7 +28,7 @@ class LogicValue
     operator int16_t() const;
     operator int32_t() const;
     // operator int64_t() const;
-    // operator double() const;
+    operator double() const;
     operator float() const;
     operator const char*() const;
 
@@ -41,7 +41,7 @@ class LogicValue
     LogicValue& operator=(const int16_t value);
     LogicValue& operator=(const int32_t value);
     // LogicValue& operator=(const int64_t value);
-    // LogicValue& operator=(const double value);
+    LogicValue& operator=(const double value);
     LogicValue& operator=(const float value);
     LogicValue& operator=(const char* value);
 
@@ -49,6 +49,7 @@ class LogicValue
     // LogicValue& operator++(int);
 
     LogicValue& operator+=(const int32_t value);
+    LogicValue& operator+=(const double value);
     LogicValue& operator+=(const float value);
 
     bool operator>(LogicValue const& value);
@@ -77,12 +78,13 @@ class LogicValue
     int16_t shortValue() const;
     int32_t intValue() const;
     // int64_t longValue() const;
-    // double doubleValue() const;
+    double doubleValue() const;
     float floatValue() const;
     const char* stringValue() const;
 
     void setInternal(const uint32_t value);
     void setInternal(const int32_t value);
+    void setInternal(const double value);
     void setInternal(const float value);
     void setInternal(const char* value);
 
@@ -97,7 +99,7 @@ class LogicValue
         int16_t shortValue;
         int32_t intValue;
         // int64_t longValue;
-        // double doubleValue;
+        double doubleValue;
         float floatValue;
         const char* stringValue;
     };
@@ -112,7 +114,7 @@ class LogicValue
         ShortType,
         IntType,
         // LongType,
-        // DoubleType,
+        DoubleType,
         FloatType,
         StringType,
     };

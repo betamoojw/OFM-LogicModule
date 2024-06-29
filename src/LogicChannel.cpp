@@ -721,7 +721,8 @@ void LogicChannel::writeFunctionValue(uint16_t iParamIndex, bool iOn)
     uint8_t lDptOut = getByteParam(LOG_fODpt);
     LogicValue lKoValue = getKoValue(IO_Output, lDptOut);
     LogicValue lValue = LogicFunction::callFunction(_channelIndex, lFunction, lDptE1, lE1, lDptE2, lE2, &lDptOut, lKoValue);
-    writeValue(lValue, lDptOut, iOn);
+    if (isfinite((double)lValue))
+        writeValue(lValue, lDptOut, iOn);
 }
 
 void LogicChannel::writeValue(LogicValue iValue, uint8_t iDpt, bool iOn)

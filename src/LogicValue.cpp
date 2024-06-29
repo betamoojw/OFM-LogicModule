@@ -64,11 +64,11 @@ LogicValue::LogicValue(int32_t value)
 //     setType(LongType);
 // }
 
-// LogicValue::LogicValue(double value)
-// {
-//     _value.doubleValue = value;
-//     setType(DoubleType);
-// }
+LogicValue::LogicValue(double value)
+{
+    _value.doubleValue = value;
+    setType(DoubleType);
+}
 
 LogicValue::LogicValue(float value)
 {
@@ -127,10 +127,10 @@ LogicValue::operator int32_t() const
 //     return longValue();
 // }
 
-// LogicValue::operator double() const
-// {
-//     return doubleValue();
-// }
+LogicValue::operator double() const
+{
+    return doubleValue();
+}
 
 LogicValue::operator float() const
 {
@@ -205,12 +205,12 @@ LogicValue& LogicValue::operator=(const int32_t value)
 //     return *this;
 // }
 
-// LogicValue& LogicValue::operator=(const double value)
-// {
-//     _value.doubleValue = value;
-//     setType(DoubleType);
-//     return *this;
-// }
+LogicValue& LogicValue::operator=(const double value)
+{
+    _value.doubleValue = value;
+    setType(DoubleType);
+    return *this;
+}
 
 LogicValue& LogicValue::operator=(const float value)
 {
@@ -257,9 +257,9 @@ void LogicValue::setInternal(const uint32_t value)
         // case LongType:
         //     _value.longValue = value;
         //     break;
-        // case DoubleType:
-        //     _value.doubleValue = value;
-        //     break;
+        case DoubleType:
+            _value.doubleValue = value;
+            break;
         case FloatType:
             _value.floatValue = value;
             break;
@@ -298,9 +298,9 @@ void LogicValue::setInternal(const int32_t value)
         // case LongType:
         //     _value.longValue = value;
         //     break;
-        // case DoubleType:
-        //     _value.doubleValue = value;
-        //     break;
+        case DoubleType:
+            _value.doubleValue = value;
+            break;
         case FloatType:
             _value.floatValue = value;
             break;
@@ -339,9 +339,9 @@ void LogicValue::setInternal(const float value)
         // case LongType:
         //     _value.longValue = value;
         //     break;
-        // case DoubleType:
-        //     _value.doubleValue = value;
-        //     break;
+        case DoubleType:
+            _value.doubleValue = value;
+            break;
         case FloatType:
             _value.floatValue = value;
             break;
@@ -382,6 +382,9 @@ LogicValue& LogicValue::operator++()
         case FloatType:
             setInternal(floatValue() + 1);
             return *this;
+        case DoubleType:
+            setInternal(doubleValue() + 1);
+            return *this;
     }
     return *this;
 }
@@ -404,6 +407,9 @@ LogicValue& LogicValue::operator+=(const int32_t value)
             return *this;
         case FloatType:
             setInternal(floatValue() + value);
+            return *this;
+        case DoubleType:
+            setInternal(doubleValue() + value);
             return *this;
     }
     return *this;
@@ -428,6 +434,9 @@ LogicValue& LogicValue::operator+=(const float value)
         case FloatType:
             setInternal(floatValue() + value);
             return *this;
+        case DoubleType:
+            setInternal(doubleValue() + value);
+            return *this;
     }
     return *this;
 }
@@ -437,6 +446,11 @@ LogicValue LogicValue::operator+(LogicValue const& value)
     if (_type == FloatType || value._type == FloatType)
     {
         LogicValue lValue = floatValue() + value.floatValue();
+        return lValue;
+    }
+    else if (_type == DoubleType || value._type == DoubleType)
+    {
+        LogicValue lValue = doubleValue() + value.doubleValue();
         return lValue;
     }
     else
@@ -453,6 +467,11 @@ LogicValue LogicValue::operator-(LogicValue const& value)
         LogicValue lValue = floatValue() - value.floatValue();
         return lValue;
     }
+    else if (_type == DoubleType || value._type == DoubleType)
+    {
+        LogicValue lValue = doubleValue() - value.doubleValue();
+        return lValue;
+    }
     else
     {
         LogicValue lValue = intValue() - value.intValue();
@@ -467,6 +486,11 @@ LogicValue LogicValue::operator*(LogicValue const& value)
         LogicValue lValue = floatValue() * value.floatValue();
         return lValue;
     }
+    else if (_type == DoubleType || value._type == DoubleType)
+    {
+        LogicValue lValue = doubleValue() * value.doubleValue();
+        return lValue;
+    }
     else
     {
         LogicValue lValue = intValue() * value.intValue();
@@ -479,6 +503,11 @@ LogicValue LogicValue::operator/(LogicValue const& value)
     if (_type == FloatType || value._type == FloatType)
     {
         LogicValue lValue = floatValue() / value.floatValue();
+        return lValue;
+    }
+    else if (_type == DoubleType || value._type == DoubleType)
+    {
+        LogicValue lValue = doubleValue() / value.doubleValue();
         return lValue;
     }
     else
@@ -511,6 +540,10 @@ LogicValue LogicValue::operator-(const int32_t value)
             lValue._type = _type;
             setInternal(floatValue() - value);
             return lValue;
+        case DoubleType:
+            lValue._type = _type;
+            setInternal(doubleValue() - value);
+            return lValue;
     }
     return lValue;
 }
@@ -538,6 +571,10 @@ LogicValue LogicValue::operator-(const float value)
             lValue._type = _type;
             setInternal(floatValue() - value);
             return lValue;
+        case DoubleType:
+            lValue._type = _type;
+            setInternal(doubleValue() - value);
+            return lValue;
     }
     return lValue;
 }
@@ -546,6 +583,8 @@ bool LogicValue::operator>(LogicValue const& value)
 {
     if (_type == FloatType || value._type == FloatType)
         return (floatValue() > value.floatValue());
+    else if (_type == DoubleType || value._type == DoubleType)
+        return (doubleValue() > value.doubleValue());
     else if (_type == UIntType && value._type == UIntType)
         return (uintValue() > value.uintValue());
     else if (_type == UIntType)
@@ -560,6 +599,8 @@ bool LogicValue::operator<(LogicValue const& value)
 {
     if (_type == FloatType || value._type == FloatType)
         return (floatValue() < value.floatValue());
+    else if (_type == DoubleType || value._type == DoubleType)
+        return (doubleValue() < value.doubleValue());
     else if (_type == UIntType && value._type == UIntType)
         return (uintValue() < value.uintValue());
     else if (_type == UIntType)
@@ -574,6 +615,8 @@ bool LogicValue::operator>=(LogicValue const& value)
 {
     if (_type == FloatType || value._type == FloatType)
         return (floatValue() >= value.floatValue());
+    else if (_type == DoubleType || value._type == DoubleType)
+        return (doubleValue() >= value.doubleValue());
     else if (_type == UIntType && value._type == UIntType)
         return (uintValue() >= value.uintValue());
     else if (_type == UIntType)
@@ -588,6 +631,8 @@ bool LogicValue::operator<=(LogicValue const& value)
 {
     if (_type == FloatType || value._type == FloatType)
         return (floatValue() <= value.floatValue());
+    else if (_type == DoubleType || value._type == DoubleType)
+        return (doubleValue() <= value.doubleValue());
     else if (_type == UIntType && value._type == UIntType)
         return (uintValue() <= value.uintValue());
     else if (_type == UIntType)
@@ -615,9 +660,10 @@ bool LogicValue::boolValue() const
         case IntType:
             // case LongType:
             return intValue() != 0;
-        // case DoubleType:
         case FloatType:
             return _value.floatValue != 0;
+        case DoubleType:
+            return _value.doubleValue != 0;
         case StringType:
             return strcmp(_value.stringValue, "true") == 0 || strcmp(_value.stringValue, "True") == 0 || intValue() != 0 || floatValue() != 0;
     }
@@ -641,7 +687,7 @@ uint8_t LogicValue::ucharValue() const
         case ShortType:
         case IntType:
         // case LongType:
-        // case DoubleType:
+        case DoubleType:
         case FloatType:
         case StringType:
             return (uint8_t)intValue();
@@ -666,7 +712,7 @@ uint16_t LogicValue::ushortValue() const
         case ShortType:
         case IntType:
         // case LongType:
-        // case DoubleType:
+        case DoubleType:
         case FloatType:
         case StringType:
             return (uint16_t)intValue();
@@ -697,7 +743,8 @@ uint32_t LogicValue::uintValue() const
         case IntType:
             return _value.intValue;
         // case LongType:
-        // case DoubleType:
+        case DoubleType:
+            return _value.doubleValue;
         case FloatType:
             return _value.floatValue;
         case StringType:
@@ -754,7 +801,7 @@ int8_t LogicValue::charValue() const
         case ShortType:
         case IntType:
         // case LongType:
-        // case DoubleType:
+        case DoubleType:
         case FloatType:
         case StringType:
             return (int8_t)intValue();
@@ -779,7 +826,7 @@ int16_t LogicValue::shortValue() const
         case CharType:
         case IntType:
         // case LongType:
-        // case DoubleType:
+        case DoubleType:
         case FloatType:
         case StringType:
             return (int16_t)intValue();
@@ -810,7 +857,8 @@ int32_t LogicValue::intValue() const
         case ShortType:
             return _value.shortValue;
         // case LongType:
-        // case DoubleType:
+        case DoubleType:
+            return _value.doubleValue;
         case FloatType:
             return _value.floatValue;
         case StringType:
@@ -850,36 +898,40 @@ int32_t LogicValue::intValue() const
 //     return 0;
 // }
 
-// double LogicValue::doubleValue() const
-// {
-//     switch (_type)
-//     {
-//         case DoubleType:
-//             return _value.doubleValue;
-//          case BoolType:
-//             return _value.boolValue ? 1 : 0;
-//         case UCharType:
-//             return _value.ucharValue;
-//         case UShortType:
-//             return _value.ushortValue;
-//         case UIntType:
-//             return _value.uintValue;
-//         case ULongType:
-//             return _value.uintValue;
-//         case CharType:
-//             return _value.charValue;
-//         case ShortType:
-//             return _value.shortValue;
-//         case IntType:
-//             return _value.intValue;
-//         case LongType:
-//             return _value.longValue;
-//         case StringType:
-//             // return strtod(_value.stringValue, NULL);
-//             return 0;
-//     }
-//     return 0;
-// }
+double LogicValue::doubleValue() const
+{
+    if (_isInitial)
+        return 0;
+    switch (_type)
+    {
+        case DoubleType:
+            return _value.doubleValue;
+        case BoolType:
+            return _value.boolValue ? 1 : 0;
+        case UCharType:
+            return _value.ucharValue;
+        case UShortType:
+            return _value.ushortValue;
+        case UIntType:
+            return _value.uintValue;
+        // case ULongType:
+        //     return _value.uintValue;
+        case CharType:
+            return _value.charValue;
+        case ShortType:
+            return _value.shortValue;
+        case IntType:
+            return _value.intValue;
+        // case LongType:
+        //     return _value.longValue;
+        case FloatType:
+            return _value.floatValue;
+        case StringType:
+            return strtod(_value.stringValue, NULL);
+            return 0;
+    }
+    return 0;
+}
 
 float LogicValue::floatValue() const
 {
@@ -907,11 +959,10 @@ float LogicValue::floatValue() const
             return _value.intValue;
         // case LongType:
         //     return _value.longValue;
-        // case DoubleType:
-        //     return _value.doubleValue;
+        case DoubleType:
+            return _value.doubleValue;
         case StringType:
             return strtof(_value.stringValue, NULL);
-            return 0;
     }
     return 0;
 }
@@ -929,6 +980,8 @@ const char* LogicValue::stringValue() const
         case UIntType:
         // case ULongType:
         case CharType:
+        case FloatType:
+        case DoubleType:
         case ShortType:
         case IntType:
             // case LongType:
@@ -938,24 +991,6 @@ const char* LogicValue::stringValue() const
     }
     return 0;
 }
-
-// LogicValue::LogicValue(float value)
-// {
-//     _value.doubleValue = value;
-//     setType(DoubleType);
-// }
-
-// LogicValue& LogicValue::operator=(const float value)
-// {
-//     _value.doubleValue = value;
-//     setType(DoubleType);
-//     return *this;
-// }
-
-// LogicValue::operator float() const
-// {
-//     return doubleValue();
-// }
 
 bool LogicValue::isInitial()
 {

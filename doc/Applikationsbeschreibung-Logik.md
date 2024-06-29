@@ -82,6 +82,12 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+17.06.2024: Firmware 3.x, Applikation 3.x
+
+* NEU: [Benutzerformeln](#benutzerformeln) sind nun in der ETS-Applikation definierbar, dies löst mittelfristig die bisher verfügbaren [Benutzerfunktionen](#benutzerfunktionen) ab.
+* NEU: Es kann nun in der ETS getestet werden, ob die Ergebnisse von Benutzerformeln korrekt sind.
+* NEU: Die mathematische Funktion "Potenz" ist jetzt bei den Standardformeln auch verfügbar.
+
 09.06.2024: Firmware 3.3, Applikation 3.3
 
 * NEU: Durch die Logik verursachte Endlosschleifen werden jetzt erkannt und die entsprechenden Logikkanäle deaktiviert (siehe [Endlosschleifen-Erkennung](#endlosschleifen-erkennung))
@@ -356,21 +362,18 @@ Weitere Features:
 * Speichern von Werten über einen Stromausfall hinweg 
 * Senden von gespeicherten Werten nach einem Neustart
 
-## **Allgemein**
+## OpenKNX
 
 Das Logikmodul hat auch eine eigene ETS-Applikation, die es erlaubt, das Logikmodul ohne Einbettung in eine andere Applikation zu verwenden. In diesem Fall hat es eine Seite mit allgemeinen Parametern, die unter [Applikationsbeschreibung-Common](https://github.com/OpenKNX/OGM-Common/blob/v1/doc/Applikationsbeschreibung-Common.md) beschrieben sind. 
 
-Hier werden Einstellungen getroffen, die die generelle Arbeitsweise des Gerätes bestimmen.
 
-## **Dokumentation**
-
-Eine stichwortartige Liste der vorhandenen Möglichkeiten ist auch in der Applikation verfügbar. Ferner ist zu jedem Eingabefeld eine Kontextsensitive Hilfe vorhanden.
-
-Auf dieser Seite wird auch die Applikationsversion des Logikmoduls ausgegeben.
-
-## **Basiseinstellung**
+## **Allgemein**
 
 Hier werden Einstellungen vorgenommen, die für das gesamte Logikmodul und alle Kanäle gelten.
+
+### Logikmodulversion
+
+Auf dieser Seite wird die Applikationsversion des Logikmoduls ausgegeben.
 
 <!-- DOC -->
 ### **Verfügbare Kanäle**
@@ -468,6 +471,136 @@ An dieser Stelle kann man die Pinbelegung für Rot/Grün/Blau in verschiedenen P
 
 Das Logikmodul unterstützt 3 verschiedene Töne bzw. Lautstärken für den Buzzer.
 In den Eingabefeldern kann man die Tonfrequenzen für die einzelnen Töne für Laut/Mittel und Leise angeben. Über die Tonhöhe werden indirekt auch die Lautstärken gesteuert.
+
+## **Dokumentation**
+
+Eine stichwortartige Liste der vorhandenen Möglichkeiten ist auch in der Applikation verfügbar. Ferner ist zu jedem Eingabefeld eine Kontextsensitive Hilfe vorhanden.
+
+## **Benutzerformeln**
+
+Bisher war es schon immer möglich, durch Implementierung von [Benutzerfunktionen](#benutzerfunktionen) in C++ komplexere Berechnungen durch das Logikmodul durchführen zu lassen. Das hat aber immer den Nachteil, dass man selber Kompilieren muss, bei Updates sein eigenes Coding immer nachziehen muss und man verliert womöglich die Update-Kompatibilität wegen Eigenänderungen.
+
+Ab sofort ist es möglich, bis zu 30 Benutzerformeln in der ETS-Applikation zu definieren und diese im Ausgangskonverter eines jeden Logikkanals verwenden. Das neue Konzept ist dazu gedacht, die alten Benutzerfunktionen abzulösen, so dass die neuen und die alten Formeln den gleichen Namensraum belegen. Eine Benutzerformel 22 überschreibt somit eine implementierte Benutzerfunktion 22. Das heißt, wenn beide vorhanden sind, wird immer die Benutzerformel berechnet. 
+
+<!-- DOC -->
+### **Benutzerformel testen**
+
+Mit dieser Checkbox aktiviert man die Möglichkeit, bereits in der ETS vor der Programmierung und vor der Ausführung eigene Formeln zu testen und bereits definierte Benutzerformeln auf das korrekte Ergebnis zu überprüfen.
+
+Hierzu kann eine beliebige Formel im Feld Formeldefinition eingegeben werden. Durch drücken der Taste "Formel rechnen" wird eine Direktverbindung zum Gerät aufgebaut, die Formel dort berechnet und das Ergebnis in der ETS dargestellt.
+
+Um eine bereits definierte Benutzerformel zu berechnen, gibt man z.B. B10(4,7,15) ein. Das führt die Benutzerformel 10 mit den Argumenten E1=4, E2=7 und A=15 aus und präsentiert das Ergebnis.
+
+> Achtung: Um eine Benutzerformel B*n* aus der Testformel heraus aufzurufen, muss die Benutzerformel B*n* von der ETS zum Gerät übertragen worden sein (sprich: Das Gerät muss mit dieser Formel programmiert worden sein). Das liegt daran, dass zwar zum Testen von Formeln die aktuelle Testformel zum Gerät direkt übertragen wird, aber die Übertragungskapazität nicht ausreicht, um alle anderen Formeln auch gleich mit zu übertragen. Somit müssen diese bereits vorher über "Programmieren" übertragen worden sein. Trotz dieser Einschränkung kann man Formeln auf diese Weise relativ schnell auf ihre korrekte Berechnung hin prüfen. 
+
+<!-- DOC -->
+### **Benutzerformel aktiv**
+
+Mit dieser Checkbox aktiviert man die entsprechende Benutzerformel. Eine eventuell in der Firmware implementierte Benutzerfunktion mit der gleichen Nummer wird deaktiviert. Es erscheinen 2 Eingabefelder, eines um die Benutzerformel zu beschreiben und eines, um die Benutzerformel einzugeben.
+
+<!-- DOC -->
+### **Beschreibung der Benutzerformel**
+
+Hier sollte eingetragen werden, was die Benutzerformel macht. Dieser Text dient der reinen Dokumentation und wird nicht zum Logikmodul übertragen.
+
+<!-- DOC HelpContext="Definition der Benutzerformel" -->
+### **Formeldefinition**
+
+Hier wird die Benutzerformel eingegeben. Es wird normale C Formelsyntax unterstützt. Es stehen die unten aufgeführten Variablen, Konstanten, Operatoren und Funktionen zur Verfügung. Das Ergebnis der Formel wird immer dem Ausgang zugewiesen.
+
+Benutzerformeln werden immer mit dem Datentyp double (Fließkommazahl) berechnet. Alle Eingangsgrößen werden in double umgewandelt, dann wird gerechnet, anschließend wird das Ergebnis von double im Ausgangskonverter in den Ziel-DPT gewandelt.
+
+Eine Benutzerfunktion kann aus maximal 99 Zeichen bestehen. In einer Benutzerfunktion können auch andere Benutzerfunktionen aufgerufen werden.
+
+Um die Lesbarkeit einer Benutzerfunktion zu erhöhen, können neue Zeilen eingefügt werden. Da die ETS keine mehrzeiligen Eingabefelder zulässt, wird das gleiche Verfahren wie bei Kommentarfeldern verwendet: Die Zeichenfolge *\n*, gefolgt von einem Klick auf die Taste "Neue Zeilen aus '\n' machen".
+
+Eine Formel kann auch mit der Taste "Formel prüfen" auf ihre syntaktische Korrektheit geprüft werden. Dies passiert durch eine Online-Verbindung mit dem Gerät selbst. Damit die Taste "Formel prüfen" verfügbar ist, muss das Gerät der ETS bekannt sein. Dafür muss es mindestens einmal programmiert worden sein.
+
+Groß- und Kleinschreibung ist für die Formelauswertung nicht relevant. Man sollte die Formeln so notieren, dass die Lesbarkeit für einen selbst am höchsten ist.
+
+Wenn eine Formel zur Ausführungszeit einen Fehler enthält, liefert sie den Wert NaN (Not-a-Number). Das Ergebnis einer solchen Formel ändert nicht das Ausgangs-KO und der Wert wird nicht auf den Bus gesendet. Folgende Fehler sind möglich:
+
+* Formel ist syntaktisch falsch (Formel prüfen wurde z.B nicht ausgeführt)
+* Formel enthält eine Division durch 0
+* Formel enthält die Quadratwurzel einer negativen Zahl
+* Formel enthält den Logarithmus einer Zahl <= 0
+* Formel ruft mehr als 10 weitere Formeln auf (z.B. durch Rekursion)
+
+#### **Variable E1 - Eingang 1**
+
+E1 wird in der Formel als der aktuelle Wert vom Eingang 1 interpretiert. Der Wert wird generisch in eine Fließkommazahl gewandelt (double in C++) und dann mit dem Wert weitergerechnet.
+
+#### **Variable E2 - Eingang 2**
+
+E2 wird in der Formel als der aktuelle Wert vom Eingang 2 interpretiert. Der Wert wird generisch in eine Fließkommazahl gewandelt (double in C++) und dann mit dem Wert weitergerechnet.
+
+#### **Variable A - Ausgang**
+
+A wird in der Formel als der aktuelle Wert vom Ausgang interpretiert. Der Wert wird generisch in eine Fließkommazahl gewandelt (double in C++) und dann mit dem Wert weitergerechnet.
+
+#### **Konstante e - Eulersche Zahl**
+
+Die Konstante e wird mit dem Wert der Eulerschen Zahl belegt.
+
+#### **Konstante pi - Kreiszahl**
+
+Die Konstante pi wird mit dem Wert der Kreiszahl belegt.
+
+#### **Operatoren**
+
+Folgende Operatoren sind verfügbar:
+
+* '+' - Addition
+* '-' - Subtraktion
+* '*' - Multiplikation
+* '/' - Division
+* '*' - Multiplikation
+* '^' - Potenz
+* '%' - Modulo
+* '==' - Gleich
+* '!=' - Ungleich
+* '<' - Kleiner
+* '<=' - Kleiner gleich
+* '>' - Größer
+* '>=' - Größer gleich
+* '!' - Logisches 'Nicht'
+* '&&' - Logisches 'Und'
+* '||' - Logisches 'Oder'
+
+#### **Funktionen**
+
+Folgende Funktionen sind verfügbar:
+
+* 'if(c,p,q)' - Wenn c wahr ist, dann p sonst q
+* 'if2(c1,p,c2,q,r)' - Wenn c1 wahr ist, dann p sonst wenn c2 wahr ist, dann q sonst r
+* 'if3(c1,p,c2,q,c3,r,s)' - Wenn c1 wahr ist, dann p sonst wenn c2 wahr ist, dann q sonst wenn c3 wahr ist, dann  r sonst s
+* 'b*n*(e1,e2,a)' - Benutzerfunktion *n* (für n=1 bis n=30)
+
+* 'abs(x)' - Absolutwert
+* 'sqrt(x)' - Quadratwurzel
+* 'pow(x,y)' - Potenz (x^y)
+* 'exp(x)' - Exponenentialfunktion (e^x) 
+* 'ln(x)' - natürlicher Logarithmus
+* 'log(x)' - Logarithmus zur Basis 10
+* 'fac(x)' - Fakultät
+* 'ncr(x,y)' - Kombination (nCr)
+* 'npr(x,y)' - Permutation (nPr)
+
+* 'round(x,n)' - Runde x an n-ter Stelle hinter dem Komma
+* 'ceil(x)' - nächstgrößere Ganzzahl
+* 'floor(x)' - nächstkleinere Ganzzahl
+
+* 'sin(x)' - Sinus
+* 'sinh(x)' - Sinus hyperbolicus
+* 'cos(x)' - Cosinus
+* 'cosh(x)' - Cosinus hyperbolicus
+* 'tan(x)' - Tangens
+* 'tanh(x)' - Tangens hyperbolicus
+* 'asin(x)' - Arcussinus
+* 'acos(x)' - Arcuscosinus
+* 'atan(x)' - Arcustangens
+
+* 'nan()' - Not-A-Number (liefert ungültigen Funktionswert)
 
 ## **Logiken**
 
@@ -1813,7 +1946,7 @@ Dieses Auswahlfeld legt den DPT für den Ausgang fest. Unterstützt werden:
 * DPT 17: Szenen Nummer (1-64)
 * DPT 232: RGB-Wert (3*8 Bit Rot-, Grün-, Blauwert)
 
-Je nach gewähltem DPT unterscheiden sich die folgenden Felder leicht. Es werden erst mal die parameter für alle DPT beschrieben und anschließend die DPT-spezifischen.
+Je nach gewähltem DPT unterscheiden sich die folgenden Felder leicht. Es werden erst mal die Parameter für alle DPT beschrieben und anschließend die DPT-spezifischen.
 
 <!-- DOC -->
 ### **Wert für EIN senden?**
@@ -2169,6 +2302,14 @@ Ist nur Eingang 1 aktiv, ist der andere 0 und man bekommt keinen Wert ausgegeben
 
 Ist nur Eingang 2 aktiv, ist der andere 0 und man bekommt den  Wert 0 ausgegeben.
 
+#### **A = E1 ^ E2 (Potenz)**
+
+Der Wert von Eingang 1 wird mit dem Wert von Eingang 2 potenziert und als Ergebnis am Ausgang ausgegeben.
+
+Ist nur Eingang 1 aktiv, ist der andere 0 und man bekommt den Wert 1 ausgegeben.
+
+Ist nur Eingang 2 aktiv, ist der andere 0 und man bekommt den  Wert 0 ausgegeben.
+
 #### **A = (E1 + E2) / 2 (Durchschnitt)**
 
 Es wird der Durchschnitt der Werte der beiden Eingänge gebildet und als Ergebnis am Ausgang ausgegeben.
@@ -2397,6 +2538,8 @@ Die Funktion kann zwar mit allen Eingangs-DPT arbeiten, ist aber besonders für 
 Die Funktion liefert 0, wenn nur einer der beiden Eingänge aktiv sein sollte oder E2 = 0 ist.
 
 ### **Benutzerfunktionen**
+
+> ACHTUNG: Benutzerfunktionen sollten nicht mehr verwendet werden, sie wurden durch [Benutzerformeln](#benutzerformeln) ersetzt. Falls Benutzerfunktionen in bisheriger Firmware implementiert worden sind, sollten diese in Benutzerformeln überführt werden. Die neuen Benutzerformeln sind Updatefähig und können benutzt werden, ohne die Firmware zu modifizieren. 
 
 Die eigentliche Stärke des Formelansatzes liegt sicherlich nicht in den implementierten Standardfunktionen, sondern in den 30 zur Verfügung stehenden Benutzerfunktionen.
 

@@ -1,4 +1,5 @@
 #include "Logic.h"
+#include "LogicFunction.h"
 #include "OpenKNX.h"
 #include "PCA9632.h"
 #include "Timer.h"
@@ -643,4 +644,22 @@ tm &Logic::Now()
 bool Logic::timeValid()
 {
     return sTimer.isTimerValid();
+}
+
+bool Logic::processFunctionProperty(uint8_t objectIndex, uint8_t propertyId, uint8_t length, uint8_t *data, uint8_t *resultData, uint8_t &resultLength)
+{
+    if (!knx.configured() || objectIndex != 160 || propertyId != 4)
+        return false;
+
+    switch (data[0])
+    {
+        case 1:
+            LogicFunction::handleFunctionPropertyCheckFormula(data, resultData, resultLength);
+            return true;
+        case 2:
+            LogicFunction::handleFunctionPropertyTestFormula(data, resultData, resultLength);
+            return true;
+        default:
+            return false;
+    }
 }

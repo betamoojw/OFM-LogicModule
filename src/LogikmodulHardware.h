@@ -348,6 +348,31 @@
         #define SAVE_INTERRUPT_PIN 0
     #endif
 
+    #ifdef BOARD_ABTOOLS_HFPM_HLKLD2420
+        #define PROG_LED_PIN 10
+        #define PROG_LED_PIN_ACTIVE_ON HIGH
+        #define PROG_BUTTON_PIN 9
+        #define PROG_BUTTON_PIN_INTERRUPT_ON FALLING
+        #define INFO_LED_PIN 11
+        #define INFO_LED_PIN_ACTIVE_ON HIGH
+        #define PRESENCE_LED_PIN 28
+        #define PRESENCE_LED_PIN_ACTIVE_ON HIGH
+        #define MOVE_LED_PIN 29
+        #define MOVE_LED_PIN_ACTIVE_ON HIGH
+        #define KNX_UART_TX_PIN 12
+        #define KNX_UART_RX_PIN 13
+        #define SAVE_INTERRUPT_PIN 0
+        #define I2C_WIRE Wire1
+        #define I2C_SDA_PIN 2
+        #define I2C_SCL_PIN 3
+        #define HF_SERIAL Serial2
+        #define HF_SERIAL_SPEED 115200
+        #define HF_POWER_PIN 27
+        #define HF_UART_TX_PIN 4
+        #define HF_UART_RX_PIN 5
+        #define PIR_PIN 26
+    #endif
+
 // #ifdef BOARD_MASIFI_PM
 // #define PROG_LED_PIN 13
 // #define PROG_LED_PIN_ACTIVE_ON HIGH
