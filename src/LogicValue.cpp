@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
+#include <math.h>
 
 void LogicValue::setType(ValueType iType)
 {
@@ -513,6 +514,25 @@ LogicValue LogicValue::operator/(LogicValue const& value)
     else
     {
         LogicValue lValue = intValue() / value.intValue();
+        return lValue;
+    }
+}
+
+LogicValue LogicValue::operator^(LogicValue const& value)
+{
+    if (_type == FloatType || value._type == FloatType)
+    {
+        LogicValue lValue = pow(floatValue(), value.floatValue());
+        return lValue;
+    }
+    else if (_type == DoubleType || value._type == DoubleType)
+    {
+        LogicValue lValue = pow(doubleValue(), value.doubleValue());
+        return lValue;
+    }
+    else
+    {
+        LogicValue lValue = intValue() ^ value.intValue();
         return lValue;
     }
 }
