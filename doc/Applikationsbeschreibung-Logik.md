@@ -579,7 +579,7 @@ Folgende Funktionen sind verfügbar:
 * 'abs(x)' - Absolutwert
 * 'sqrt(x)' - Quadratwurzel
 * 'pow(x,y)' - Potenz (x^y)
-* 'exp(x)' - Exponenentialfunktion (e^x) 
+* 'exp(x)' - Exponentialfunktion (e^x) 
 * 'ln(x)' - natürlicher Logarithmus
 * 'log(x)' - Logarithmus zur Basis 10
 * 'fac(x)' - Fakultät
@@ -2539,7 +2539,7 @@ Die Funktion liefert 0, wenn nur einer der beiden Eingänge aktiv sein sollte od
 
 ### **Benutzerfunktionen**
 
-> ACHTUNG: Benutzerfunktionen sollten nicht mehr verwendet werden, sie wurden durch [Benutzerformeln](#benutzerformeln) ersetzt. Falls Benutzerfunktionen in bisheriger Firmware implementiert worden sind, sollten diese in Benutzerformeln überführt werden. Die neuen Benutzerformeln sind Updatefähig und können benutzt werden, ohne die Firmware zu modifizieren. 
+> ACHTUNG: Benutzerfunktionen sollten nicht mehr verwendet werden, sie wurden durch [Benutzerformeln](#benutzerformeln) ersetzt. Falls Benutzerfunktionen in bisheriger Firmware implementiert worden sind, sollten diese in Benutzerformeln überführt werden. Die neuen Benutzerformeln sind updatefähig und können benutzt werden, ohne die Firmware zu modifizieren. 
 
 Die eigentliche Stärke des Formelansatzes liegt sicherlich nicht in den implementierten Standardfunktionen, sondern in den 30 zur Verfügung stehenden Benutzerfunktionen.
 
@@ -2551,9 +2551,9 @@ Um eigene Benutzerfunktionen zu implementieren, muss man die gesamte Entwicklung
 
 Alle Benutzerfunktionen werden gleichartig aufgerufen, im Folgenden wird nur eine behandelt.
 
-#### **Ausgang = Benutzerfunktion_xx(E1, E2)**
+#### **A = B*xx*(E1, E2, A)**
 
-Sobald der Ausgang senden soll, ruft er die angegebene Benutzerfunktion mit den Werten der Eingänge 1 und 2 auf. Nachdem die Berechnung erfolgt ist, sendet der Ausgang den berechneten Wert.
+Sobald der Ausgang senden soll, ruft er die angegebene Benutzerfunktion mit den Werten der Eingänge 1 und 2 und dem aktuellen Wert des Ausgangs auf. Nachdem die Berechnung erfolgt ist, sendet der Ausgang den berechneten Wert.
 
 Nichtaktive Eingänge bekommen den Wert 0 beim Aufruf der Funktion.
 
@@ -2648,7 +2648,7 @@ Ab der Version 3.2 des Logikmoduls gibt es eine Endlosschleifen-Erkennung. Wird 
 
 gesendet wurde, wobei NN die Nummer des deaktivierten Kanals ist.
 
-Diese neue Funktion ermöglicht es, gravierende Logikfehler zu korrigieren, ohne dass man das Logikmodul erneut ausbauen oder gar neu Flashen muss. Es wird nur der fehlerhaft parametrisierte Kanal deaktiviert, alle anderen Funktionen bleiben erhalten. Vor allem ist es möglich, das Logikmodul neu zu programmieren.
+Diese neue Funktion ermöglicht es, gravierende Logikfehler zu korrigieren, ohne dass man das Logikmodul erneut ausbauen oder gar die Firmware neu aufspielen muss. Es wird nur der fehlerhaft parametrisierte Kanal deaktiviert, alle anderen Funktionen bleiben erhalten. Vor allem ist es möglich, das Logikmodul neu zu programmieren.
 
 Ob ein Kanal durch die Endlosschleifen-Erkennung deaktiviert wurde, kann man erkennen, indem man über das Diagnoseobjekt das Kommando
  
@@ -3032,7 +3032,7 @@ Diese Beispiellogik realisiert somit einen Betriebszeitzähler, der eine maximal
 
 Vorgehen:
 
-Das normale Einschaltsignal des Gerätes wird durch ein TOR geschickt, dass im AUS-Fall auf jeden Fall auch ein AUS-Signal schickt. Im EIN-Fall wird nur ein EIN-Signal weitergeschickt, wenn der Betriebszeitzähler noch nicht die maximale Einschaltzeit (im Beispiel 30 Sekunden) erreicht hat. Der Ausgang schaltet das Gerät ein und schaltet gleichzeitig einen einfachen Zähler, der weiterzählt, solange ein EIN vorliegt.
+Das normale Einschaltsignal des Gerätes wird durch ein TOR geschickt, dass im AUS-Fall auf jeden Fall auch ein AUS-Signal schickt. Im EIN-Fall wird nur ein EIN-Signal weitergeschickt, wenn der Betriebszeitzähler noch nicht die maximale Einschaltzeit (im Beispiel 30 Sekunden) erreicht hat. Der Ausgang schaltet das Gerät ein und schaltet gleichzeitig einen einfachen Zähler, der weiter zählt, solange ein EIN vorliegt.
 
 #### **Schaltsignal auswerten**
 
@@ -3117,9 +3117,9 @@ Zuerst gehen wir davon aus, dass der Zählwert 31/6/120 auf 0 steht, der Schalte
 
 Ein EIN auf der 31/6/121 führt dazu, dass das TOR von Kanal 1 aufgeht. Ab Eingang 1 vom TOR liegt ein EIN-Signal, da der Zähler im Wertintervall von 0-29 ist. Dieses EIN-Signal wird zum Ausgang geschickt und damit ein EIN ausgesendet. Das Gerät wird eingeschaltet.
 
-Durch die interne Verknüpfung wird das UND von Kanal 2 getriggert. Dieses UND hat am Einang 1 ein EIN-Signal, da der Zähler im Wertebereich von 0-2147483647 liegt. Einang 2 ist EIN, weil Konstante Werte immer ein EIN-Signal ergeben. Interner Eingang 3 ist EIN, weil Kanal 1 am Ausgang ein EIN hat.
+Durch die interne Verknüpfung wird das UND von Kanal 2 getriggert. Dieses UND hat am Eingang 1 ein EIN-Signal, da der Zähler im Wertebereich von 0-2147483647 liegt. Eingang 2 ist EIN, weil Konstante Werte immer ein EIN-Signal ergeben. Interner Eingang 3 ist EIN, weil Kanal 1 am Ausgang ein EIN hat.
 
-Das UND schickt also ein EIN-Signal zu seinem Ausgang, der erstmal den Wert von Eingang 1 um eins hoch zählt. Der Zähler hat jetzt den Wert 1. 
+Das UND schickt also ein EIN-Signal zu seinem Ausgang, der erst einmal den Wert von Eingang 1 um eins hoch zählt. Der Zähler hat jetzt den Wert 1. 
 
 Diese Änderung triggert den Eingang 1 von Kanal 1, aber 1 liegt immer noch im Intervall von 0-29, der Eingang bleibt somit auf EIN.
 
@@ -3153,7 +3153,7 @@ Man kann (und sollte) die einzelnen Grenzwerte an die eigenen Bedürfnisse anpas
 
 #### Vergleichswert für die Duscherkennung ermitteln
 
-Da wir für die Duscherkennung vergleichen wollen, ob die Luftfeuchte innerhalb einer Minute um 2% gestiegen ist, müssen wir erstmal dafür sorgen, dass wir jede Minute den aktuellen Wert für eine Minute speichern.
+Da wir für die Duscherkennung vergleichen wollen, ob die Luftfeuchte innerhalb einer Minute um 2% gestiegen ist, müssen wir erst einmal dafür sorgen, dass wir jede Minute den aktuellen Wert für eine Minute speichern.
 
 Dies erfolgt klassischerweise durch ein TOR, dass jede Minute kurz geöffnet wird. Dadurch wird der Wert vom Eingang auf den Ausgang geschickt. Da das TOR danach sofort wieder geschlossen wird, bleibt der Wert am Ausgang für eine Minute erhalten.
 
@@ -3296,7 +3296,7 @@ Die Logik ist ein einfaches ODER mit einem Eingang.
 
 <kbd>![Eingang 1](examples/bsp06/bsp06-1e1-farbe-setzen.png)</kbd>
 
-Der Eingang 1 behält seine Standardeinstellungne, man sollte ihn nur passend benennen.
+Der Eingang 1 behält seine Standardeinstellungen, man sollte ihn nur passend benennen.
 
 <kbd>![Ausgang](examples/bsp06/bsp06-1a-farbe-intern.png)</kbd>
 
