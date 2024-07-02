@@ -37,7 +37,8 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 * Fortgeschrittene Funktionen
   * [Endlosschleifen-Erkennung](#endlosschleifen-erkennung)
   * [Diagnoseobjekt](#diagnoseobjekt)
-  * [Benutzerfunktionen](#benutzerfunktionen)
+  * [Benutzerformeln](#benutzerformeln)
+  * [Benutzerfunktionen (veraltet)](#benutzerfunktionen)
 
 ### ETS Konfiguration
 
@@ -82,14 +83,13 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
-17.06.2024: Firmware 3.x, Applikation 3.x
+
+02.07.2024: Firmware 3.3, Applikation 3.3
+
 
 * NEU: [Benutzerformeln](#benutzerformeln) sind nun in der ETS-Applikation definierbar, dies löst mittelfristig die bisher verfügbaren [Benutzerfunktionen](#benutzerfunktionen) ab.
 * NEU: Es kann nun in der ETS getestet werden, ob die Ergebnisse von Benutzerformeln korrekt sind.
 * NEU: Die mathematische Funktion "Potenz" ist jetzt bei den Standardformeln auch verfügbar.
-
-09.06.2024: Firmware 3.3, Applikation 3.3
-
 * NEU: Durch die Logik verursachte Endlosschleifen werden jetzt erkannt und die entsprechenden Logikkanäle deaktiviert (siehe [Endlosschleifen-Erkennung](#endlosschleifen-erkennung))
 * NEU: Es sind neue mathematische Funktionen hinzugekommen, die Logikkanäle vereinfachen können (siehe [Standardformeln](#standardformeln))
   * Inkrementieren und Dekrementieren, damit der Aufbau von Zählern einfacher wird.
@@ -320,7 +320,7 @@ Ausgangskonverter
 
 * Für EIN oder AUS wird der Wert eines anderen DPT gesendet
 * Für EIN oder AUS wird der Wert eines Eingangs gesendet
-* Für EIN oder AUS kann das Ergebnis einer Formel verwendet werden
+* Für EIN oder AUS kann das Ergebnis einer Standardformel oder einer Benutzerformel verwendet werden
 
 User-spezifische (mathematische) Formeln sind in die Firmware einbaubar
 
@@ -347,7 +347,8 @@ Zeitschaltuhren
 
 Weitere Features:
 
-* Ein Eingang kann jetzt intern (ohne externe GA) mit jedem KO des Moduls verbunden werden.
+* Komplexe Benutzerformeln können in der ETS eingegeben, getestet und die Ergebnisse überprüft werden. Diese Formeln können dann im Ausgangskonverter einer Logik genutzt werden.
+* Ein Eingang kann intern (ohne externe GA) mit jedem KO des Moduls verbunden werden.
 
   * Das erlaubt große Logiken ohne den Bus Zwischenergebnissen "vollzumüllen"
   * Da jedes KO geht, kann beim Sensormodul oder Enocean-Gateway z.B. direkt ein Sensorausgang verbunden werden und mit Logiken versehen werden.
@@ -362,10 +363,24 @@ Weitere Features:
 * Speichern von Werten über einen Stromausfall hinweg 
 * Senden von gespeicherten Werten nach einem Neustart
 
-## OpenKNX
+## Logikmodul als eigene Applikation
 
-Das Logikmodul hat auch eine eigene ETS-Applikation, die es erlaubt, das Logikmodul ohne Einbettung in eine andere Applikation zu verwenden. In diesem Fall hat es eine Seite mit allgemeinen Parametern, die unter [Applikationsbeschreibung-Common](https://github.com/OpenKNX/OGM-Common/blob/v1/doc/Applikationsbeschreibung-Common.md) beschrieben sind. 
+Das Logikmodul hat auch eine eigene ETS-Applikation, die es erlaubt, das Logikmodul ohne Einbettung in eine andere Applikation zu verwenden. In diesem Fall hat es zusätzliche Unterseiten, die standardmäßig in OpenKNX-Applikationen verfügbar sind: 
 
+### OpenKNX
+
+Dies ist eine Seite mit allgemeinen Parametern, die unter [Applikationsbeschreibung-Common](https://github.com/OpenKNX/OGM-Common/blob/v1/doc/Applikationsbeschreibung-Common.md) beschrieben sind. 
+
+### Konfigurationstransfer
+
+Der Konfigurationstransfer erlaubt einen
+
+* Export von Konfigurationen von OpenKNX-Modulen und deren Kanälen
+* Import von Konfigurationen von OpenKNX-Modulen und deren Kanälen
+* Kopieren der Konfiguration von einem OpenKNX-Modulkanal auf einen anderen
+* Zurücksetzen der Konfiguration eines OpenKNX-Modulkanals auf Standardwerte
+
+Die Funktionen vom Konfigurationstranfer-Modul sind unter [Applikationsbeschreibung-ConfigTransfer](https://github.com/OpenKNX/OFM-ConfigTransfer/blob/v1/doc/Applikationsbeschreibung-ConfigTransfer.md) beschrieben.
 
 ## **Allgemein**
 
