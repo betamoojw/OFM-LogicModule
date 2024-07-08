@@ -61,7 +61,7 @@ Ausgangskonverter
 
 * Für EIN oder AUS wird der Wert eines anderen DPT gesendet
 * Für EIN oder AUS wird der Wert eines Eingangs gesendet
-* Für EIN oder AUS kann das Ergebnis einer Formel verwendet werden
+* Für EIN oder AUS kann das Ergebnis einer Standardformel oder einer Benutzerformel verwendet werden
 
 User-spezifische (mathematische) Formeln sind in die Firmware einbaubar
 
@@ -88,7 +88,8 @@ Zeitschaltuhren
 
 Weitere Features:
 
-* Ein Eingang kann jetzt intern (ohne externe GA) mit jedem KO des Moduls verbunden werden.
+* Komplexe Benutzerformeln können in der ETS eingegeben, getestet und die Ergebnisse überprüft werden. Diese Formeln können dann im Ausgangskonverter einer Logik genutzt werden.
+* Ein Eingang kann intern (ohne externe GA) mit jedem KO des Moduls verbunden werden.
 
   * Das erlaubt große Logiken ohne den Bus Zwischenergebnissen "vollzumüllen"
   * Da jedes KO geht, kann beim Sensormodul oder Enocean-Gateway z.B. direkt ein Sensorausgang verbunden werden und mit Logiken versehen werden.

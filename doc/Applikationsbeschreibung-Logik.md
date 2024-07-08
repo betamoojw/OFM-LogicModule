@@ -363,15 +363,11 @@ Weitere Features:
 * Speichern von Werten über einen Stromausfall hinweg 
 * Senden von gespeicherten Werten nach einem Neustart
 
-## Logikmodul als eigene Applikation
-
-Das Logikmodul hat auch eine eigene ETS-Applikation, die es erlaubt, das Logikmodul ohne Einbettung in eine andere Applikation zu verwenden. In diesem Fall hat es zusätzliche Unterseiten, die standardmäßig in OpenKNX-Applikationen verfügbar sind: 
-
-### OpenKNX
+### **OpenKNX**
 
 Dies ist eine Seite mit allgemeinen Parametern, die unter [Applikationsbeschreibung-Common](https://github.com/OpenKNX/OGM-Common/blob/v1/doc/Applikationsbeschreibung-Common.md) beschrieben sind. 
 
-### Konfigurationstransfer
+### **Konfigurationstransfer**
 
 Der Konfigurationstransfer erlaubt einen
 
@@ -487,15 +483,15 @@ An dieser Stelle kann man die Pinbelegung für Rot/Grün/Blau in verschiedenen P
 Das Logikmodul unterstützt 3 verschiedene Töne bzw. Lautstärken für den Buzzer.
 In den Eingabefeldern kann man die Tonfrequenzen für die einzelnen Töne für Laut/Mittel und Leise angeben. Über die Tonhöhe werden indirekt auch die Lautstärken gesteuert.
 
-## **Dokumentation**
-
-Eine stichwortartige Liste der vorhandenen Möglichkeiten ist auch in der Applikation verfügbar. Ferner ist zu jedem Eingabefeld eine Kontextsensitive Hilfe vorhanden.
-
 ## **Benutzerformeln**
 
 Bisher war es schon immer möglich, durch Implementierung von [Benutzerfunktionen](#benutzerfunktionen) in C++ komplexere Berechnungen durch das Logikmodul durchführen zu lassen. Das hat aber immer den Nachteil, dass man selber Kompilieren muss, bei Updates sein eigenes Coding immer nachziehen muss und man verliert womöglich die Update-Kompatibilität wegen Eigenänderungen.
 
-Ab sofort ist es möglich, bis zu 30 Benutzerformeln in der ETS-Applikation zu definieren und diese im Ausgangskonverter eines jeden Logikkanals verwenden. Das neue Konzept ist dazu gedacht, die alten Benutzerfunktionen abzulösen, so dass die neuen und die alten Formeln den gleichen Namensraum belegen. Eine Benutzerformel 22 überschreibt somit eine implementierte Benutzerfunktion 22. Das heißt, wenn beide vorhanden sind, wird immer die Benutzerformel berechnet. 
+<!-- DOC HelpContext="Benutzerformeln" -->
+Es ist möglich, bis zu 30 Benutzerformeln in der ETS-Applikation zu definieren und diese im Ausgangskonverter eines jeden Logikkanals verwenden. 
+<!-- DOCEND -->
+
+Das neue Konzept ist dazu gedacht, die alten Benutzerfunktionen abzulösen, so dass die neuen und die alten Formeln den gleichen Namensraum belegen. Eine Benutzerformel 22 überschreibt somit eine implementierte Benutzerfunktion 22. Das heißt, wenn beide vorhanden sind, wird immer die Benutzerformel berechnet. 
 
 <!-- DOC -->
 ### **Benutzerformel testen**
@@ -617,6 +613,70 @@ Folgende Funktionen sind verfügbar:
 
 * 'nan()' - Not-A-Number (liefert ungültigen Funktionswert)
 
+## **Übersicht interne KO**
+
+Das Logikmodul erlaubt 2 Arten von internen Verknüpfungen, damit Hilfswerte und Zwischenergebnisse von Kanal zu Kanal nicht über den Bus ausgetauscht werden müssen.
+
+Die eine Möglichkeit der Verknüpfung, genannt Interner Eingang, erlaubt es, die internen Eingänge eines Kanals mit dem internen Ausgang eines anderen Kanals zu verbinden. Dies ist unter [Interne Eingänge](#interne-eingänge) beschrieben.
+
+<!-- DOC HelpContext="Übersicht interne KO" -->
+Es gibt die Möglichkeit, einen Eingang oder einen Ausgang direkt mit einem Kommunikationsobjekt (KO) zu verknüpfen (über dessen KO-Nummer) und so den Wert von diesem KO intern (statt über eine GA) zu bekommen.
+
+Da es bei bis zu 99 Kanälen sehr schwer sein kann, den Überblick über alle intern verknüpften KO zu behalten, soll die Übersichtstabelle auf dieser Seite dabei helfen.
+
+<!-- DOC Skip="1" -->
+![Übersicht interne KO](pics/Uebersicht-KO.png)
+
+### **Anzeige**
+
+Das Feld Anzeige bestimmt, welche Elemente in der Tabelle dargestellt werden.
+
+#### **Mit Logikbeschriftungen**
+
+Die Tabelle zeigt neben der Spalte L*n* (*n* ist die Nummer des Logikkanals) auch den Beschriftungstext, der für diesen Kanal vergeben wurde. Dies ist die ausführlichere Variante, benötigt aber pro dargestelltem Logikkanal eine zusätzliche Zeile.
+
+#### **Ohne Logikbeschriftungen**
+
+Es gibt nur eine Spalte mit den Logiknummern L*n*, aber ohne deren Texte. Diese Darstellung ist kompakter und erlaubt es, mehr Ein- und Ausgänge und deren interne KO-Verknüpfungen pro Seite zu sehen.
+
+#### **Nur Kanäle mit internen KO**
+
+Diese Ansicht zeigt nur Logikkanäle, die auch wirklich interne KO-Verknüpfungen enthalten. Kanäle ohne interne KO-Verknüpfungen werden nicht dargestellt.
+
+#### **Alle Kanäle**
+
+Diese Ansicht zeigt alle definierbaren Kanäle.
+
+### **Übersichtstabelle mit internen KO-Verknüpfungen**
+
+Die Tabelle enthält 5 Spalten und bis zu 3 Zeilen pro Logikkanal. Alle eingabebereiten Felder kommen auch so in der Kanaldefinition selbst vor und haben die gleiche Funktion.
+
+#### Spalte 1 (ohne Überschrift)
+
+Diese Spalte zeigt, welcher Logikkanal L*n* dargestellt wird und um welchen Eingang es geht (E1 oder E2).
+
+#### Spalte Logiktext/Eingang
+
+Die in dieser Spalte erscheinenden Textfelder enthalten die Beschriftungen, die man dem Logikkanal bzw. den Eingängen gegeben hat. Die Textfelder sind änderbar.
+
+#### Spalte KO
+
+Diese Spalten zeigt die KO-Nummern der Eingänge und wie sie ermittelt werden. Der Wert "Neues KO" zeigt immer die dann automatisch dem Eingang zugeordnete KO-Nummer, beim Wert "Bestehendes KO" erscheint ein Eingabefeld, in dem man die KO-Nummer eingeben kann. Details kann man unter [Kommunikationsobjekt für Eingang](#kommunikationsobjekt-für-eingang) nachlesen.
+
+#### Spalte Ausgang
+
+Das in dieser Spalte erscheinende Textfeld enthält die Beschriftung, die man dem Ausgang gegeben hat. Das Textfeld ist änderbar.
+
+#### Spalte zusätzliche KO
+
+In dieser Spalte sieht man, ob für das EIN-Signal oder das AUS-Signal ein zusätzliches KO gewählt wurde und welche Nummer es hat.
+
+Falls kein zusätzliches KO gewählt wurde, ist die das Auswahlfeld leer und die leere KO-Nummer wird durch 3 Striche '---' repräsentiert.
+
+Falls ein zusätzliches KO gewählt wurde, ist das Auswahlfeld aktiv und die KO-Nummer steht in einem eingebbaren Feld. Sie kann hier auch geändert werden.
+Details kann man unter [Kommunikationsobjekt für Ausgang](#kommunikationsobjekt-für-ausgang) nachlesen.
+
+
 ## **Logiken**
 
 Im Folgenden werden die generellen Konzepte und die grobe Funktion eines Logikkanals beschrieben. Die Parameter eines jeden Kanals werden später im Detail beschrieben.
@@ -727,6 +787,8 @@ Die hier für jeden Kanal zur Verfügung stehenden Möglichkeiten der Beeinfluss
 * Verzögere ein Signal
 * Zeitschaltuhr-Funktionen
 * tbc
+
+
 
 ## **Logik n: ...**
 
