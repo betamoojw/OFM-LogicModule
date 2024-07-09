@@ -4,6 +4,12 @@
 #include "knx.h"
 #include "knxprod.h"
 
+double LogicFunction::e1 = 0;
+double LogicFunction::e2 = 0;
+double LogicFunction::out = 0;
+uint8_t LogicFunction::sRecursionCounter = 0;
+char LogicFunction::sFormulaBuffer[100] = {0};
+
 // native functions, implemented as a simple example how to use user functions
 LogicValue LogicFunction::nativeAdd(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
 {

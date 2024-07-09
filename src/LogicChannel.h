@@ -343,8 +343,8 @@ class LogicChannel : public OpenKNX::Channel
     ~LogicChannel();
 
     // static
-    inline static uint8_t pLoadCounterMax = 0;
-    inline static uint8_t pLoadChannel = 0;
+    static uint8_t pLoadCounterMax;
+    static uint8_t pLoadChannel;
     static uint16_t calcKoNumber(uint8_t iIOIndex, uint8_t iChannelId);
     static GroupObject *getKoForChannel(uint8_t iIOIndex, uint8_t iChannelId);
     // static float getFloat(uint8_t *data);
