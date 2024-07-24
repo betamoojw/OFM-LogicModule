@@ -72,6 +72,7 @@ class Logic : public OpenKNX::Module
 
     tm &Now();
     bool timeValid();
+    char gBuffer[14] = {0};
 
   private:
     static uint8_t sMagicWord[];

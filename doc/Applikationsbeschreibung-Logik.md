@@ -83,9 +83,11 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+24.07.2024: Firmware 3.3.1, Applikation 3.3
+
+* FIX: Ausgangskonverter Zahl->String (irgendein Zahl-DPT nach DPT16) ist jetzt implementiert.
 
 02.07.2024: Firmware 3.3, Applikation 3.3
-
 
 * NEU: [Benutzerformeln](#benutzerformeln) sind nun in der ETS-Applikation definierbar, dies löst mittelfristig die bisher verfügbaren [Benutzerfunktionen](#benutzerfunktionen) ab.
 * NEU: Es kann nun in der ETS getestet werden, ob die Ergebnisse von Benutzerformeln korrekt sind.
