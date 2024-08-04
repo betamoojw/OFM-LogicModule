@@ -224,7 +224,7 @@ void Logic::readFlash(const uint8_t *iBuffer, const uint16_t iSize)
 void Logic::writeFlash()
 {
     openknx.flash.writeByte(1); // Version
-    for (uint8_t lIndex = 0; lIndex < min(mNumChannels, LOG_ChannelCount); lIndex++)
+    for (uint8_t lIndex = 0; lIndex < MIN(mNumChannels, LOG_ChannelCount); lIndex++)
     {
         mChannel[lIndex]->save();
     }
