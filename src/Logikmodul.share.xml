@@ -928,8 +928,23 @@
               <ParameterType Id="%AID%_PT-KOInput" Name="KOInput">
                 <TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
                   <Enumeration Text="Neues KO" Value="0" Id="%ENID%" />
-                  <Enumeration Text="Bestehendes KO" Value="1" Id="%ENID%" />
+                  <Enumeration Text="Absolutes KO" Value="1" Id="%ENID%" />
                 </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-KORelInput" Name="KORelInput">
+                <TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
+                  <Enumeration Text="Neues KO" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Absolutes KO" Value="1" Id="%ENID%" />
+                  <Enumeration Text="Relatives KO" Value="2" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-KOAbsNumber" Name="KOAbsNumber">
+                <!-- Referencing other KO as an absolute number -->
+                <TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="1" maxInclusive="%MaxKoNumber%" />
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-KORelNumber" Name="KORelNumber">
+                <!-- Referencing other KO as a relative number -->
+                <TypeNumber SizeInBit="16" Type="signedInt" minInclusive="-%MaxKoNumber-1%" maxInclusive="%MaxKoNumber-1%" />
               </ParameterType>
               <ParameterType Id="%AID%_PT-OverviewFilter" Name="OverviewFilter">
                 <TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">

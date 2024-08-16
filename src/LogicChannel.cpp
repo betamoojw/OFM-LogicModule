@@ -1863,49 +1863,63 @@ bool LogicChannel::processCommand(const std::string iCmd, bool iDebugKo)
         return lResult;
 
     if (iCmd.length() == 10)
-    {
-        char v[5];
-        // here we find the last IO state
-        uint8_t lValidInput = pValidActiveIO & BIT_INPUT_MASK;
-        uint8_t lCurrentIO = pCurrentIODebug & 0x1F;
-        // input values
-        for (uint8_t i = 0; i < 4; i++)
+        if (pLoadCounter >= LOAD_COUNTER_MAX)
         {
-            if (lValidInput & 1)
-            {
-                // input is valid, we present its value
-                v[i] = (lCurrentIO & 1) ? '1' : '0';
-            }
-            else
-            {
-                // invalid input
-                v[i] = 'x';
-            }
-            lValidInput >>= 1;
-            lCurrentIO >>= 1;
+            logInfoP("This channel is disabled due to call limit");
+            if (iDebugKo)
+                openknx.console.writeDiagenoseKo("Dis call: yes");
+            lResult = true;
         }
-        // output value
-        if ((pCurrentPipeline & PIP_RUNNING) && (pCurrentIn & BIT_FIRST_PROCESSING))
+        else if (ParamLOG_fDisable)
         {
-            v[4] = (lCurrentIO & 1) ? '1' : '0';
+            logInfoP("This channel is disabled with test setting");
+            if (iDebugKo)
+                openknx.console.writeDiagenoseKo("Dis test: yes");
+            lResult = true;
         }
         else
         {
-            v[4] = 'x';
+            char v[5];
+            // here we find the last IO state
+            uint8_t lValidInput = pValidActiveIO & BIT_INPUT_MASK;
+            uint8_t lCurrentIO = pCurrentIODebug & 0x1F;
+            // input values
+            for (uint8_t i = 0; i < 4; i++)
+            {
+                if (lValidInput & 1)
+                {
+                    // input is valid, we present its value
+                    v[i] = (lCurrentIO & 1) ? '1' : '0';
+                }
+                else
+                {
+                    // invalid input
+                    v[i] = 'x';
+                }
+                lValidInput >>= 1;
+                lCurrentIO >>= 1;
+            }
+            // output value
+            if ((pCurrentPipeline & PIP_RUNNING) && (pCurrentIn & BIT_FIRST_PROCESSING))
+                v[4] = (lCurrentIO & 1) ? '1' : '0';
+            else
+                v[4] = 'x';
+            // list state of logic of last execution
+            logInfoP("Inputs: A%c B%c C%c D%c, Output: Q%c", v[0], v[1], v[2], v[3], v[4]);
+            if (iDebugKo)
+                openknx.console.writeDiagenoseKo("A%c B%c C%c D%c Q%c", v[0], v[1], v[2], v[3], v[4]);
+            lResult = true;
         }
-        // list state of logic of last execution
-        logInfoP("Inputs: A%c B%c C%c D%c, Output: Q%c", v[0], v[1], v[2], v[3], v[4]);
-        if (iDebugKo)
-        {
-            openknx.console.writeDiagenoseKo("A%c B%c C%c D%c Q%c", v[0], v[1], v[2], v[3], v[4]);
-        }
-        lResult = true;
-    }
     else if (iCmd.length() > 11 && iCmd.substr(11, 1) == "l")
     {
-        logInfoP("This channel is %sdisabled", (pLoadCounter < LOAD_COUNTER_MAX) ? "not " : "");
+        logInfoP("This channel is %sdisabled due to call limit", (pLoadCounter < LOAD_COUNTER_MAX) ? "not " : "");
+        logInfoP("This channel is %sdisabled with test setting", (ParamLOG_fDisable) ? "" : "not");
         if (iDebugKo)
-            openknx.console.writeDiagenoseKo("Disabled: %s", (pLoadCounter < LOAD_COUNTER_MAX) ? "no" : "yes");
+        {
+            openknx.console.writeDiagenoseKo("Dis call: %s", (pLoadCounter < LOAD_COUNTER_MAX) ? "no" : "yes");
+            openknx.console.writeDiagenoseKo("");
+            openknx.console.writeDiagenoseKo("Dis test: %s", (ParamLOG_fDisable) ? "yes" : "no");
+        }
         lResult = true;
     }
     else if (iCmd.length() > 11 && iCmd.substr(11, 1) == "r")

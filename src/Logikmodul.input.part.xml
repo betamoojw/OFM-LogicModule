@@ -30,15 +30,17 @@
                 <!-- Delay pattern -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+383%" Name="f%C%E%En%RepeatBase" ParameterType="%AID%_PT-DelayBase" Offset="2" BitOffset="0" Text="Eingang wird gelesen alle" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+384%" Name="f%C%E%En%RepeatTime" ParameterType="%AID%_PT-DelayTime" Offset="2" BitOffset="2" Text="Eingang wird gelesen alle" Value="0" />
-                <!-- Internal KO -->
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+377%" Name="f%C%E%En%UseOtherKO" ParameterType="%AID%_PT-KOInput" Offset="4" BitOffset="0" Text="Kommunikationsobjekt für Eingang" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+378%" Name="f%C%E%En%OtherKO" ParameterType="%AID%_PT-KONumber" Offset="4" BitOffset="1" Text="    Nummer des Kommunikationsobjekts" Value="%K%En-1%%" />
+                <!-- Internal KO Numbers -->
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+378%" Name="f%C%E%En%OtherKO" ParameterType="%AID%_PT-KOAbsNumber" Offset="4" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="%K%En-1%%" />
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+459%" Name="f%C%E%En%OtherKORel" ParameterType="%AID%_PT-KORelNumber" Offset="4" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="0" />
                 <!-- Default value handling -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+026%" Name="f%C%E%En%Default" ParameterType="%AID%_PT-InputDefault" Offset="6" BitOffset="6" Text="Falls Vorbelegung aus dem Speicher nicht möglich oder nicht gewünscht, dann vorbelegen mit" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+393%" Name="f%C%E%En%DefaultExt" ParameterType="%AID%_PT-InputDefaultExt" Offset="6" BitOffset="6" Text="Eingang vorbelegen mit" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+130%" Name="f%C%E%En%DefaultEEPROM" ParameterType="%AID%_PT-OnOffYesNo" Offset="6" BitOffset="5" Text="Eingangswert speichern und beim nächsten Neustart als Vorbelegung nutzen?" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+164%" Name="f%C%E%En%DefaultRepeat" ParameterType="%AID%_PT-OnOffYesNo" Offset="6" BitOffset="4" Text="Nur so lange zyklisch lesen, bis erstes Telegramm eingeht" Value="0" />
-                <!-- 4 Bit frei -->
+                <!-- Internal KO Setting -->
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+377%" Name="f%C%E%En%UseOtherKO" ParameterType="%AID%_PT-KORelInput" Offset="6" BitOffset="2" Text="Kommunikationsobjekt für Eingang" Value="0" />
+                <!-- 2 Bit frei -->
               </Union>
               <!-- Parameter for input E1 -->
               <Union SizeInBit="64">
@@ -267,6 +269,7 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP20+025%_R-%TT%%CC%%PPP20+025%01" RefId="%AID%_UP-%TT%%CC%%PPP20+025%" Text="Bis-Wert" Value="16777216" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP20+025%_R-%TT%%CC%%PPP20+025%02" RefId="%AID%_UP-%TT%%CC%%PPP20+025%" Text="Einschalt-Wert" Value="10000000" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP44+324%_R-%TT%%CC%%PPP44+324%01" RefId="%AID%_UP-%TT%%CC%%PPP44+324%" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+459%_R-%TT%%CC%%PPP1+459%01" RefId="%AID%_UP-%TT%%CC%%PPP1+459%" />
             </ParameterRefs>
             <ComObjectTable>
               <ComObject Id="%AID%_O-%TT%%CC%%KKK+0%" Name="KOf%C%E%En%" Text="Eingang %En%" Number="%K%En-1%%" FunctionText="Logik %C%, Eingang %En%" ObjectSize="4 Bytes" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
