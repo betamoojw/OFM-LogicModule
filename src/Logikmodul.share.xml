@@ -933,7 +933,13 @@
               </ParameterType>
               <ParameterType Id="%AID%_PT-KORelInput" Name="KORelInput">
                 <TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
-                  <Enumeration Text="Neues KO" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Eigenes KO" Value="0" Id="%ENID%" />
+                  <Enumeration Text="Absolutes KO" Value="1" Id="%ENID%" />
+                  <Enumeration Text="Relatives KO" Value="2" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-KORelInput2" Name="KORelInput2">
+                <TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
                   <Enumeration Text="Absolutes KO" Value="1" Id="%ENID%" />
                   <Enumeration Text="Relatives KO" Value="2" Id="%ENID%" />
                 </TypeRestriction>
@@ -1338,9 +1344,11 @@
                   <Columns>
                     <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="11%" />
                     <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="37%" />
-                    <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="37%" />
+                    <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="45%" />
                     <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="37%" />
-                    <Column Id="%AID%_PB-nnn_C-5" Name="Col4" Width="27%" />
+                    <Column Id="%AID%_PB-nnn_C-5" Name="Col5" Width="7%" />
+                    <Column Id="%AID%_PB-nnn_C-6" Name="Col6" Width="45%" />
+                    <Column Id="%AID%_PB-nnn_C-7" Name="Col7" Width="45%" />
                   </Columns>
                   <choose ParamRefId="%AID%_P-%TT%00168_R-%TT%0016801">
                     <when test="0">
@@ -1352,9 +1360,10 @@
                   </choose>
                   <ParameterSeparator Id="%AID%_PS-nnn" Text="KO" UIHint="Headline" Cell="1,3" />
                   <ParameterSeparator Id="%AID%_PS-nnn" Text="Ausgang" UIHint="Headline" Cell="1,4" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="zusätzliche KO" UIHint="Headline" Cell="1,5" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Text="zusätzliche KO" UIHint="Headline" Cell="1,6" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert senden KO" UIHint="Headline" Cell="1,7" />
                 </ParameterBlock>
-                <op:include href="Logikmodul.intko.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Channel-List']/*" type="template" prefix="LOG" IsInner="true" />
+                <op:include href="Logikmodul.overview-intko.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Channel-List']/*" type="template" prefix="LOG" IsInner="true" />
               </ParameterBlock>
               <!-- followed by all logic channels -->
               <op:include href="Logikmodul.templ.xml" xpath="//ApplicationProgram/Dynamic/ChannelIndependentBlock/*" type="template" prefix="LOG" IsInner="true" />

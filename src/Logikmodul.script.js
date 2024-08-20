@@ -69,3 +69,17 @@ function LOG_processUserFormula(command, parFormulaName, iFormulaIndex, device, 
         throw new Error("Logik: Fehler bei '" + lLetter + "':\n\n" + lStart + " ==>" + lLetter + "<== " + lEnd);
     }
 }
+
+function LOG_CalcAbsFromRel(input, output, context) {
+    if (input.AbsRel == 2) {
+        output.AbsReadKO = context.OwnKO + input.RelWriteKO;
+        output.AbsWriteKO = output.AbsReadKO;
+    }
+}
+
+function LOG_CalcRelFromAbs(input, output, context) {
+    if (output.AbsRel == 1) {
+        output.RelWriteKO = input.AbsWriteKO - context.OwnKO;
+    }
+}
+

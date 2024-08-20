@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<?xml-model href="../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<?xml-model href="../../../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/20" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
   <ManufacturerData>
     <Manufacturer RefId="M-00FA">
@@ -53,22 +53,22 @@
                       <when test="1">
                         <!-- true case -->
                         <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
-                          <when test="1">
+                          <when test="1 2">
                             <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="1" />
                           </when>
                         </choose>
                         <choose ParamRefId="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901">
-                          <when test="1">
+                          <when test="1 2">
                             <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="1" />
                           </when>
                         </choose>
                         <choose ParamRefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001">
-                          <when test="1">
+                          <when test="1 2">
                             <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="1" />
                           </when>
                         </choose>
                         <choose ParamRefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101">
-                          <when test="1">
+                          <when test="1 2">
                             <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="1" />
                           </when>
                         </choose>
@@ -107,12 +107,17 @@
                             <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="6%" />
                             <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="5%" />
                             <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="37%" />
-                            <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="25%" />
+                            <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="21%" />
                             <Column Id="%AID%_PB-nnn_C-5" Name="Col5" Width="12%" />
-                            <Column Id="%AID%_PB-nnn_C-6" Name="Col6" Width="37%" />
-                            <Column Id="%AID%_PB-nnn_C-7" Name="Col7" Width="10%" />
-                            <Column Id="%AID%_PB-nnn_C-8" Name="Col8" Width="5%" />
-                            <Column Id="%AID%_PB-nnn_C-9" Name="Col9" Width="12%" />
+                            <Column Id="%AID%_PB-nnn_C-6" Name="Col6" Width="12%" />
+                            <Column Id="%AID%_PB-nnn_C-7" Name="Col7" Width="37%" />
+                            <Column Id="%AID%_PB-nnn_C-8" Name="Col8" Width="7%" />
+                            <Column Id="%AID%_PB-nnn_C-9" Name="Col9" Width="21%" />
+                            <Column Id="%AID%_PB-nnn_C-10" Name="Col10" Width="12%" />
+                            <Column Id="%AID%_PB-nnn_C-11" Name="Col11" Width="12%" />
+                            <Column Id="%AID%_PB-nnn_C-12" Name="Col12" Width="21%" />
+                            <Column Id="%AID%_PB-nnn_C-13" Name="Col13" Width="12%" />
+                            <Column Id="%AID%_PB-nnn_C-14" Name="Col14" Width="12%" />
                           </Columns>
                           <choose ParamRefId="%AID%_P-%TT%00168_R-%TT%0016801">
                             <when test="0">
@@ -131,10 +136,14 @@
                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701" Cell="2,4" HelpContext="%DOC%" />
                               <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
                                 <when test="0">
-                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="%K0%" Cell="2,5" />
+                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="%K0%" Cell="2,6" />
                                 </when>
                                 <when test="1">
-                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%378_R-%TT%%CC%37802" Cell="2,5" HelpContext="%DOC%" />
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%378_R-%TT%%CC%37802" Cell="2,6" HelpContext="%DOC%" />
+                                </when>
+                                <when test="2">
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%459_R-%TT%%CC%45901" Cell="2,5" HelpContext="%DOC%" />
+                                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%461_R-%TT%%CC%46101" Cell="2,6" HelpContext="%DOC%" />
                                 </when>
                               </choose>
                             </when>
@@ -147,34 +156,68 @@
                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901" Cell="3,4" HelpContext="%DOC%" />
                               <choose ParamRefId="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901">
                                 <when test="0">
-                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="%K1%" Cell="3,5" />
+                                  <ParameterSeparator Id="%AID%_PS-nnn" Text="%K1%" Cell="3,6" />
                                 </when>
                                 <when test="1">
-                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%380_R-%TT%%CC%38002" Cell="3,5" HelpContext="%DOC%" />
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%380_R-%TT%%CC%38002" Cell="3,6" HelpContext="%DOC%" />
+                                </when>
+                                <when test="2">
+                                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%460_R-%TT%%CC%46001" Cell="3,5" HelpContext="%DOC%" />
+                                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%462_R-%TT%%CC%46201" Cell="3,6" HelpContext="%DOC%" />
                                 </when>
                               </choose>
                             </when>
                           </choose>
                           <!-- Output -->
-                          <ParameterRefRef RefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" Cell="2,6" HelpContext="%DOC%" />
-                          <ParameterSeparator Id="%AID%_PS-nnn" Text="EIN-KO" Cell="2,7" />
-                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001" Cell="2,8" HelpContext="%DOC%" />
+                          <ParameterRefRef RefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" Cell="2,7" HelpContext="%DOC%" />
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="EIN" Cell="2,8" UIHint="Headline" />
+                          <ParameterSeparator Id="%AID%_PS-nnn" Text="AUS" Cell="3,8" UIHint="Headline" />
+                          <!-- Send additional KO -->
+                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001" Cell="2,9" HelpContext="%DOC%" />
                           <choose ParamRefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001">
                             <when test="0">
-                              <ParameterSeparator Id="%AID%_PS-nnn" Text="---" Cell="2,9" />
+                              <ParameterSeparator Id="%AID%_PS-nnn" Text="%K2%" Cell="2,11" />
                             </when>
                             <when test="1">
-                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%442_R-%TT%%CC%44201" Cell="2,9" HelpContext="%DOC%" />
+                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%442_R-%TT%%CC%44201" Cell="2,11" HelpContext="%DOC%" />
+                            </when>
+                            <when test="2">
+                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%463_R-%TT%%CC%46301" HelpContext="%DOC%" Cell="2,10" />
+                              <ParameterRefRef RefId="%AID%_P-%TT%%CC%465_R-%TT%%CC%46501" HelpContext="%DOC%" Cell="2,11" />
                             </when>
                           </choose>
-                          <ParameterSeparator Id="%AID%_PS-nnn" Text="AUS-KO" Cell="3,7" />
-                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101" Cell="3,8" HelpContext="%DOC%" />
+                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101" Cell="3,9" HelpContext="%DOC%" />
                           <choose ParamRefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101">
                             <when test="0">
-                              <ParameterSeparator Id="%AID%_PS-nnn" Text="---" Cell="3,9" />
+                              <ParameterSeparator Id="%AID%_PS-nnn" Text="%K2%" Cell="3,11" />
                             </when>
                             <when test="1">
-                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%443_R-%TT%%CC%44301" Cell="3,9" HelpContext="%DOC%" />
+                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%443_R-%TT%%CC%44301" Cell="3,11" HelpContext="%DOC%" />
+                            </when>
+                            <when test="2">
+                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%464_R-%TT%%CC%46401" HelpContext="%DOC%" Cell="3,10" />
+                              <ParameterRefRef RefId="%AID%_P-%TT%%CC%466_R-%TT%%CC%46601" HelpContext="%DOC%" Cell="3,11" />
+                            </when>
+                          </choose>
+                          <!-- Send value of other KO -->
+                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%471_R-%TT%%CC%47101" HelpContext="%DOC%" Cell="2,12" />
+                          <choose ParamRefId="%AID%_UP-%TT%%CC%471_R-%TT%%CC%47101">
+                            <when test="1">
+                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%435_R-%TT%%CC%43501" HelpContext="%DOC%" Cell="2,14" />
+                            </when>
+                            <when test="2">
+                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%467_R-%TT%%CC%46701" HelpContext="%DOC%" Cell="2,13" />
+                              <ParameterRefRef RefId="%AID%_P-%TT%%CC%469_R-%TT%%CC%46901" HelpContext="%DOC%" Cell="2,14" />
+                            </when>
+                          </choose>
+                          <ParameterRefRef RefId="%AID%_UP-%TT%%CC%472_R-%TT%%CC%47201" HelpContext="%DOC%" Cell="3,12" />
+                          <choose ParamRefId="%AID%_UP-%TT%%CC%472_R-%TT%%CC%47201">
+                            <when test="1">
+                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%436_R-%TT%%CC%43601" HelpContext="%DOC%" Cell="3,14" />
+                            </when>
+                            <when test="2">
+                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%468_R-%TT%%CC%46801" HelpContext="%DOC%" Cell="3,13" />
+                              <ParameterRefRef RefId="%AID%_P-%TT%%CC%470_R-%TT%%CC%47001" HelpContext="%DOC%" Cell="3,14" />
                             </when>
                           </choose>
                         </ParameterBlock>

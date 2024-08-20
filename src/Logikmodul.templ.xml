@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<?xml-model href="../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<?xml-model href="../../../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/20" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
   <ManufacturerData>
     <Manufacturer RefId="M-00FA">
       <ApplicationPrograms>
         <ApplicationProgram Id="%AID%" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="WP-Presence-Logic-Develop" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0" ApplicationNumber="0" ApplicationVersion="0" ReplacesVersions="0">
-          <op:part name="INPUT" href="Logikmodul.input.part.xml" instances="2">
+          <op:part name="INPUT" href="Logikmodul.input-e1-e2.part.xml" instances="2">
             <op:param name="%En%" value="1" increment="1" />
             <op:param name="%OtherEn%" value="2" increment="-1" />
             <op:param name="%ParamOffset%" value="0" increment="15" />
@@ -269,10 +269,13 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%122" Name="f%C%OOnPALine" ParameterType="%AID%_PT-PALine" Offset="1" BitOffset="4" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%123" Name="f%C%OOnPADevice" ParameterType="%AID%_PT-PADevice" Offset="2" BitOffset="0" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%279" Name="f%C%OOnFunction" ParameterType="%AID%_PT-ValueFunction" Offset="1" BitOffset="0" Text="    Wert für EIN ermitteln als" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%435" Name="f%C%OOnKONumber" ParameterType="%AID%_PT-KONumber" Offset="1" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%471" Name="f%C%OOnKOKind" ParameterType="%AID%_PT-KORelInput2" Offset="6" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%435" Name="f%C%OOnKONumber" ParameterType="%AID%_PT-KOAbsNumber" Offset="1" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="%K2%" />
+                <Parameter Id="%AID%_UP-%TT%%CC%467" Name="f%C%OOnKONumberRel" ParameterType="%AID%_PT-KORelNumber" Offset="1" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%437" Name="f%C%OOnKODpt" ParameterType="%AID%_PT-InputDpt" Offset="3" BitOffset="0" Text="    DPT des Kommunikationsobjekts" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%440" Name="f%C%OOnKOSend" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="0" Text="    Wert für EIN an ein zusätzliches&#10;    KO senden?" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%442" Name="f%C%OOnKOSendNumber" ParameterType="%AID%_PT-KONumber" Offset="7" BitOffset="1" Text="        Nummer des zusätzlichen KO" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%440" Name="f%C%OOnKOSend" ParameterType="%AID%_PT-KORelInput" Offset="6" BitOffset="2" Text="    Wert für EIN an ein zusätzliches&#10;    KO senden?" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%442" Name="f%C%OOnKOSendNumber" ParameterType="%AID%_PT-KOAbsNumber" Offset="7" BitOffset="0" Text="        Nummer des zusätzlichen KO" Value="%K2%" />
+                <Parameter Id="%AID%_UP-%TT%%CC%463" Name="f%C%OOnKOSendNumberRel" ParameterType="%AID%_PT-KORelNumber" Offset="7" BitOffset="0" Text="        Nummer des zusätzlichen KO" Value="0" />
               </Union>
               <Union SizeInBit="120">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="69" BitOffset="0" />
@@ -299,11 +302,18 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%125" Name="f%C%OOffPALine" ParameterType="%AID%_PT-PALine" Offset="1" BitOffset="4" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%126" Name="f%C%OOffPADevice" ParameterType="%AID%_PT-PADevice" Offset="2" BitOffset="0" Text="" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%%CC%280" Name="f%C%OOffFunction" ParameterType="%AID%_PT-ValueFunction" Offset="1" BitOffset="0" Text="    Wert für AUS ermitteln als" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%%CC%436" Name="f%C%OOffKONumber" ParameterType="%AID%_PT-KONumber" Offset="1" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%472" Name="f%C%OOffKOKind" ParameterType="%AID%_PT-KORelInput2" Offset="6" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%436" Name="f%C%OOffKONumber" ParameterType="%AID%_PT-KOAbsNumber" Offset="1" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="%K2%" />
+                <Parameter Id="%AID%_UP-%TT%%CC%468" Name="f%C%OOffKONumberRel" ParameterType="%AID%_PT-KORelNumber" Offset="1" BitOffset="0" Text="    Nummer des Kommunikationsobjekts" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%438" Name="f%C%OOffKODpt" ParameterType="%AID%_PT-InputDpt" Offset="3" BitOffset="0" Text="    DPT des Kommunikationsobjekts" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%441" Name="f%C%OOffKOSend" ParameterType="%AID%_PT-CheckBox" Offset="7" BitOffset="0" Text="    Wert für AUS an ein zusätzliches&#10;    KO senden?" Value="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%443" Name="f%C%OOffKOSendNumber" ParameterType="%AID%_PT-KONumber" Offset="7" BitOffset="1" Text="        Nummer des zusätzlichen KO" Value="1" />
+                <Parameter Id="%AID%_UP-%TT%%CC%441" Name="f%C%OOffKOSend" ParameterType="%AID%_PT-KORelInput" Offset="6" BitOffset="2" Text="    Wert für AUS an ein zusätzliches&#10;    KO senden?" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%443" Name="f%C%OOffKOSendNumber" ParameterType="%AID%_PT-KOAbsNumber" Offset="7" BitOffset="0" Text="        Nummer des zusätzlichen KO" Value="%K2%" />
+                <Parameter Id="%AID%_UP-%TT%%CC%464" Name="f%C%OOffKOSendNumberRel" ParameterType="%AID%_PT-KORelNumber" Offset="7" BitOffset="0" Text="        Nummer des zusätzlichen KO" Value="0" />
               </Union>
+              <Parameter Id="%AID%_P-%TT%%CC%465" Name="f%C%OOnKOSendNumberRead" ParameterType="%AID%_PT-KOAbsNumber" Text="    Nummer des zusätzlichen KO" Value="%K2%" Access="Read" />
+              <Parameter Id="%AID%_P-%TT%%CC%466" Name="f%C%OOffKOSendNumberRead" ParameterType="%AID%_PT-KOAbsNumber" Text="    Nummer des zusätzlichen KO" Value="%K2%" Access="Read" />
+              <Parameter Id="%AID%_P-%TT%%CC%469" Name="f%C%OOnKONumberRead" ParameterType="%AID%_PT-KOAbsNumber" Text="    Nummer des Kommunikationsobjekts" Value="%K2%" Access="Read" />
+              <Parameter Id="%AID%_P-%TT%%CC%470" Name="f%C%OOffKONumberRead" ParameterType="%AID%_PT-KOAbsNumber" Text="    Nummer des Kommunikationsobjekts" Value="%K2%" Access="Read" />
               <Parameter Id="%AID%_P-%TT%%CC%133" Name="f%C%AnyInputActive" ParameterType="%AID%_PT-OnOffYesNo" Text="Irgendein Eingang aktiv (interner Wert)" Access="None" Value="0" />
               <!-- <Parameter Id="%AID%_P-%TT%%CC%144" Name="f%C%E1AnySceneChosen" ParameterType="%AID%_PT-ValueDpt5" Text="Eingang1: Welches Szenenfeld wird benutzt (interner Wert)" Access="None" Value="0" /> -->
               <!-- <Parameter Id="%AID%_P-%TT%%CC%145" Name="f%C%E2AnySceneChosen" ParameterType="%AID%_PT-ValueDpt5" Text="Eingang2: Welches Szenenfeld wird benutzt (interner Wert)" Access="None" Value="0" /> -->
@@ -549,7 +559,65 @@
               <ParameterRef Id="%AID%_P-%TT%%CC%456_R-%TT%%CC%45601" RefId="%AID%_P-%TT%%CC%456" />
               <ParameterRef Id="%AID%_P-%TT%%CC%457_R-%TT%%CC%45701" RefId="%AID%_P-%TT%%CC%457" />
               <ParameterRef Id="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" RefId="%AID%_P-%TT%%CC%458" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%463_R-%TT%%CC%46301" RefId="%AID%_UP-%TT%%CC%463" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%464_R-%TT%%CC%46401" RefId="%AID%_UP-%TT%%CC%464" />
+              <ParameterRef Id="%AID%_P-%TT%%CC%465_R-%TT%%CC%46501" RefId="%AID%_P-%TT%%CC%465" />
+              <ParameterRef Id="%AID%_P-%TT%%CC%466_R-%TT%%CC%46601" RefId="%AID%_P-%TT%%CC%466" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%467_R-%TT%%CC%46701" RefId="%AID%_UP-%TT%%CC%467" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%468_R-%TT%%CC%46801" RefId="%AID%_UP-%TT%%CC%468" />
+              <ParameterRef Id="%AID%_P-%TT%%CC%469_R-%TT%%CC%46901" RefId="%AID%_P-%TT%%CC%469" />
+              <ParameterRef Id="%AID%_P-%TT%%CC%470_R-%TT%%CC%47001" RefId="%AID%_P-%TT%%CC%470" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%471_R-%TT%%CC%47101" RefId="%AID%_UP-%TT%%CC%471" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%472_R-%TT%%CC%47201" RefId="%AID%_UP-%TT%%CC%472" />
             </ParameterRefs>
+            <ParameterCalculations>
+              <op:usePart name="INPUT" xpath="//ParameterCalculations/*" />
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0101" Language="JavaScript" Name="CalcRelAbs%CC%Oa" RLTransformationFunc="LOG_CalcAbsFromRel" RLTransformationParameters="{&quot;OwnKO&quot;: %K2%}" LRTransformationFunc="LOG_CalcRelFromAbs" LRTransformationParameters="{&quot;OwnKO&quot;: %K2%}">
+                <LParameters>
+                  <!-- Absolute Address -->
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%465_R-%TT%%CC%46501" AliasName="AbsReadKO" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%442_R-%TT%%CC%44201" AliasName="AbsWriteKO" />
+                </LParameters>
+                <RParameters>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%463_R-%TT%%CC%46301" AliasName="RelWriteKO" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001" AliasName="AbsRel" />
+                </RParameters>
+              </ParameterCalculation>
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0102" Language="JavaScript" Name="CalcRelAbs%CC%Ob" RLTransformationFunc="LOG_CalcAbsFromRel" RLTransformationParameters="{&quot;OwnKO&quot;: %K2%}" LRTransformationFunc="LOG_CalcRelFromAbs" LRTransformationParameters="{&quot;OwnKO&quot;: %K2%}">
+                <LParameters>
+                  <!-- Absolute Address -->
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%466_R-%TT%%CC%46601" AliasName="AbsReadKO" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%443_R-%TT%%CC%44301" AliasName="AbsWriteKO" />
+                </LParameters>
+                <RParameters>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%464_R-%TT%%CC%46401" AliasName="RelWriteKO" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101" AliasName="AbsRel" />
+                </RParameters>
+              </ParameterCalculation>
+
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0103" Language="JavaScript" Name="CalcRelAbs%CC%Oc" RLTransformationFunc="LOG_CalcAbsFromRel" RLTransformationParameters="{&quot;OwnKO&quot;: %K2%}" LRTransformationFunc="LOG_CalcRelFromAbs" LRTransformationParameters="{&quot;OwnKO&quot;: %K2%}">
+                <LParameters>
+                  <!-- Absolute Address -->
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%469_R-%TT%%CC%46901" AliasName="AbsReadKO" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%435_R-%TT%%CC%43501" AliasName="AbsWriteKO" />
+                </LParameters>
+                <RParameters>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%467_R-%TT%%CC%46701" AliasName="RelWriteKO" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%471_R-%TT%%CC%47101" AliasName="AbsRel" />
+                </RParameters>
+              </ParameterCalculation>
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0104" Language="JavaScript" Name="CalcRelAbs%CC%Od" RLTransformationFunc="LOG_CalcAbsFromRel" RLTransformationParameters="{&quot;OwnKO&quot;: %K2%}" LRTransformationFunc="LOG_CalcRelFromAbs" LRTransformationParameters="{&quot;OwnKO&quot;: %K2%}">
+                <LParameters>
+                  <!-- Absolute Address -->
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%470_R-%TT%%CC%47001" AliasName="AbsReadKO" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%436_R-%TT%%CC%43601" AliasName="AbsWriteKO" />
+                </LParameters>
+                <RParameters>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%468_R-%TT%%CC%46801" AliasName="RelWriteKO" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%472_R-%TT%%CC%47201" AliasName="AbsRel" />
+                </RParameters>
+              </ParameterCalculation>
+            </ParameterCalculations>
             <ComObjectTable>
               <op:usePart name="INPUT" xpath="//ComObjectTable/*" />
               <ComObject Id="%AID%_O-%TT%%CC%002" Name="KOf%C%O" Text="Ausgang" Number="%K2%" FunctionText="Logik %C%, Ausgang" ObjectSize="14 Bytes" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
@@ -1447,7 +1515,29 @@
                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%279_R-%TT%%CC%27901" HelpContext="%DOC%" IndentLevel="1" />
                             </when>
                             <when test="9">
-                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%435_R-%TT%%CC%43501" HelpContext="%DOC%" IndentLevel="1" />
+                              <ParameterBlock Id="%AID%_PB-%C%003" Inline="true" Layout="Grid" HelpContext="LOG-Nummer-des-Kommunikationsobjekts">
+                                <Rows>
+                                  <Row Id="%AID%_PB-%C%001_R-1" Name="Row1" />
+                                </Rows>
+                                <Columns>
+                                  <Column Id="%AID%_PB-%C%001_C-1" Name="Col1" Width="4%" />
+                                  <Column Id="%AID%_PB-%C%001_C-2" Name="Col2" Width="41%" />
+                                  <Column Id="%AID%_PB-%C%001_C-3" Name="Col3" Width="21%" />
+                                  <Column Id="%AID%_PB-%C%001_C-4" Name="Col4" Width="12%" />
+                                  <Column Id="%AID%_PB-%C%001_C-5" Name="Col5" Width="12%" />
+                                </Columns>
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Nummer des Kommunikationsobjekts" Cell="1,2" />
+                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%471_R-%TT%%CC%47101" HelpContext="%DOC%" Cell="1,3" />
+                                <choose ParamRefId="%AID%_UP-%TT%%CC%471_R-%TT%%CC%47101">
+                                  <when test="1">
+                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%435_R-%TT%%CC%43501" HelpContext="%DOC%" Cell="1,5" />
+                                  </when>
+                                  <when test="2">
+                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%467_R-%TT%%CC%46701" HelpContext="%DOC%" Cell="1,4" />
+                                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%469_R-%TT%%CC%46901" HelpContext="%DOC%" Cell="1,5" />
+                                  </when>
+                                </choose>
+                              </ParameterBlock>
                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%437_R-%TT%%CC%43701" HelpContext="%DOC%" IndentLevel="1" />
                             </when>
                           </choose>
@@ -1456,34 +1546,32 @@
                             <when test="1 2 3 8 9">
                               <choose ParamRefId="%AID%_UP-%TT%%CC%064_R-%TT%%CC%06401">
                                 <when test="0 1 2 3 4 5 6 7 9 10 13 14 15">
-                                  <ParameterBlock Id="%AID%_PB-%C%002" Name="KO%C%001" Inline="true" Layout="Grid" HelpContext="LOG-Wert-fuer-EIN-an-ein-zusaetzliches-KO-senden">
+                                  <ParameterBlock Id="%AID%_PB-%C%002" Inline="true" Layout="Grid" HelpContext="LOG-Wert-fuer-EIN-an-ein-zusaetzliches-KO-senden">
                                     <Rows>
                                       <Row Id="%AID%_PB-%C%001_R-1" Name="Row%C%001" />
                                     </Rows>
                                     <Columns>
                                       <Column Id="%AID%_PB-%C%001_C-1" Name="Col1" Width="4%" />
                                       <Column Id="%AID%_PB-%C%001_C-2" Name="Col2" Width="41%" />
-                                      <Column Id="%AID%_PB-%C%001_C-3" Name="Col3" Width="15%" />
-                                      <Column Id="%AID%_PB-%C%001_C-4" Name="Col4" Width="21%" />
-                                      <Column Id="%AID%_PB-%C%001_C-5" Name="Col5" Width="20%" />
+                                      <Column Id="%AID%_PB-%C%001_C-3" Name="Col3" Width="21%" />
+                                      <Column Id="%AID%_PB-%C%001_C-4" Name="Col4" Width="12%" />
+                                      <Column Id="%AID%_PB-%C%001_C-5" Name="Col5" Width="12%" />
                                     </Columns>
                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert für EIN an ein zusätzliches&#10;KO senden?" Cell="1,2" />
                                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001" HelpContext="%DOC%" IndentLevel="1" Cell="1,3" />
                                     <choose ParamRefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001">
+                                      <when test="0">
+                                        <ParameterSeparator Id="%AID%_PS-nnn" Text="%K2%" Cell="1,5" />
+                                      </when>
                                       <when test="1">
-                                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Nummer des KO" Cell="1,4" />
                                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%442_R-%TT%%CC%44201" HelpContext="%DOC%" Cell="1,5" />
+                                      </when>
+                                      <when test="2">
+                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%463_R-%TT%%CC%46301" HelpContext="%DOC%" Cell="1,4" />
+                                        <ParameterRefRef RefId="%AID%_P-%TT%%CC%465_R-%TT%%CC%46501" HelpContext="%DOC%" Cell="1,5" />
                                       </when>
                                     </choose>
                                   </ParameterBlock>
-
-
-                                  <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001" HelpContext="%DOC%" IndentLevel="1" />
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001">
-                                      <when test="1">
-                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%442_R-%TT%%CC%44201" HelpContext="%DOC%" IndentLevel="1" />
-                                      </when>
-                                    </choose> -->
                                 </when>
                               </choose>
                             </when>
@@ -1600,7 +1688,29 @@
                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%280_R-%TT%%CC%28001" HelpContext="%DOC%" IndentLevel="1" />
                             </when>
                             <when test="9">
-                              <ParameterRefRef RefId="%AID%_UP-%TT%%CC%436_R-%TT%%CC%43601" HelpContext="%DOC%" IndentLevel="1" />
+                              <ParameterBlock Id="%AID%_PB-%C%003" Inline="true" Layout="Grid" HelpContext="LOG-Nummer-des-Kommunikationsobjekts">
+                                <Rows>
+                                  <Row Id="%AID%_PB-%C%001_R-1" Name="Row1" />
+                                </Rows>
+                                <Columns>
+                                  <Column Id="%AID%_PB-%C%001_C-1" Name="Col1" Width="4%" />
+                                  <Column Id="%AID%_PB-%C%001_C-2" Name="Col2" Width="41%" />
+                                  <Column Id="%AID%_PB-%C%001_C-3" Name="Col3" Width="21%" />
+                                  <Column Id="%AID%_PB-%C%001_C-4" Name="Col4" Width="12%" />
+                                  <Column Id="%AID%_PB-%C%001_C-5" Name="Col5" Width="12%" />
+                                </Columns>
+                                <ParameterSeparator Id="%AID%_PS-nnn" Text="Nummer des Kommunikationsobjekts" Cell="1,2" />
+                                <ParameterRefRef RefId="%AID%_UP-%TT%%CC%472_R-%TT%%CC%47201" HelpContext="%DOC%" Cell="1,3" />
+                                <choose ParamRefId="%AID%_UP-%TT%%CC%472_R-%TT%%CC%47201">
+                                  <when test="1">
+                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%436_R-%TT%%CC%43601" HelpContext="%DOC%" Cell="1,5" />
+                                  </when>
+                                  <when test="2">
+                                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%468_R-%TT%%CC%46801" HelpContext="%DOC%" Cell="1,4" />
+                                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%470_R-%TT%%CC%47001" HelpContext="%DOC%" Cell="1,5" />
+                                  </when>
+                                </choose>
+                              </ParameterBlock>
                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%438_R-%TT%%CC%43801" HelpContext="%DOC%" IndentLevel="1" />
                             </when>
                           </choose>
@@ -1615,27 +1725,25 @@
                                     <Columns>
                                       <Column Id="%AID%_PB-%C%001_C-1" Name="Col1" Width="4%" />
                                       <Column Id="%AID%_PB-%C%001_C-2" Name="Col2" Width="41%" />
-                                      <Column Id="%AID%_PB-%C%001_C-3" Name="Col3" Width="15%" />
-                                      <Column Id="%AID%_PB-%C%001_C-4" Name="Col4" Width="21%" />
-                                      <Column Id="%AID%_PB-%C%001_C-5" Name="Col5" Width="20%" />
+                                      <Column Id="%AID%_PB-%C%001_C-3" Name="Col3" Width="21%" />
+                                      <Column Id="%AID%_PB-%C%001_C-4" Name="Col4" Width="12%" />
+                                      <Column Id="%AID%_PB-%C%001_C-5" Name="Col5" Width="12%" />
                                     </Columns>
                                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert für AUS an ein zusätzliches&#10;KO senden?" Cell="1,2" />
                                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101" HelpContext="%DOC%" IndentLevel="1" Cell="1,3" />
                                     <choose ParamRefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101">
+                                      <when test="0">
+                                        <ParameterSeparator Id="%AID%_PS-nnn" Text="%K2%" Cell="1,5" />
+                                      </when>
                                       <when test="1">
-                                        <ParameterSeparator Id="%AID%_PS-nnn" Text="Nummer des KO" Cell="1,4" />
                                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%443_R-%TT%%CC%44301" HelpContext="%DOC%" Cell="1,5" />
+                                      </when>
+                                      <when test="2">
+                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%464_R-%TT%%CC%46401" HelpContext="%DOC%" Cell="1,4" />
+                                        <ParameterRefRef RefId="%AID%_P-%TT%%CC%466_R-%TT%%CC%46601" HelpContext="%DOC%" Cell="1,5" />
                                       </when>
                                     </choose>
                                   </ParameterBlock>
-
-
-                                  <!-- <ParameterRefRef RefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101" HelpContext="%DOC%" IndentLevel="1" />
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101">
-                                      <when test="1">
-                                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%443_R-%TT%%CC%44301" HelpContext="%DOC%" IndentLevel="1" />
-                                      </when>
-                                    </choose> -->
                                 </when>
                               </choose>
                             </when>

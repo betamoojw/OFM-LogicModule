@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<?xml-model href="../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<?xml-model href="../../../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/20" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
   <ManufacturerData>
     <Manufacturer RefId="M-00FA">
       <ApplicationPrograms>
         <ApplicationProgram Id="%AID%" ApplicationNumber="102" ApplicationVersion="10" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="WP-Logic" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0">
-          <op:part name="CHOOSE-KO" href="Logikmodul.inputko.part.xml" />
+          <op:part name="CHOOSE-KO" href="Logikmodul.input-intko.part.xml" />
           <Static>
             <Parameters>
               <!-- Input E1 -->
@@ -18,6 +18,7 @@
               <Parameter Id="%AID%_P-%TT%%CC%%PPP8+151%" Name="f%C%E%En%Low5Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" />
               <Parameter Id="%AID%_P-%TT%%CC%%PPP8+152%" Name="f%C%E%En%Low6Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" />
               <Parameter Id="%AID%_P-%TT%%CC%%PPP8+153%" Name="f%C%E%En%Low7Dpt17Input" ParameterType="%AID%_PT-ValueSceneIn" Text="... oder bei Szene" Value="0" /> -->
+              <Parameter Id="%AID%_P-%TT%%CC%%PPP1+461%" Name="f%C%E%En%OtherKORead" ParameterType="%AID%_PT-KOAbsNumber" Text="    Nummer des Kommunikationsobjekts" Value="%K%En-1%%" Access="Read" />
               <Union SizeInBit="56">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="%ParamOffset+6%" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+008%" Name="f%C%E%En%" ParameterType="%AID%_PT-InputEnable" Offset="0" BitOffset="4" Text="Eingang %En%" Value="0" />
@@ -153,7 +154,7 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP2+383%_R-%TT%%CC%%PPP2+383%01" RefId="%AID%_UP-%TT%%CC%%PPP2+383%" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP2+384%_R-%TT%%CC%%PPP2+384%01" RefId="%AID%_UP-%TT%%CC%%PPP2+384%" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01" RefId="%AID%_UP-%TT%%CC%%PPP2+377%" />
-              <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP2+378%_R-%TT%%CC%%PPP2+378%02" RefId="%AID%_UP-%TT%%CC%%PPP2+378%" Value="1" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP2+378%_R-%TT%%CC%%PPP2+378%02" RefId="%AID%_UP-%TT%%CC%%PPP2+378%" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP20+026%_R-%TT%%CC%%PPP20+026%01" RefId="%AID%_UP-%TT%%CC%%PPP20+026%" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+393%_R-%TT%%CC%%PPP1+393%01" RefId="%AID%_UP-%TT%%CC%%PPP1+393%" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+130%_R-%TT%%CC%%PPP1+130%01" RefId="%AID%_UP-%TT%%CC%%PPP1+130%" />
@@ -270,7 +271,21 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP20+025%_R-%TT%%CC%%PPP20+025%02" RefId="%AID%_UP-%TT%%CC%%PPP20+025%" Text="Einschalt-Wert" Value="10000000" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP44+324%_R-%TT%%CC%%PPP44+324%01" RefId="%AID%_UP-%TT%%CC%%PPP44+324%" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%%PPP1+459%_R-%TT%%CC%%PPP1+459%01" RefId="%AID%_UP-%TT%%CC%%PPP1+459%" />
+              <ParameterRef Id="%AID%_P-%TT%%CC%%PPP1+461%_R-%TT%%CC%%PPP1+461%01" RefId="%AID%_P-%TT%%CC%%PPP1+461%" />
             </ParameterRefs>
+            <ParameterCalculations>
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%0%En%" Language="JavaScript" Name="CalcRelAbs%CC%E%En%" RLTransformationFunc="LOG_CalcAbsFromRel" RLTransformationParameters="{&quot;OwnKO&quot;: %K%En-1%%}" LRTransformationFunc="LOG_CalcRelFromAbs" LRTransformationParameters="{&quot;OwnKO&quot;: %K%En-1%%}">
+                <LParameters>
+                  <!-- Absolute Address -->
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%%PPP1+461%_R-%TT%%CC%%PPP1+461%01" AliasName="AbsReadKO" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP2+378%_R-%TT%%CC%%PPP2+378%02" AliasName="AbsWriteKO" />
+                </LParameters>
+                <RParameters>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+459%_R-%TT%%CC%%PPP1+459%01" AliasName="RelWriteKO" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01" AliasName="AbsRel" />
+                </RParameters>
+              </ParameterCalculation>
+            </ParameterCalculations>
             <ComObjectTable>
               <ComObject Id="%AID%_O-%TT%%CC%%KKK+0%" Name="KOf%C%E%En%" Text="Eingang %En%" Number="%K%En-1%%" FunctionText="Logik %C%, Eingang %En%" ObjectSize="4 Bytes" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
             </ComObjectTable>
@@ -302,8 +317,8 @@
                         <!-- choose KO -->
                         <op:usePart name="CHOOSE-KO" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='ChooseInputKO']/*" />
                         <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
-                          <when test="1">
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Bestehendes KO: In der folgenden DPT-Dropdown muss unbedingt der DPT ausgewählt werden, den das Bestehende KO trägt! Das kann in der Appliation nicht ermittelt werden. Bei Falscheingaben könnte sich das gesamte Gerät aufhängen!" UIHint="Information" />
+                          <when test="1 2">
+                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Beim Verweis auf ein anderes KO muss der folgenden DPT-Dropdown unbedingt der DPT ausgewählt werden, den das andere KO trägt! Das kann in der Appliation nicht ermittelt werden. Bei Falscheingaben könnte sich das gesamte Gerät aufhängen!" UIHint="Information" />
                           </when>
                         </choose>
                         <!-- dpt -->
@@ -393,7 +408,7 @@
                               </when>
                             </choose>
                           </when>
-                          <when test="1">
+                          <when test="1 2">
                             <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+393%_R-%TT%%CC%%PPP1+393%01" HelpContext="%DOC%" IndentLevel="1" />
                           </when>
                         </choose>
@@ -424,8 +439,8 @@
                         <!-- choose KO -->
                         <op:usePart name="CHOOSE-KO" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='ChooseInputKO']/*" />
                         <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
-                          <when test="1">
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Bestehendes KO: In der folgenden DPT-Dropdown muss unbedingt der DPT ausgewählt werden, den das Bestehende KO trägt! Das kann in der Appliation nicht ermittelt werden. Bei Falscheingaben könnte sich das gesamte Gerät aufhängen!" UIHint="Information" />
+                          <when test="1 2">
+                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Beim Verweis auf ein anderes KO muss der folgenden DPT-Dropdown unbedingt der DPT ausgewählt werden, den das andere KO trägt! Das kann in der Appliation nicht ermittelt werden. Bei Falscheingaben könnte sich das gesamte Gerät aufhängen!" UIHint="Information" />
                           </when>
                         </choose>
                         <!-- dpt -->
@@ -1059,7 +1074,7 @@
                                   </when>
                                 </choose>
                               </when>
-                              <when test="1">
+                              <when test="1 2">
                                 <ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP1+393%_R-%TT%%CC%%PPP1+393%01" HelpContext="%DOC%" IndentLevel="1" />
                               </when>
                             </choose>
