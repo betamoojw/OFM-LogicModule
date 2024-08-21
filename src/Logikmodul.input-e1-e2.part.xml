@@ -318,7 +318,7 @@
                         <op:usePart name="CHOOSE-KO" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='ChooseInputKO']/*" />
                         <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
                           <when test="1 2">
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Beim Verweis auf ein anderes KO muss der folgenden DPT-Dropdown unbedingt der DPT ausgewählt werden, den das andere KO trägt! Das kann in der Appliation nicht ermittelt werden. Bei Falscheingaben könnte sich das gesamte Gerät aufhängen!" UIHint="Information" />
+                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Beim Verweis auf ein anderes KO muss der folgenden DPT-Dropdown unbedingt der DPT ausgewählt werden, den das andere KO trägt! Das kann in der Applikation nicht ermittelt werden. Bei Falscheingaben könnte sich das gesamte Gerät aufhängen!" UIHint="Information" />
                           </when>
                         </choose>
                         <!-- dpt -->
@@ -440,7 +440,7 @@
                         <op:usePart name="CHOOSE-KO" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='ChooseInputKO']/*" />
                         <choose ParamRefId="%AID%_UP-%TT%%CC%%PPP2+377%_R-%TT%%CC%%PPP2+377%01">
                           <when test="1 2">
-                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Beim Verweis auf ein anderes KO muss der folgenden DPT-Dropdown unbedingt der DPT ausgewählt werden, den das andere KO trägt! Das kann in der Appliation nicht ermittelt werden. Bei Falscheingaben könnte sich das gesamte Gerät aufhängen!" UIHint="Information" />
+                            <ParameterSeparator Id="%AID%_PS-nnn" Text="Beim Verweis auf ein anderes KO muss der folgenden DPT-Dropdown unbedingt der DPT ausgewählt werden, den das andere KO trägt! Das kann in der Applikation nicht ermittelt werden. Bei Falscheingaben könnte sich das gesamte Gerät aufhängen!" UIHint="Information" />
                           </when>
                         </choose>
                         <!-- dpt -->

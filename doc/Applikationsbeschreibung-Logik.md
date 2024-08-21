@@ -1433,7 +1433,20 @@ Erscheint nur, wenn bei der logischen Operation "Interner Eingang 3" oder "Inter
 Diese Feld erlaubt eine kurze Beschreibung, wozu dieser Eingang verwendet wird. Es hat keinen Einfluss auf die Funktion des Eingangs und dient rein zu Dokumentationszwecken.
 
 <!-- DOC -->
-### **Internen Eingang verbinden mit Kanalausgang Nr.** =
+### **Art der Verknüpfung**
+
+Hier wird ausgewählt, wie die Verknüpfung erfolgen soll.
+
+#### **absolut**
+
+Wenn absolut ausgewählt wird, muss die Nummer des Kanals, dessen Ausgang mit diesem Eingang verknüpft werden soll, angegeben werden.
+
+#### **relativ**
+
+Wenn relativ ausgewählt wird, muss angegeben werden, wie viele Kanäle vor (positive Zahl) oder zurück (negative Zahl) der Kanal liegt, dessen Ausgang mit diesem Eingang verknüpft werden soll. In einem weiteren Feld wird die Nummer des Zielkanals ausgerechnet und ausgegeben.
+
+<!-- DOC -->
+### **Internen Eingang verbinden mit Kanalausgang Nr.**
 
 Als Eingabe wird hier die Nummer der Logik erwartet, deren Ausgang als interner Eingang genutzt werden soll. Solange der Eingang nicht verbunden ist (Wert im Eingabefeld ist 0) erscheint eine Warnmeldung, dass der Eingang inaktiv (undefiniert) ist.
 

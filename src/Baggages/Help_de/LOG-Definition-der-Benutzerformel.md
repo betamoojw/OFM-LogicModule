@@ -73,7 +73,7 @@ Folgende Funktionen sind verfügbar:
 * 'abs(x)' - Absolutwert
 * 'sqrt(x)' - Quadratwurzel
 * 'pow(x,y)' - Potenz (x^y)
-* 'exp(x)' - Exponenentialfunktion (e^x) 
+* 'exp(x)' - Exponentialfunktion (e^x) 
 * 'ln(x)' - natürlicher Logarithmus
 * 'log(x)' - Logarithmus zur Basis 10
 * 'fac(x)' - Fakultät

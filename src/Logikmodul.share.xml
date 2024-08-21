@@ -107,8 +107,15 @@
                   <Enumeration Text="Eingangswert gesendet" Value="3" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
+              <ParameterType Id="%AID%_PT-InputKind" Name="InputKind">
+                <TypeRestriction Base="Value" SizeInBit="2" UIHint="DropDown">
+                  <!-- <Enumeration Text="keine" Value="0" Id="%ENID%" /> -->
+                  <Enumeration Text="absolut" Value="1" Id="%ENID%" />
+                  <Enumeration Text="relativ" Value="2" Id="%ENID%" />
+                </TypeRestriction>
+              </ParameterType>
               <ParameterType Id="%AID%_PT-InputEnable" Name="InputEnable">
-                <TypeRestriction Base="Value" SizeInBit="4">
+                <TypeRestriction Base="Value" SizeInBit="2">
                   <Enumeration Text="inaktiv" Value="0" Id="%ENID%" />
                   <Enumeration Text="normal aktiv" Value="1" Id="%ENID%" />
                   <Enumeration Text="invertiert aktiv" Value="2" Id="%ENID%" />
@@ -221,7 +228,10 @@
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-InputFunction" Name="InputFunction">
-                <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="%N%" />
+                <TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="1" maxInclusive="%N%" />
+              </ParameterType>
+              <ParameterType Id="%AID%_PT-InputFunctionRel" Name="InputFunctionRel">
+                <TypeNumber SizeInBit="8" Type="signedInt" minInclusive="-%N-1%" maxInclusive="%N-1%" />
               </ParameterType>
               <!-- <ParameterType Id="%AID%_PT-TimeBase" Name="TimeBase">
                 <TypeRestriction Base="Value" SizeInBit="8">
@@ -1321,9 +1331,9 @@
                 <ParameterSeparator Id="%AID%_PS-nnn" Text=" " />
                 <op:usePart name="FORMULA" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock/*" />
               </ParameterBlock>
-              <ParameterBlock Id="%AID%_PB-nnn" Name="KoOverview" Text="Übersicht interne KO" Icon="view-list-outline" HelpContext="Empty" ShowInComObjectTree="false">
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Übersicht interne KO-Verknüpfungen" UIHint="Headline" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Die folgende Liste kann leer sein, falls noch keine Logikkanäle definiert wurden oder noch keine internen KO-Verknüpfungen genutzt werden." />
+              <ParameterBlock Id="%AID%_PB-nnn" Name="KoOverview" Text="Übersicht Verknüpfungen" Icon="view-list-outline" HelpContext="Empty" ShowInComObjectTree="false">
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Übersicht aller Verknüpfungen" UIHint="Headline" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Die folgende Liste kann leer sein, falls noch keine Logikkanäle definiert wurden oder noch keine internen Verknüpfungen genutzt werden." />
                 <ParameterBlock Id="%AID%_PB-nnn" Name="fIntKoOverviewFilter" Inline="true" Layout="Grid" HelpContext="Empty">
                   <Rows>
                     <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
@@ -1346,9 +1356,8 @@
                     <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="37%" />
                     <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="45%" />
                     <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="37%" />
-                    <Column Id="%AID%_PB-nnn_C-5" Name="Col5" Width="7%" />
+                    <Column Id="%AID%_PB-nnn_C-5" Name="Col5" Width="15%" />
                     <Column Id="%AID%_PB-nnn_C-6" Name="Col6" Width="45%" />
-                    <Column Id="%AID%_PB-nnn_C-7" Name="Col7" Width="45%" />
                   </Columns>
                   <choose ParamRefId="%AID%_P-%TT%00168_R-%TT%0016801">
                     <when test="0">
@@ -1358,10 +1367,9 @@
                       <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang" UIHint="Headline" Cell="1,2" />
                     </when>
                   </choose>
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="KO" UIHint="Headline" Cell="1,3" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Text="KO / Interne Verknüpfung" UIHint="Headline" Cell="1,3" />
                   <ParameterSeparator Id="%AID%_PS-nnn" Text="Ausgang" UIHint="Headline" Cell="1,4" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="zusätzliche KO" UIHint="Headline" Cell="1,6" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert senden KO" UIHint="Headline" Cell="1,7" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Kommunikationsobjekt" UIHint="Headline" Cell="1,6" />
                 </ParameterBlock>
                 <op:include href="Logikmodul.overview-intko.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Channel-List']/*" type="template" prefix="LOG" IsInner="true" />
               </ParameterBlock>
