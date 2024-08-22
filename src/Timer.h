@@ -54,7 +54,7 @@ class Timer
 #endif
 
   protected:
-    static const uint8_t cHolidaysCount = 32;
+    static const uint8_t cHolidaysCount = 34;
     static sDay cHolidays[cHolidaysCount];
     struct tm mTimeHelper;
     // double mLongitude;
@@ -109,7 +109,7 @@ class Timer
     float mLatitude;
     int8_t mTimezone;
 
-    void setup(double iLongitude, double iLatitude, int8_t iTimezone, bool iUseSummertime, uint32_t iHolidayBitmask);
+    void setup(double iLongitude, double iLatitude, int8_t iTimezone, bool iUseSummertime, uint64_t iHolidayBitmask);
     void loop();
     void debug();
 
@@ -143,7 +143,7 @@ class Timer
 /* (which is equal to 1999 Dec 31, 0h UT)                           */
 
 #define days_since_2000_Jan_0(y, m, d) \
-    (367L * (y) - ((7 * ((y) + (((m) + 9) / 12))) / 4) + ((275 * (m)) / 9) + (d)-730530L)
+    (367L * (y) - ((7 * ((y) + (((m) + 9) / 12))) / 4) + ((275 * (m)) / 9) + (d) - 730530L)
 
 /* Some conversion factors between radians and degrees */
 
@@ -156,9 +156,9 @@ class Timer
 
 /* The trigonometric functions in degrees */
 
-#define sind(x) sin((x)*DEGRAD)
-#define cosd(x) cos((x)*DEGRAD)
-#define tand(x) tan((x)*DEGRAD)
+#define sind(x) sin((x) * DEGRAD)
+#define cosd(x) cos((x) * DEGRAD)
+#define tand(x) tan((x) * DEGRAD)
 
 #define atand(x) (RADEG * atan(x))
 #define asind(x) (RADEG * asin(x))

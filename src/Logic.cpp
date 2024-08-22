@@ -527,7 +527,8 @@ void Logic::setup()
     int8_t lTimezone = ParamBASE_TimezoneValue;
     lTimezone = lTimezone * (lTimezoneSign ? -1 : 1);
     bool lUseSummertime = (ParamBASE_SummertimeAll == VAL_STIM_FROM_INTERN);
-    sTimer.setup(ParamBASE_Longitude, ParamBASE_Latitude, ParamBASE_Timezone, lUseSummertime, knx.paramInt(LOG_Neujahr)); // do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
+    uint64_t lHolidayBitmask = holidaysToUInt64(knx.paramData(LOG_Neujahr), 5);
+    sTimer.setup(ParamBASE_Longitude, ParamBASE_Latitude, ParamBASE_Timezone, lUseSummertime, lHolidayBitmask); // do not fetch just ParamLOG_Neujahr here, we need the whole bitfield
     // for TimerRestore we prepare all Timer channels
     for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
     {
@@ -535,6 +536,16 @@ void Logic::setup()
         lChannel->startTimerRestoreState();
     }
 }
+
+uint64_t Logic::holidaysToUInt64(uint8_t *iData, uint8_t iCount)
+{
+    uint64_t l = 0;
+    uint8_t *p = (uint8_t *)&l;
+    for (uint8_t i = 0; i < iCount; i++)
+        p[i] = iData[i];
+    return l;
+}
+
 void Logic::loop()
 {
     if (!openknx.afterStartupDelay())

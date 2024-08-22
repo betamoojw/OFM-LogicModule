@@ -87,6 +87,11 @@
 #define VAL_Buzzer_Normal 3
 #define VAL_Buzzer_Loud 1
 
+// enum for Abs-Rel-connections
+#define VAL_AbsRel_None 0
+#define VAL_AbsRel_Absolute 1
+#define VAL_AbsRel_Relative 2
+
 // flags for in- and output
 #define BIT_EXT_INPUT_1 0x01
 #define BIT_EXT_INPUT_2 0x02
@@ -244,7 +249,7 @@ class LogicChannel : public OpenKNX::Channel
     void writeConstantValue(uint16_t iParamIndex, bool iOn);
     void writeParameterValue(uint8_t iIOIndex, bool iOn);
     void writeFunctionValue(uint16_t iParamIndex, bool iOn);
-    void writeOtherKoValue(uint16_t iParamIndex, uint16_t iDptIndex, bool iOn);
+    void writeOtherKoValue(uint16_t iParamIndex, uint16_t iRelAbsIndex, uint16_t iDptIndex, bool iOn);
     void writeValue(LogicValue iValue, uint8_t iDpt, bool iOn);
     void setRGBColor(uint16_t iParamIndex);
     void setBuzzer(uint16_t iParamIndex);

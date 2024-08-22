@@ -45,7 +45,9 @@ sDay Timer::cHolidays[cHolidaysCount] = {
     {26, 12},
     {31, 12},
     {26, 10},
-    {8, 12}};
+    {8, 12},
+    {1, 8},
+    {-28, ADVENT}};
 
 Timer::Timer()
 {
@@ -67,7 +69,7 @@ Timer &Timer::instance()
     return sInstance;
 }
 
-void Timer::setup(double iLongitude, double iLatitude, int8_t iTimezone, bool iUseSummertime, uint32_t iHolidayBitmask)
+void Timer::setup(double iLongitude, double iLatitude, int8_t iTimezone, bool iUseSummertime, uint64_t iHolidayBitmask)
 {
 
     mLongitude = iLongitude;
@@ -78,7 +80,7 @@ void Timer::setup(double iLongitude, double iLatitude, int8_t iTimezone, bool iU
     // we delete all unnecessary holidays from holiday data
     for (uint8_t i = 0; i < cHolidaysCount; i++)
     {
-        if ((iHolidayBitmask & 0x80000000) == 0)
+        if ((iHolidayBitmask & 0x8000000000000000) == 0)
             cHolidays[i].month = REMOVED;
         iHolidayBitmask <<= 1;
     }
@@ -164,7 +166,7 @@ void Timer::calculateSunriseSunset()
 
 #ifdef OPENKNX_EXPERIMENTAL_RP2040RTC_LOCALTIME
 // Experimental Inclusion of RTC-Timer in RP2040
-void Timer::setHardwareDateTime(tm* iDateTime)
+void Timer::setHardwareDateTime(tm *iDateTime)
 {
     datetime_t t = {
         .year = (int16_t)iDateTime->tm_year,

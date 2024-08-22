@@ -16,7 +16,7 @@
       <ApplicationPrograms>
         <ApplicationProgram Id="%AID%" ApplicationNumber="102" ApplicationVersion="21" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="WP-Logic" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0">
           <op:part name="FORMULA" href="Logikmodul.userformula.part.xml" instances="30">
-            <op:param name="%ParamOffset%" value="13" increment="100" />
+            <op:param name="%ParamOffset%" value="14" increment="100" />
             <op:param name="%PPP%" value="200" digits="3" increment="3" />
             <op:param name="%Fn%" value="1" increment="1" />
           </op:part>
@@ -965,7 +965,7 @@
               <ParameterType Id="%AID%_PT-OverviewFilter" Name="OverviewFilter">
                 <TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
                   <Enumeration Text="Alle Kanäle" Value="0" Id="%ENID%" />
-                  <Enumeration Text="Nur Kanäle mit internen KO" Value="1" Id="%ENID%" />
+                  <Enumeration Text="Nur Kanäle mit Verknüpfungen" Value="1" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-OverviewDisplay" Name="OverviewDisplay">
@@ -993,7 +993,7 @@
                 <Parameter Id="%AID%_UP-%TT%00141" Name="HolidaySend" ParameterType="%AID%_PT-OnOffYesNo" Offset="0" BitOffset="5" Text="Nach Neuberechnung Feiertagsinfo senden?" Value="0" />
                 <!-- 2 Bit free -->
               </Union>
-              <Union SizeInBit="32">
+              <Union SizeInBit="40">
                 <Memory CodeSegment="%MID%" Offset="1" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%00152" Name="Neujahr" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="0" Text="1. Neujahr" SuffixText="1. Januar" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%00110" Name="DreiKoenige" ParameterType="%AID%_PT-CheckBox" Offset="0" BitOffset="1" Text="2. Heilige Drei Könige" SuffixText="6. Januar" Value="1" />
@@ -1014,11 +1014,9 @@
                 <Parameter Id="%AID%_UP-%TT%00124" Name="Friedensfest" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="0" Text="17. Hohes Friedensfest" SuffixText="8. August" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00125" Name="MariaHimmelfahrt" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="1" Text="18. Mariä Himmelfahrt" SuffixText="15. August" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00126" Name="DeutscheEinheit" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="2" Text="19. Tag der Deutschen Einheit" SuffixText="3. Oktober" Value="1" />
-                <Parameter Id="%AID%_UP-%TT%00154" Name="Nationalfeiertag" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="6" Text="31. Nationalfeiertag (AT)" SuffixText="26. Oktober" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00127" Name="Reformationstag" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="3" Text="20. Reformationstag" SuffixText="31. Oktober" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00128" Name="Allerheiligen" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="4" Text="21. Allerheiligen" SuffixText="1. November" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%00129" Name="BussBettag" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="5" Text="22. Buß- und Bettag" SuffixText="11 Tage vor 1. Adv." Value="0" />
-                <Parameter Id="%AID%_UP-%TT%00155" Name="MariaEmpfaengnis" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="7" Text="32. Maria Empfängnis (AT)" SuffixText="8. Dezember" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00130" Name="Advent1" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="6" Text="23. Erster Advent" SuffixText="21 Tage vor 4. Adv." Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00131" Name="Advent2" ParameterType="%AID%_PT-CheckBox" Offset="2" BitOffset="7" Text="24. Zweiter Advent" SuffixText="14 Tage vor 4. Adv." Value="0" />
                 <Parameter Id="%AID%_UP-%TT%00132" Name="Advent3" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="0" Text="25. Dritter Advent" SuffixText="7 Tage vor 4. Adv." Value="0" />
@@ -1027,17 +1025,20 @@
                 <Parameter Id="%AID%_UP-%TT%00135" Name="Weihnachtstag1" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="3" Text="28. Erster Weihnachtstag" SuffixText="25. Dezember" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%00136" Name="Weihnachtstag2" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="4" Text="29. Zweiter Weihnachtstag" SuffixText="26. Dezember" Value="1" />
                 <Parameter Id="%AID%_UP-%TT%00137" Name="Silvester" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="5" Text="30. Silvester" SuffixText="31. Dezember" Value="1" />
-                <!-- Siehe Nationalfeiertag (AT) mit Offset 3, Bit 6 -->
-                <!-- Siehe Maria Empfängnis mit Offset 3, Bit 7 -->
+                <Parameter Id="%AID%_UP-%TT%00154" Name="Nationalfeiertag" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="6" Text="31. Nationalfeiertag (AT)" SuffixText="26. Oktober" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00155" Name="MariaEmpfaengnis" ParameterType="%AID%_PT-CheckBox" Offset="3" BitOffset="7" Text="32. Maria Empfängnis (AT)" SuffixText="8. Dezember" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00172" Name="NationalfeiertagSchweiz" ParameterType="%AID%_PT-CheckBox" Offset="4" BitOffset="0" Text="33. Nationalfeiertag (CH)" SuffixText="1. August" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%00173" Name="Totensonntag" ParameterType="%AID%_PT-CheckBox" Offset="4" BitOffset="1" Text="34. Totensonntag" SuffixText="7 Tage vor 1. Adv." Value="0" />
+                <!-- 6 Bit free -->
               </Union>
               <Union SizeInBit="48">
-                <Memory CodeSegment="%MID%" Offset="5" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="6" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%00148" Name="BuzzerSilent" ParameterType="%AID%_PT-BuzzerFrequency" Offset="0" BitOffset="0" Text="Frequenz für Buzzer (leise)" SuffixText="Hz" Value="1800" />
                 <Parameter Id="%AID%_UP-%TT%00149" Name="BuzzerNormal" ParameterType="%AID%_PT-BuzzerFrequency" Offset="2" BitOffset="0" Text="Frequenz für Buzzer (normal)" SuffixText="Hz" Value="3200" />
                 <Parameter Id="%AID%_UP-%TT%00150" Name="BuzzerLoud" ParameterType="%AID%_PT-BuzzerFrequency" Offset="4" BitOffset="0" Text="Frequenz für Buzzer (laut)" SuffixText="Hz" Value="2400" />
               </Union>
               <Union SizeInBit="16">
-                <Memory CodeSegment="%MID%" Offset="11" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="12" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%00164" Name="VisibleChannels" ParameterType="%AID%_PT-LOGNumChannels" Offset="0" BitOffset="0" Text="Verfügbare Kanäle" Value="%LOG_NumChannelsDefault%" SuffixText=" von %N%" />
                 <Parameter Id="%AID%_UP-%TT%00151" Name="LedMapping" ParameterType="%AID%_PT-RGBMapping" Offset="1" BitOffset="0" Text="Lötpad A / B / C entspricht" Value="1" />
                 <!-- <Parameter Id="%AID%_UP-%TT%00144" Name="Timezone" ParameterType="%AID%_PT-Timezone" Offset="0" BitOffset="3" Text="Zeitzone" Value="1" /> -->
@@ -1048,7 +1049,7 @@
               <Parameter Id="%AID%_P-%TT%00169" Name="TestFormulaResult" ParameterType="%AID%_PT-Text40Byte" Text="Ergebnis des Formeltests" Value="" Access="None" />
               <Parameter Id="%AID%_P-%TT%00170" Name="TestFormulaActive" ParameterType="%AID%_PT-CheckBox" Text="Formeltest aktiv" Value="0" />
               <Parameter Id="%AID%_P-%TT%00171" Name="TestFormula" ParameterType="%AID%_PT-UserFormula" Text="Testformel" Value="" />
-              <!-- The following starts at Offset=13 !!! -->
+              <!-- The following starts at Offset=14 !!! -->
               <op:usePart name="FORMULA" xpath="//Static/Parameters/*" />
             </Parameters>
             <ParameterRefs>
@@ -1123,6 +1124,9 @@
               <ParameterRef Id="%AID%_P-%TT%00169_R-%TT%0016901" RefId="%AID%_P-%TT%00169" />
               <ParameterRef Id="%AID%_P-%TT%00170_R-%TT%0017001" RefId="%AID%_P-%TT%00170" />
               <ParameterRef Id="%AID%_P-%TT%00171_R-%TT%0017101" RefId="%AID%_P-%TT%00171" />
+              <ParameterRef Id="%AID%_UP-%TT%00172_R-%TT%0017201" RefId="%AID%_UP-%TT%00172" />
+              <ParameterRef Id="%AID%_UP-%TT%00173_R-%TT%0017301" RefId="%AID%_UP-%TT%00173" />
+              <!-- starts with %TT%00200 -->
               <op:usePart name="FORMULA" xpath="//Static/ParameterRefs/*" />
             </ParameterRefs>
             <ParameterCalculations>
@@ -1331,7 +1335,7 @@
                 <ParameterSeparator Id="%AID%_PS-nnn" Text=" " />
                 <op:usePart name="FORMULA" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock/*" />
               </ParameterBlock>
-              <ParameterBlock Id="%AID%_PB-nnn" Name="KoOverview" Text="Übersicht Verknüpfungen" Icon="view-list-outline" HelpContext="Empty" ShowInComObjectTree="false">
+              <ParameterBlock Id="%AID%_PB-nnn" Name="KoOverview" Text="Übersicht interne Verknüpfungen" Icon="view-list-outline" HelpContext="Empty" ShowInComObjectTree="false">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Übersicht aller Verknüpfungen" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Die folgende Liste kann leer sein, falls noch keine Logikkanäle definiert wurden oder noch keine internen Verknüpfungen genutzt werden." />
                 <ParameterBlock Id="%AID%_PB-nnn" Name="fIntKoOverviewFilter" Inline="true" Layout="Grid" HelpContext="Empty">

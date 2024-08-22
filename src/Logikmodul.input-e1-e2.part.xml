@@ -21,12 +21,13 @@
               <Parameter Id="%AID%_P-%TT%%CC%%PPP1+461%" Name="f%C%E%En%OtherKORead" ParameterType="%AID%_PT-KOAbsNumber" Text="    Nummer des Kommunikationsobjekts" Value="%K%En-1%%" Access="Read" />
               <Union SizeInBit="56">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="%ParamOffset+6%" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+008%" Name="f%C%E%En%" ParameterType="%AID%_PT-InputEnable" Offset="0" BitOffset="4" Text="Eingang %En%" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+093%" Name="f%C%E%En%ConvertInt" ParameterType="%AID%_PT-InputConvInt" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+446%" Name="f%C%E%En%Convert" ParameterType="%AID%_PT-InputConv" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" Access="None" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+369%" Name="f%C%E%En%ConvertFloat" ParameterType="%AID%_PT-InputConvFloat" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+370%" Name="f%C%E%En%ConvertSpecial" ParameterType="%AID%_PT-InputConvSpecial" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="4" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP1+444%" Name="f%C%E%En%ConvertBool" ParameterType="%AID%_PT-InputConvBool" Offset="0" BitOffset="0" Text="Wert für Eingang wird ermittelt durch" Value="6" />
+                <!-- 2 bit frei -->
+                <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+008%" Name="f%C%E%En%" ParameterType="%AID%_PT-InputEnable" Offset="0" BitOffset="6" Text="Eingang %En%" Value="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP20+009%" Name="f%C%E%En%Dpt" ParameterType="%AID%_PT-InputDpt" Offset="1" BitOffset="0" Text="DPT für Eingang" Value="0" />
                 <!-- Delay pattern -->
                 <Parameter Id="%AID%_UP-%TT%%CC%%PPP2+383%" Name="f%C%E%En%RepeatBase" ParameterType="%AID%_PT-DelayBase" Offset="2" BitOffset="0" Text="Eingang wird gelesen alle" Value="0" />

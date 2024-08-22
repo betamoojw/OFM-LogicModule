@@ -218,25 +218,37 @@ GroupObject *LogicChannel::getKo(uint8_t iIOIndex)
 {
     // new behaviour since 4.0: We support also external KO for input
     GroupObject *lKo = nullptr;
-    uint16_t lExternalAccess = 0;
-    bool lUseExternal = false;
+    int16_t lExternalAccess = 0;
+    uint8_t lAbsRel = 0;
     if (iIOIndex == IO_Input1)
     {
-        lExternalAccess = ParamLOG_fE1OtherKO; // getWordParam(LOG_fE1OtherKO);
-        lUseExternal = ParamLOG_fE1UseOtherKO;
+        lExternalAccess = ParamLOG_fE1OtherKORel;
+        lAbsRel = ParamLOG_fE1UseOtherKO;
     }
     else if (iIOIndex == IO_Input2)
     {
-        lExternalAccess = ParamLOG_fE2OtherKO; // getWordParam(LOG_fE2OtherKO);
-        lUseExternal = ParamLOG_fE2UseOtherKO;
+        lExternalAccess = ParamLOG_fE2OtherKORel;
+        lAbsRel = ParamLOG_fE2UseOtherKO;
     }
-    if (lUseExternal)
+    uint16_t lKoNumber = calcKoNumber(iIOIndex);
+    switch (lAbsRel)
     {
-        uint16_t lKoNumber = lExternalAccess & 0x3FFF; // mask ist for both inputs identical
-        lKo = &knx.getGroupObject(lKoNumber);
+        case VAL_AbsRel_Absolute:
+            if (lExternalAccess > 0 && lExternalAccess < MAIN_MaxKoNumber)
+                lKoNumber = lExternalAccess;
+            break;
+
+        case VAL_AbsRel_Relative:
+        {
+            int16_t lNewKoNumber = lKoNumber + lExternalAccess;
+            if (lNewKoNumber > 0 && lNewKoNumber < MAIN_MaxKoNumber)
+                lKoNumber += lNewKoNumber;
+        }
+        break;
+        default:
+            break;
     }
-    if (lKo == nullptr)
-        lKo = LogicChannel::getKoForChannel(iIOIndex, channelIndex());
+    lKo = &knx.getGroupObject(lKoNumber);
     return lKo;
 }
 
@@ -263,17 +275,42 @@ Dpt &LogicChannel::getKoDPT(uint8_t iIOIndex)
 
 uint16_t LogicChannel::checkAdditionalWrite(bool iOn)
 {
-    uint16_t lKoNumber = 0;
+    int16_t lKoNumber = 0;
+    uint16_t lAbsRel = 0;
     if (iOn)
     {
-        if (ParamLOG_fOOnKOSend)
-            lKoNumber = ParamLOG_fOOnKOSendNumber;
+        lAbsRel = ParamLOG_fOOnKOSend;
+        switch (lAbsRel)
+        {
+            case VAL_AbsRel_Absolute:
+                lKoNumber = ParamLOG_fOOnKOSendNumber;
+                break;
+            case VAL_AbsRel_Relative:
+                lKoNumber = ParamLOG_fOOnKOSendNumberRel + calcKoNumber(IO_Output);
+                break;
+            default:
+                lKoNumber = 0;
+                break;
+        }
     }
     else
     {
-        if (ParamLOG_fOOffKOSend)
-            lKoNumber = ParamLOG_fOOffKOSendNumber;
+        lAbsRel = ParamLOG_fOOffKOSend;
+        switch (lAbsRel)
+        {
+            case VAL_AbsRel_Absolute:
+                lKoNumber = ParamLOG_fOOffKOSendNumber;
+                break;
+            case VAL_AbsRel_Relative:
+                lKoNumber = ParamLOG_fOOffKOSendNumberRel + calcKoNumber(IO_Output);
+                break;
+            default:
+                lKoNumber = 0;
+                break;
+        }
     }
+    if (lKoNumber < 1 || lKoNumber > MAIN_MaxKoNumber)
+        lKoNumber = 0;
     return lKoNumber;
 }
 
@@ -703,12 +740,18 @@ void LogicChannel::writeParameterValue(uint8_t iIOIndex, bool iOn)
     writeValue(lValue, lInputDpt, iOn);
 }
 
-void LogicChannel::writeOtherKoValue(uint16_t iKoParamIndex, uint16_t iDptIndex, bool iOn)
+void LogicChannel::writeOtherKoValue(uint16_t iKoParamIndex, uint16_t iRelAbsIndex, uint16_t iDptIndex, bool iOn)
 {
-    uint16_t lKoNumber = getWordParam(iKoParamIndex) >> 1;
-    LogicValue lValue = getOtherKoValue(lKoNumber, iDptIndex);
-    uint8_t lDptOut = getByteParam(LOG_fODpt);
-    writeValue(lValue, lDptOut, iOn);
+    int16_t lKoNumber = getSWordParam(iKoParamIndex);
+    uint8_t lIsRelative = getByteParam(iRelAbsIndex);
+    if (lIsRelative)
+        lKoNumber += calcKoNumber(IO_Output);
+    if (lKoNumber > 1 && lKoNumber <= MAIN_MaxKoNumber)
+    {
+        LogicValue lValue = getOtherKoValue(lKoNumber, iDptIndex);
+        uint8_t lDptOut = getByteParam(LOG_fODpt);
+        writeValue(lValue, lDptOut, iOn);
+    }
 }
 
 void LogicChannel::writeFunctionValue(uint16_t iParamIndex, bool iOn)
@@ -786,11 +829,11 @@ void LogicChannel::writeValue(LogicValue iValue, uint8_t iDpt, bool iOn)
  *******************************/
 bool LogicChannel::isInputActive(uint8_t iIOIndex)
 {
-    uint8_t lIsActive = getByteParam((iIOIndex == IO_Input1) ? LOG_fE1 : LOG_fE2) & BIT_INPUT_MASK;
+    uint8_t lIsActive = ((iIOIndex == IO_Input1) ? ParamLOG_fE1 : ParamLOG_fE2) & BIT_INPUT_MASK;
     if (lIsActive == 0)
     {
         // input might be also activated by a delta input converter, means from the other input
-        lIsActive = (getByteParam((iIOIndex == IO_Input2) ? LOG_fE1Convert : LOG_fE2Convert) >> LOG_fE1ConvertShift);
+        lIsActive = (iIOIndex == IO_Input2) ? ParamLOG_fE1Convert : ParamLOG_fE2Convert;
         lIsActive = (lIsActive < VAL_InputConvert_Values) && (lIsActive & 1);
     }
     return (lIsActive > 0);
@@ -831,9 +874,8 @@ void LogicChannel::processInput(uint8_t iIOIndex)
 {
     if (iIOIndex == IO_Absolute || iIOIndex == IO_Output)
         return;
-    uint16_t lParamBase = (iIOIndex == IO_Input1) ? LOG_fE1 : LOG_fE2;
     // we have now an event for an input, first we check, if this input is active
-    uint8_t lActive = getByteParam(lParamBase) & BIT_INPUT_MASK;
+    uint8_t lActive = ((iIOIndex == IO_Input1) ? ParamLOG_fE1 : ParamLOG_fE2) & BIT_INPUT_MASK;
     if (lActive > 0)
     {
         // this input is we start convert for this input
@@ -842,8 +884,7 @@ void LogicChannel::processInput(uint8_t iIOIndex)
         pValidActiveIO |= iIOIndex;
     }
     // this input might also be used for delta conversion in the other input
-    uint16_t lOtherParamBase = (iIOIndex == IO_Input2) ? LOG_fE1 : LOG_fE2;
-    uint8_t lConverter = getByteParam(lOtherParamBase) >> LOG_fE1ConvertShift;
+    uint8_t lConverter = (iIOIndex == IO_Input2) ? ParamLOG_fE1Convert : ParamLOG_fE2Convert;
     if ((lConverter <= VAL_InputConvert_Constant) && (lConverter & 1))
     {
         // reading "the other" Input is just necessary, if this input was not activated by the user
@@ -976,9 +1017,8 @@ bool LogicChannel::checkConvertValues(uint16_t iParamValues, uint8_t iDpt, int32
 
 void LogicChannel::processConvertInput(uint8_t iIOIndex)
 {
-    uint16_t lParamBase = (iIOIndex == IO_Input1) ? LOG_fE1 : LOG_fE2;
     uint16_t lParamLow = (iIOIndex == IO_Input1) ? LOG_fE1LowDelta : LOG_fE2LowDelta;
-    uint8_t lConvert = (getByteParam(lParamBase) & LOG_fE1ConvertMask) >> LOG_fE1ConvertShift;
+    uint8_t lConvert = (iIOIndex == IO_Input1) ? LOG_fE1Convert : LOG_fE2Convert;
     bool lValueOut = 0;
     // get input value
     uint8_t lDpt;
@@ -1170,12 +1210,24 @@ void LogicChannel::startLogic(uint8_t iIOIndex, bool iValue)
         }
         // invert input
         bool lValue = iValue;
-        uint16_t lParamBase = (iIOIndex == BIT_EXT_INPUT_1) ? LOG_fE1 : (iIOIndex == BIT_EXT_INPUT_2) ? LOG_fE2
-                                                                    : (iIOIndex == BIT_INT_INPUT_1)   ? LOG_fI1
-                                                                                                      : LOG_fI2;
-        uint8_t lInput = getByteParam(lParamBase);
-        if (iIOIndex == BIT_INT_INPUT_1)
-            lInput >>= 4;
+        uint8_t lInput = 0;
+        switch (iIOIndex)
+        {
+            case BIT_EXT_INPUT_1:
+                lInput = ParamLOG_fE1;
+                break;
+            case BIT_EXT_INPUT_2:
+                lInput = ParamLOG_fE2;
+                break;
+            case BIT_INT_INPUT_1:
+                lInput = ParamLOG_fI1;
+                break;
+            case BIT_INT_INPUT_2:
+                lInput = ParamLOG_fI2;
+                break;
+            default:
+                break;
+        }
         if ((lInput & BIT_INPUT_MASK) == 2)
             lValue = !iValue;
         // set according input bit
@@ -1827,7 +1879,10 @@ void LogicChannel::processInternalInputs(uint8_t iChannelId, bool iValue)
     uint8_t lInput1 = ParamLOG_fI1;
     if (lInput1 > 0)
     {
-        uint8_t lFunction1 = ParamLOG_fI1Function;
+        uint8_t lIsRelative = ParamLOG_fI1Kind - 1;
+        int8_t lFunction1 = ParamLOG_fI1Function;
+        if (lIsRelative)
+            lFunction1 += _channelIndex + 1;
         if (lFunction1 == (iChannelId + 1))
         {
 #if LOGIC_TRACE
@@ -1842,7 +1897,10 @@ void LogicChannel::processInternalInputs(uint8_t iChannelId, bool iValue)
     uint8_t lInput2 = ParamLOG_fI2;
     if (lInput2 > 0)
     {
-        uint8_t lFunction2 = ParamLOG_fI2Function;
+        uint8_t lIsRelative = ParamLOG_fI2Kind - 1;
+        int8_t lFunction2 = ParamLOG_fI2Function;
+        if (lIsRelative)
+            lFunction2 += _channelIndex + 1;
         if (lFunction2 == (iChannelId + 1))
         {
 #if LOGIC_TRACE
@@ -1962,7 +2020,7 @@ void LogicChannel::processOutput(bool iValue)
                 writeParameterValue(IO_Input2, iValue);
                 break;
             case VAL_Out_OtherKO:
-                writeOtherKoValue(LOG_fOOnKONumber, LOG_fOOnKODpt, iValue);
+                writeOtherKoValue(LOG_fOOnKONumber, LOG_fOOnKOKind, LOG_fOOnKODpt, iValue);
                 break;
             case VAL_Out_Function:
                 writeFunctionValue(LOG_fOOnFunction, iValue);
@@ -1999,7 +2057,7 @@ void LogicChannel::processOutput(bool iValue)
                 writeParameterValue(IO_Input2, iValue);
                 break;
             case VAL_Out_OtherKO:
-                writeOtherKoValue(LOG_fOOffKONumber, LOG_fOOffKODpt, iValue);
+                writeOtherKoValue(LOG_fOOffKONumber, LOG_fOOffKOKind, LOG_fOOffKODpt, iValue);
                 break;
             case VAL_Out_Function:
                 writeFunctionValue(LOG_fOOffFunction, iValue);
@@ -2158,11 +2216,12 @@ void LogicChannel::prepareChannel()
             // input is active, we set according flag
             pValidActiveIO |= BIT_EXT_INPUT_1 << 4;
             // prepare input for external KO
-            uint16_t lExternalKo = getWordParam(LOG_fE1OtherKO);
-            if (lExternalKo & 0x8000) // LOG_fE1UseOtherKOMask)
-            {
-                openknxLogic.addKoLookup(lExternalKo & 0x03FFF, channelIndex(), IO_Input1);
-            }
+            uint8_t lAbsRel = ParamLOG_fE1UseOtherKO;
+            int16_t lExternalKo = ParamLOG_fE1OtherKORel;
+            if (lAbsRel == VAL_AbsRel_Relative)
+                lExternalKo += calcKoNumber(IO_Input1);
+            if (lAbsRel > 0 && lExternalKo > 0 && lExternalKo <= MAIN_MaxKoNumber)
+                openknxLogic.addKoLookup(lExternalKo, channelIndex(), IO_Input1);
             // prepare input for cyclic read
             pInputProcessing.repeatInput1Delay = ParamLOG_fE1RepeatTimeMS;
             if (pInputProcessing.repeatInput1Delay)
@@ -2222,11 +2281,12 @@ void LogicChannel::prepareChannel()
             // input is active, we set according flag
             pValidActiveIO |= BIT_EXT_INPUT_2 << 4;
             // prepare input for external KO
-            uint16_t lExternalKo = getWordParam(LOG_fE2OtherKO);
-            if (lExternalKo & 0x8000) // LOG_fE2UseOtherKOMask)
-            {
-                openknxLogic.addKoLookup(lExternalKo & 0x3FFF, channelIndex(), IO_Input2);
-            }
+            uint8_t lAbsRel = ParamLOG_fE2UseOtherKO;
+            int16_t lExternalKo = ParamLOG_fE2OtherKORel;
+            if (lAbsRel == VAL_AbsRel_Relative)
+                lExternalKo += calcKoNumber(IO_Input2);
+            if (lAbsRel > 0 && lExternalKo > 0 && lExternalKo <= MAIN_MaxKoNumber)
+                openknxLogic.addKoLookup(lExternalKo, channelIndex(), IO_Input2);
             // prepare input for cyclic read
             pInputProcessing.repeatInput2Delay = ParamLOG_fE2RepeatTimeMS;
             if (pInputProcessing.repeatInput2Delay)
