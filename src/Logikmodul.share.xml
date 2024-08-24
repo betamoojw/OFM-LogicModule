@@ -1344,8 +1344,8 @@
                   </Rows>
                   <Columns>
                     <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="11%" />
-                    <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="37%" />
-                    <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="37%" />
+                    <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="42%" />
+                    <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="42%" />
                   </Columns>
                   <ParameterSeparator Id="%AID%_PS-nnn" Text="Anzeige" Cell="1,1" />
                   <ParameterRefRef RefId="%AID%_P-%TT%00168_R-%TT%0016801" Cell="1,2" />

@@ -84,8 +84,13 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
 
-02.07.2024: Firmware 3.3, Applikation 3.3
+23.08.2024: Firmware 3.4, Applikation 3.4
 
+* NEU: Alle internen KO-Verknüpfungen können auch relativ zum eigenen KO angegeben werden
+* NEU: Alle internen Eingänge können auch relativ zum eigenen Kanal angegeben werden
+* NEU: Die Feiertage Totensonntag und Schweizer Nationalfeiertag sind neu
+
+02.07.2024: Firmware 3.3, Applikation 3.3
 
 * NEU: [Benutzerformeln](#benutzerformeln) sind nun in der ETS-Applikation definierbar, dies löst mittelfristig die bisher verfügbaren [Benutzerfunktionen](#benutzerfunktionen) ab.
 * NEU: Es kann nun in der ETS getestet werden, ob die Ergebnisse von Benutzerformeln korrekt sind.
