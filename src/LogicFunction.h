@@ -15,14 +15,14 @@ class LogicFunction
     LogicFunction();
     ~LogicFunction();
 
-    static inline double e1 = 0;
-    static inline double e2 = 0;
-    static inline double out = 0;
-    static inline char sFormulaBuffer[100] = {0};
+    static double e1;
+    static double e2;
+    static double out;
+    static char sFormulaBuffer[100];
     // bind variables and functions to parser
     static const uint8_t sVarsSize;
     static te_variable sVars[];
-    static inline uint8_t sRecursionCounter = 0;
+    static uint8_t sRecursionCounter;
 
     static LogicValue (*nativeFunction[NUM_NATIVE_FUNCTIONS])(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);
     static LogicValue (*userFunction[30])(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld);

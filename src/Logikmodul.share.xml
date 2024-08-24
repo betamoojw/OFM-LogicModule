@@ -1171,7 +1171,7 @@
             </Script>
           </Static>
           <Dynamic>
-            <Channel Id="%AID%_CH-%PREFIX%" Number="%PREFIX%" Name="Logic" Text="Logiken" Icon="blur" HelpContext="Empty">
+            <Channel Id="%AID%_CH-%PREFIX%" Number="%PREFIX%" Name="Logic" Text="Logiken" Icon="blur" HelpContext="LOG-Dokumentation">
               <!-- Inline ParameterBlock in Channel is invisible, so also all its contents -->
               <ParameterBlock Id="%AID%_PB-nnn" Name="InitInvisible" Inline="true">
                 <!-- Hope this is enough for activating the following parameter -->
@@ -1183,9 +1183,10 @@
                 <!-- Enable Save? -->
                 <ParameterRefRef RefId="%AID%_P-%TT%00167_R-%TT%0016701" />
               </ParameterBlock>
-              <ParameterBlock Id="%AID%_PB-nnn" Name="Settings" Text="Allgemein" ShowInComObjectTree="true" Icon="cog-outline" HelpContext="Empty">
+              <ParameterBlock Id="%AID%_PB-nnn" Name="Settings" Text="Allgemein" ShowInComObjectTree="true" Icon="cog-outline" HelpContext="LOG-Dokumentation">
                 <ParameterRefRef RefId="%AID%_P-%TT%00163_R-%TT%0016301" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Logikmodul Version %ModuleVersion%" UIHint="Headline" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Logikmodul" UIHint="Headline" />
+                <ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" />
@@ -1283,11 +1284,7 @@
                   </when>
                 </choose>
               </ParameterBlock>
-              <ParameterBlock Name="Docu" Text="Dokumentation" Id="%AID%_PB-nnn" Icon="information-outline" HelpContext="LOG-Dokumentation">
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Dokumentation" UIHint="Headline" />
-                <ParameterSeparator Id="%AID%_PS-nnn" Text="Die Dokumentation ist als Kontextsensitive Hilfe verfügbar, siehe den Text im unteren Bereich des Bildschirms." />
-              </ParameterBlock>
-              <ParameterBlock Name="UserFormulas" Text="Benutzerformeln" Id="%AID%_PB-nnn" Icon="calculator-variant-outline" HelpContext="Empty">
+              <ParameterBlock Name="UserFormulas" Text="Benutzerformeln" Id="%AID%_PB-nnn" Icon="calculator-variant-outline" HelpContext="LOG-Benutzerformeln">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Benutzerformeln" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Jede Formel kann im Ausgangskonverter eines Logikkanals verwendet werden. Falls eine Benutzerformel in der Firmware implementiert wurde UND eine hier eingegeben wurde, gewinnt die hier eingegebene." />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Formeln können die Variablen E1 (für Eingang 1), E2 (für Eingang 2) und A (für Ausgang) enthalten. Sie werden in C-Schreibweise notiert. Alle Funktionen und Variablen werden ohne Berücksichtigung von Groß- und Kleinschreibung interpretiert." />

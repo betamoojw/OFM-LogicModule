@@ -27,7 +27,7 @@
           <Static>
             <Parameters>
               <Parameter Id="%AID%_P-%TT%%CC%001" Name="f%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung des Kanals" Value="" />
-              <!-- <Parameter Id="%AID%_P-%TT%%CC%439" Name="f%C%Kommentar" ParameterType="%AID%_PT-Text512Byte" Text="Kommentar" Value="" /> -->
+              <Parameter Id="%AID%_P-%TT%%CC%439" Name="f%C%Kommentar" ParameterType="%AID%_PT-Text512Byte" Text="" Value="" />
               <!-- <Parameter Id="%AID%_P-%TT%%CC%002" Name="f%C%ChannelDelay" ParameterType="%AID%_PT-DelaySeconds" Text="Zeit bis der Kanal nach einem Neustart aktiv wird" SuffixText="Sekunden" Value="1">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
               </Parameter> -->
@@ -549,7 +549,7 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%436_R-%TT%%CC%43601" RefId="%AID%_UP-%TT%%CC%436" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%437_R-%TT%%CC%43701" RefId="%AID%_UP-%TT%%CC%437" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%438_R-%TT%%CC%43801" RefId="%AID%_UP-%TT%%CC%438" />
-              <!-- <ParameterRef Id="%AID%_P-%TT%%CC%439_R-%TT%%CC%43901" RefId="%AID%_P-%TT%%CC%439" /> -->
+              <ParameterRef Id="%AID%_P-%TT%%CC%439_R-%TT%%CC%43901" RefId="%AID%_P-%TT%%CC%439" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001" RefId="%AID%_UP-%TT%%CC%440" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101" RefId="%AID%_UP-%TT%%CC%441" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%442_R-%TT%%CC%44201" RefId="%AID%_UP-%TT%%CC%442" />
@@ -708,10 +708,10 @@
                     </ParameterBlock>
                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%166_R-%TT%%CC%16601" HelpContext="%DOC%" IndentLevel="1" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                    <Module Id="%AID%_MD-%TT%00001_M-%C%" RefId="%AID%_MD-%TT%00001" />
-
-                    <!-- <ParameterRefRef RefId="%AID%_P-%TT%%CC%439_R-%TT%%CC%43901"  HelpContext="%DOC%" IndentLevel="1" />
-                        <Button Id="%AID%_B-%TT%%CC%001" Text="Alle '\n' im Text durch neue Zeile(n) ersetzen" EventHandler="newline" EventHandlerParameters="{ &quot;textbox&quot;:&quot;LOG_f%C%Kommentar&quot; }" /> -->
+                    <!-- <Module Id="%AID%_MD-%TT%00001_M-%C%" RefId="%AID%_MD-%TT%00001" /> -->
+                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Kommentar" UIHint="Headline" />
+                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%439_R-%TT%%CC%43901" HelpContext="LOG-Kommentar" IndentLevel="1" />
+                    <Button Id="%AID%_B-%TT%%CC%001" Text="Alle '\n' im Text durch neue Zeile(n) ersetzen" EventHandler="newline" EventHandlerParameters="{ &quot;textbox&quot;:&quot;LOG_f%C%Kommentar&quot; }" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Logikdefinition" UIHint="Headline" />
                     <ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" HelpContext="%DOC%" IndentLevel="1" />

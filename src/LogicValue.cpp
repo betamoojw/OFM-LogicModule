@@ -1,9 +1,11 @@
 #include "LogicValue.h"
+#include "Logic.h"
 
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
 #include <math.h>
+#include <stdio.h>
 
 void LogicValue::setType(ValueType iType)
 {
@@ -989,6 +991,7 @@ float LogicValue::floatValue() const
 
 const char* LogicValue::stringValue() const
 {
+
     if (_isInitial)
         return 0;
     switch (_type)
@@ -997,15 +1000,20 @@ const char* LogicValue::stringValue() const
         case BoolType:
         case UCharType:
         case UShortType:
-        case UIntType:
         // case ULongType:
+        case UIntType:
+            sprintf(openknxLogic.gBuffer, "%u", _value.uintValue);
+            return openknxLogic.gBuffer;
         case CharType:
+        case ShortType:
+        // case LongType:
+        case IntType:
+            sprintf(openknxLogic.gBuffer, "%i", _value.intValue);
+            return openknxLogic.gBuffer;
         case FloatType:
         case DoubleType:
-        case ShortType:
-        case IntType:
-            // case LongType:
-            return ""; // we would have to manage the memory for the string otherwise. Maybe later.
+            sprintf(openknxLogic.gBuffer, "%f", _value.doubleValue);
+            return openknxLogic.gBuffer;
         case StringType:
             return _value.stringValue;
     }

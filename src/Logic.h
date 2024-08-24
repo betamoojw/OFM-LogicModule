@@ -59,6 +59,8 @@ class Logic : public OpenKNX::Module
     void showHelp() override;
     bool processCommand(const std::string cmd, bool debugKo) override;
     void initLoadCounter(bool iAll);
+    bool sendReadRequest(GroupObject &ko);
+
     void debug();
     void setup();
     void loop();
@@ -72,6 +74,7 @@ class Logic : public OpenKNX::Module
 
     tm &Now();
     bool timeValid();
+    char gBuffer[14] = {0};
 
   private:
     static uint8_t sMagicWord[];
@@ -86,6 +89,7 @@ class Logic : public OpenKNX::Module
     static const uint16_t cCountKoLookups = LOG_ChannelCount * 3;
     sKoLookup mKoLookup[cCountKoLookups]; // max 3*4*100 = 1200 Byte, too much?
     uint16_t mNumKoLookups = 0;
+    uint32_t readRequestDelay = 0;
 
     LogicChannel *getChannel(uint8_t iChannelId);
     uint8_t getChannelId(LogicChannel *iChannel);

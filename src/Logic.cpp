@@ -187,6 +187,20 @@ void Logic::processReadRequests()
     }
 }
 
+bool Logic::sendReadRequest(GroupObject &ko)
+{
+    // ensure, that we do not send too many read requests at the same time
+    if (delayCheck(readRequestDelay, 300)) // 3 per second
+    {
+        // we handle input KO and we send only read requests, if KO is uninitialized
+        if (!ko.initialized())
+            ko.requestObjectRead();
+        readRequestDelay = delayTimerInit();
+        return true;
+    }
+    return false;
+}
+
 void Logic::readFlash(const uint8_t *iBuffer, const uint16_t iSize)
 {
     if (iSize == 0) // first call - without data
@@ -210,7 +224,7 @@ void Logic::readFlash(const uint8_t *iBuffer, const uint16_t iSize)
 void Logic::writeFlash()
 {
     openknx.flash.writeByte(1); // Version
-    for (uint8_t lIndex = 0; lIndex < mNumChannels; lIndex++)
+    for (uint8_t lIndex = 0; lIndex < MIN(mNumChannels, LOG_ChannelCount); lIndex++)
     {
         mChannel[lIndex]->save();
     }

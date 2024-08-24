@@ -10,6 +10,9 @@
 
 Timer &LogicChannel::sTimer = Timer::instance();
 TimerRestore &LogicChannel::sTimerRestore = TimerRestore::instance(); // singleton
+uint8_t LogicChannel::pLoadCounterMax = 0;
+uint8_t LogicChannel::pLoadChannel = 0;
+
 #if LOGIC_TRACE
 char LogicChannel::sFilter[30] = "";
 char LogicChannel::sTimeOutputBuffer[10] = "";
