@@ -245,7 +245,7 @@ GroupObject *LogicChannel::getKo(uint8_t iIOIndex)
         {
             int16_t lNewKoNumber = lKoNumber + lExternalAccess;
             if (lNewKoNumber > 0 && lNewKoNumber < MAIN_MaxKoNumber)
-                lKoNumber += lNewKoNumber;
+                lKoNumber = lNewKoNumber;
         }
         break;
         default:
@@ -743,11 +743,10 @@ void LogicChannel::writeParameterValue(uint8_t iIOIndex, bool iOn)
     writeValue(lValue, lInputDpt, iOn);
 }
 
-void LogicChannel::writeOtherKoValue(uint16_t iKoParamIndex, uint16_t iRelAbsIndex, uint16_t iDptIndex, bool iOn)
+void LogicChannel::writeOtherKoValue(uint16_t iKoParamIndex, bool iIsRelative, uint16_t iDptIndex, bool iOn)
 {
     int16_t lKoNumber = getSWordParam(iKoParamIndex);
-    uint8_t lIsRelative = getByteParam(iRelAbsIndex);
-    if (lIsRelative)
+    if (iIsRelative)
         lKoNumber += calcKoNumber(IO_Output);
     if (lKoNumber > 1 && lKoNumber <= MAIN_MaxKoNumber)
     {
@@ -1021,7 +1020,7 @@ bool LogicChannel::checkConvertValues(uint16_t iParamValues, uint8_t iDpt, int32
 void LogicChannel::processConvertInput(uint8_t iIOIndex)
 {
     uint16_t lParamLow = (iIOIndex == IO_Input1) ? LOG_fE1LowDelta : LOG_fE2LowDelta;
-    uint8_t lConvert = (iIOIndex == IO_Input1) ? LOG_fE1Convert : LOG_fE2Convert;
+    uint8_t lConvert = (iIOIndex == IO_Input1) ? ParamLOG_fE1Convert : ParamLOG_fE2Convert;
     bool lValueOut = 0;
     // get input value
     uint8_t lDpt;
@@ -2023,7 +2022,7 @@ void LogicChannel::processOutput(bool iValue)
                 writeParameterValue(IO_Input2, iValue);
                 break;
             case VAL_Out_OtherKO:
-                writeOtherKoValue(LOG_fOOnKONumber, LOG_fOOnKOKind, LOG_fOOnKODpt, iValue);
+                writeOtherKoValue(LOG_fOOnKONumber, ParamLOG_fOOnKOKind == 2, LOG_fOOnKODpt, iValue);
                 break;
             case VAL_Out_Function:
                 writeFunctionValue(LOG_fOOnFunction, iValue);
@@ -2060,7 +2059,7 @@ void LogicChannel::processOutput(bool iValue)
                 writeParameterValue(IO_Input2, iValue);
                 break;
             case VAL_Out_OtherKO:
-                writeOtherKoValue(LOG_fOOffKONumber, LOG_fOOffKOKind, LOG_fOOffKODpt, iValue);
+                writeOtherKoValue(LOG_fOOffKONumber, ParamLOG_fOOffKOKind == 2, LOG_fOOffKODpt, iValue);
                 break;
             case VAL_Out_Function:
                 writeFunctionValue(LOG_fOOffFunction, iValue);

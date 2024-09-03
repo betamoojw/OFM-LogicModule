@@ -82,6 +82,16 @@
                             <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="1" />
                           </when>
                         </choose>
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601">
+                          <when test="9">
+                            <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="1" />
+                          </when>
+                        </choose>
+                        <choose ParamRefId="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901">
+                          <when test="9">
+                            <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="1" />
+                          </when>
+                        </choose>
                         <!-- false case -->
                         <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
                           <when test="0">
@@ -95,7 +105,15 @@
                                           <when test="0">
                                             <choose ParamRefId="%AID%_UP-%TT%%CC%050_R-%TT%%CC%05001">
                                               <when test="0">
-                                                <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="0" />
+                                                <choose ParamRefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601">
+                                                  <when test="!=9">
+                                                    <choose ParamRefId="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901">
+                                                      <when test="!=9">
+                                                        <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="0" />
+                                                      </when>
+                                                    </choose>
+                                                  </when>
+                                                </choose>
                                               </when>
                                             </choose>
                                           </when>
@@ -268,7 +286,7 @@
                               </choose>
                             </when>
                           </choose>
-                          <choose ParamRefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601">
+                          <choose ParamRefId="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901">
                             <when test="9">
                               <ParameterSeparator Id="%AID%_PS-nnn" Text="Wert-AUS" Cell="5,8" UIHint="Headline" />
                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%472_R-%TT%%CC%47201" HelpContext="%DOC%" Cell="5,9" />
