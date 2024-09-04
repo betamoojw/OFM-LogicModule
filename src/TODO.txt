@@ -1,4 +1,3 @@
 BUG: Eingang 1/2 Lesen alle xxx wird auch angezeigt, wenn lesen vom Bus aus ist.
-NEU: Relative KO-Bindings
-NEU: Relative interne Verknüpfungen
-
+NEU: ABS(E1),ABS(E2)  Standardfunktion
+NEU: -E1, -E2 Standardfunktion

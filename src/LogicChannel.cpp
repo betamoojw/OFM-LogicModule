@@ -317,16 +317,42 @@ uint16_t LogicChannel::checkAdditionalWrite(bool iOn)
     return lKoNumber;
 }
 
+void LogicChannel::knxWrite(uint8_t iIOIndex, KNXValue &iValue, bool iOn, bool iAdditional /* = true */)
+{
+    bool lSendOnChanged = ParamLOG_fOSendOnChange;
+    GroupObject *lKo = getKo(iIOIndex);
+    bool lChanged = false;
+    if (lSendOnChanged)
+        lChanged = lKo->valueNoSendCompare(iValue, getKoDPT(iIOIndex));
+    else
+        lKo->value(iValue, getKoDPT(iIOIndex));
+    if (lChanged)
+        lKo->objectWritten();
+    if (iAdditional)
+    {
+        uint16_t lKoNumber = checkAdditionalWrite(iOn);
+        if (lKoNumber > 0)
+        {
+            GroupObject lKo = knx.getGroupObject(lKoNumber);
+            lChanged = false;
+            if (lSendOnChanged)
+                lChanged = lKo.valueNoSendCompare(iValue, getKoDPT(iIOIndex));
+            else
+                lKo.value(iValue, getKoDPT(iIOIndex));
+            if (lChanged)
+                lKo.objectWritten();
+        }
+    }
+}
+
 // write value to bus
 void LogicChannel::knxWriteBool(uint8_t iIOIndex, bool iValue, bool iOn)
 {
 #if LOGIC_TRACE
     logChannel("knxWrite KO %d bool value %d", calcKoNumber(iIOIndex), iValue);
 #endif
-    getKo(iIOIndex)->value(iValue, getKoDPT(iIOIndex));
-    uint16_t lKoNumber = checkAdditionalWrite(iOn);
-    if (lKoNumber > 0)
-        knx.getGroupObject(lKoNumber).value(iValue, getKoDPT(iIOIndex));
+    KNXValue lValue = iValue;
+    knxWrite(iIOIndex, lValue, iOn);
 }
 
 void LogicChannel::knxWriteInt(uint8_t iIOIndex, int32_t iValue, bool iOn)
@@ -334,40 +360,36 @@ void LogicChannel::knxWriteInt(uint8_t iIOIndex, int32_t iValue, bool iOn)
 #if LOGIC_TRACE
     logChannel("knxWrite KO %d int value %li", calcKoNumber(iIOIndex), iValue);
 #endif
-    getKo(iIOIndex)->value((int32_t)iValue, getKoDPT(iIOIndex));
-    uint16_t lKoNumber = checkAdditionalWrite(iOn);
-    if (lKoNumber > 0)
-        knx.getGroupObject(lKoNumber).value((int32_t)iValue, getKoDPT(iIOIndex));
+    KNXValue lValue = iValue;
+    knxWrite(iIOIndex, lValue, iOn);
 }
 
-void LogicChannel::knxWriteRawInt(uint8_t iIOIndex, int32_t iValue, bool iOn)
-{
-#if LOGIC_TRACE
-    logChannel("knxWrite KO %d int value %li", calcKoNumber(iIOIndex), iValue);
-#endif
-    GroupObject *lKo = getKo(iIOIndex);
-    uint8_t *lValueRef = lKo->valueRef();
-    *lValueRef = iValue;
-    lKo->objectWritten();
-    uint16_t lKoNumber = checkAdditionalWrite(iOn);
-    if (lKoNumber > 0)
-    {
-        GroupObject &lKo = knx.getGroupObject(lKoNumber);
-        uint8_t *lValueRef = lKo.valueRef();
-        *lValueRef = iValue;
-        lKo.objectWritten();
-    }
-}
+// void LogicChannel::knxWriteRawInt(uint8_t iIOIndex, int32_t iValue, bool iOn)
+// {
+// #if LOGIC_TRACE
+//     logChannel("knxWrite KO %d int value %li", calcKoNumber(iIOIndex), iValue);
+// #endif
+//     GroupObject *lKo = getKo(iIOIndex);
+//     uint8_t *lValueRef = lKo->valueRef();
+//     *lValueRef = iValue;
+//     lKo->objectWritten();
+//     uint16_t lKoNumber = checkAdditionalWrite(iOn);
+//     if (lKoNumber > 0)
+//     {
+//         GroupObject &lKo = knx.getGroupObject(lKoNumber);
+//         uint8_t *lValueRef = lKo.valueRef();
+//         *lValueRef = iValue;
+//         lKo.objectWritten();
+//     }
+// }
 
 void LogicChannel::knxWriteFloat(uint8_t iIOIndex, float iValue, bool iOn)
 {
 #if LOGIC_TRACE
     logChannel("knxWrite KO %d float value %f", calcKoNumber(iIOIndex), iValue);
 #endif
-    getKo(iIOIndex)->value(iValue, getKoDPT(iIOIndex));
-    uint16_t lKoNumber = checkAdditionalWrite(iOn);
-    if (lKoNumber > 0)
-        knx.getGroupObject(lKoNumber).value(iValue, getKoDPT(iIOIndex));
+    KNXValue lValue = iValue;
+    knxWrite(iIOIndex, lValue, iOn);
 }
 
 void LogicChannel::knxWriteString(uint8_t iIOIndex, const char *iValue)
@@ -375,7 +397,8 @@ void LogicChannel::knxWriteString(uint8_t iIOIndex, const char *iValue)
 #if LOGIC_TRACE
     logChannel("knxWrite KO %d string value %s", calcKoNumber(iIOIndex), iValue);
 #endif
-    getKo(iIOIndex)->value(iValue, getKoDPT(iIOIndex));
+    KNXValue lValue = iValue;
+    knxWrite(iIOIndex, lValue, false, false);
 }
 
 // send read request on bus
@@ -679,7 +702,7 @@ void LogicChannel::writeConstantValue(uint16_t iParamIndex, bool iOn)
             break;
         case VAL_DPT_2:
             lValueByte = getByteParam(iParamIndex);
-            knxWriteRawInt(IO_Output, lValueByte, iOn);
+            knxWriteInt(IO_Output, lValueByte, iOn);
             break;
         case VAL_DPT_5:
         case VAL_DPT_5001: // correct value is calculated by dpt handling
@@ -693,7 +716,7 @@ void LogicChannel::writeConstantValue(uint16_t iParamIndex, bool iOn)
         case VAL_DPT_6:
             int8_t lValueShort;
             lValueShort = getSByteParam(iParamIndex);
-            knxWriteRawInt(IO_Output, lValueShort, iOn);
+            knxWriteInt(IO_Output, lValueShort, iOn);
             break;
         case VAL_DPT_7:
             uint16_t lValueUWord;
@@ -782,7 +805,7 @@ void LogicChannel::writeValue(LogicValue iValue, uint8_t iDpt, bool iOn)
         case VAL_DPT_2:
             lValueByte = iValue;
             lValueByte &= 3;
-            knxWriteRawInt(IO_Output, lValueByte, iOn);
+            knxWriteInt(IO_Output, lValueByte, iOn);
             break;
         case VAL_DPT_5:
         case VAL_DPT_5001:

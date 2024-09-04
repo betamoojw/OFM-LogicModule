@@ -233,9 +233,10 @@ class LogicChannel : public OpenKNX::Channel
     GroupObject *getKo(uint8_t iIOIndex);
     Dpt &getKoDPT(uint8_t iIOIndex);
     uint16_t checkAdditionalWrite(bool iOn);
+    void knxWrite(uint8_t iIOIndex, KNXValue &iValue, bool iOn, bool iAdditional = true);
     void knxWriteBool(uint8_t iIOIndex, bool iValue, bool iOn);
     void knxWriteInt(uint8_t iIOIndex, int32_t iValue, bool iOn);
-    void knxWriteRawInt(uint8_t iIOIndex, int32_t iValue, bool iOn);
+    // void knxWriteRawInt(uint8_t iIOIndex, int32_t iValue, bool iOn);
     void knxWriteFloat(uint8_t iIOIndex, float iValue, bool iOn);
     void knxWriteString(uint8_t iIOIndex, const char *iValue);
     void knxRead(uint8_t iIOIndex);
