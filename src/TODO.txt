@@ -1,3 +1,0 @@
-BUG: Eingang 1/2 Lesen alle xxx wird auch angezeigt, wenn lesen vom Bus aus ist.
-NEU: ABS(E1),ABS(E2)  Standardfunktion
-NEU: -E1, -E2 Standardfunktion

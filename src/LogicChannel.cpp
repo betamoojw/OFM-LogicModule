@@ -333,14 +333,14 @@ void LogicChannel::knxWrite(uint8_t iIOIndex, KNXValue &iValue, bool iOn, bool i
         uint16_t lKoNumber = checkAdditionalWrite(iOn);
         if (lKoNumber > 0)
         {
-            GroupObject lKo = knx.getGroupObject(lKoNumber);
+            lKo = &knx.getGroupObject(lKoNumber);
             lChanged = false;
             if (lSendOnChanged)
-                lChanged = lKo.valueNoSendCompare(iValue, getKoDPT(iIOIndex));
+                lChanged = lKo->valueNoSendCompare(iValue, getKoDPT(iIOIndex));
             else
-                lKo.value(iValue, getKoDPT(iIOIndex));
+                lKo->value(iValue, getKoDPT(iIOIndex));
             if (lChanged)
-                lKo.objectWritten();
+                lKo->objectWritten();
         }
     }
 }
@@ -2292,7 +2292,7 @@ void LogicChannel::prepareChannel()
                     pValidActiveIO |= BIT_EXT_INPUT_1;
                     // for Formulas, we initialize the KO, too
                     // lKo->commFlag(Ok);
-                    lKo->value(false, getKoDPT(IO_Input1));
+                    lKo->value(true, getKoDPT(IO_Input1));
                     break;
 
                 default:
@@ -2356,7 +2356,7 @@ void LogicChannel::prepareChannel()
                     pValidActiveIO |= BIT_EXT_INPUT_2;
                     // for Formulas, we initialize the KO, too
                     // lKo->commFlag(Ok);
-                    lKo->value(false, getKoDPT(IO_Input2));
+                    lKo->value(true, getKoDPT(IO_Input2));
                     break;
 
                 default:

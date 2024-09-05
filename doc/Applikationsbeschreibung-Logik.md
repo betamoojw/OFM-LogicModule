@@ -85,6 +85,8 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 
 23.08.2024: Firmware 3.4, Applikation 3.4
 
+* NEU: Standardfunktion A = ABS(E1) (Betrag von E1) und A = ABS(E2) (Betrag von E2)
+* NEU: Standardfunktion A = -E1 (Negiere E1) und A = -E2 (Negiere E2)
 * NEU: Sendeverhalten für den Ausgang: Wertwiederholungen können jetzt unterdrückt werden
 * NEU: Alle internen KO-Verknüpfungen können auch relativ zum eigenen KO angegeben werden
 * NEU: Alle internen Eingänge können auch relativ zum eigenen Kanal angegeben werden
@@ -2626,6 +2628,30 @@ Ist einer der Eingänge inaktiv oder der Ausgang initial, wird dafür jeweils ei
 Die Werte von Eingang 1 und Eingang 2 werden subtrahiert und der Wert vom Ausgang wird um diese Differenz erniedrigt und am Ausgang ausgegeben.
 
 Ist einer der Eingänge inaktiv oder der Ausgang initial, wird dafür jeweils eine 0 angenommen.
+
+#### **A = -E1 (Negiere E1)**
+
+Der Wert von E1 wird negiert (mit minus 1 multipliziert) und am Ausgang ausgegeben. 
+
+Ist der Eingang E1 initial, wird eine 0 angenommen und somit auch 0 ausgegeben.
+
+#### **A = -E2 (Negiere E2)**
+
+Der Wert von E2 wird negiert (mit minus 1 multipliziert) und am Ausgang ausgegeben. 
+
+Ist der Eingang E2 initial, wird eine 0 angenommen und somit auch 0 ausgegeben.
+
+#### **A = ABS(E1) (Betrag von E1)**
+
+Das Vorzeichen von E1 wird ignoriert und E1 als positive Zahl am Ausgang ausgegeben. 
+
+Ist der Eingang E1 initial, wird eine 0 angenommen und somit auch 0 ausgegeben.
+
+#### **A = ABS(E2) (Betrag von E2)**
+
+Das Vorzeichen von E2 wird ignoriert und E2 als positive Zahl am Ausgang ausgegeben. 
+
+Ist der Eingang E2 initial, wird eine 0 angenommen und somit auch 0 ausgegeben.
 
 #### **A = B2I(E1, E2) (Bool zu Int)**
 

@@ -220,11 +220,39 @@ LogicValue LogicFunction::nativePower(uint8_t _channelIndex, uint8_t DptE1, Logi
     return E1 ^ E2;
 }
 
+LogicValue LogicFunction::nativeNegativeE1(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+{
+    LogicValue lMinusOne = (double)-1;
+    return E1 * lMinusOne;
+}
+
+LogicValue LogicFunction::nativeNegativeE2(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+{
+    LogicValue lMinusOne = (double)-1;
+    return E2 * lMinusOne;
+}
+
+LogicValue LogicFunction::nativeAbsoluteE1(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+{
+    if ((double)E1 >= 0.0)
+        return E1;
+    else
+        return nativeNegativeE1(_channelIndex, DptE1, E1, DptE2, E2, DptOut, iOld);
+}
+
+LogicValue LogicFunction::nativeAbsoluteE2(uint8_t _channelIndex, uint8_t DptE1, LogicValue E1, uint8_t DptE2, LogicValue E2, uint8_t *DptOut, LogicValue iOld)
+{
+    if ((double)E2 >= 0.0)
+        return E2;
+    else
+        return nativeNegativeE2(_channelIndex, DptE1, E1, DptE2, E2, DptOut, iOld);
+}
+
 // do not touch after this point
 
-LogicFunction::LogicFunction(){};
+LogicFunction::LogicFunction() {};
 
-LogicFunction::~LogicFunction(){};
+LogicFunction::~LogicFunction() {};
 
 LogicValue (*LogicFunction::nativeFunction[NUM_NATIVE_FUNCTIONS])(uint8_t, uint8_t, LogicValue, uint8_t, LogicValue, uint8_t *, LogicValue){
     nativeAdd,
@@ -264,7 +292,11 @@ LogicValue (*LogicFunction::nativeFunction[NUM_NATIVE_FUNCTIONS])(uint8_t, uint8
     nativeRShiftE1,
     nativeRShiftE2,
     nativeRShiftA,
-    nativePower};
+    nativePower,
+    nativeNegativeE1,
+    nativeNegativeE2,
+    nativeAbsoluteE1,
+    nativeAbsoluteE2};
 
 LogicValue (*LogicFunction::userFunction[30])(uint8_t, uint8_t, LogicValue, uint8_t, LogicValue, uint8_t *, LogicValue){
     userFunction01,

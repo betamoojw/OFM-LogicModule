@@ -503,6 +503,10 @@
                   <Enumeration Text="A = A - E2 (Erniedrige um E2)" Value="27" Id="%ENID%" />
                   <Enumeration Text="A = A - (E1 + E2) (Erniedr. um Eingangssumme)" Value="28" Id="%ENID%" />
                   <Enumeration Text="A = A - (E1 - E2) (Erniedr. um Eingangsdifferenz)" Value="29" Id="%ENID%" />
+                  <Enumeration Text="A = -E1 (Negiere E1)" Value="39" Id="%ENID%" />
+                  <Enumeration Text="A = -E2 (Negiere E2)" Value="40" Id="%ENID%" />
+                  <Enumeration Text="A = ABS(E1) (Betrag von E1)" Value="41" Id="%ENID%" />
+                  <Enumeration Text="A = ABS(E2) (Betrag von E2)" Value="42" Id="%ENID%" />
                   <Enumeration Text="A = B2I(E1, E2) (Bool zu Int)" Value="14" Id="%ENID%" />
                   <Enumeration Text="A = Glättung(E1, E2)" Value="15" Id="%ENID%" />
                   <Enumeration Text="A = B1(E1, E2, A)" Value="201" Id="%ENID%" />
