@@ -1345,7 +1345,8 @@
               <ParameterBlock Id="%AID%_PB-nnn" Name="KoOverview" Text="Übersicht interne Verknüpfungen" Icon="view-list-outline" HelpContext="Empty" ShowInComObjectTree="false">
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Übersicht aller Verknüpfungen" UIHint="Headline" />
                 <ParameterSeparator Id="%AID%_PS-nnn" Text="Die folgende Liste kann leer sein, falls noch keine Logikkanäle definiert wurden oder noch keine internen Verknüpfungen genutzt werden." />
-                <ParameterBlock Id="%AID%_PB-nnn" Name="fIntKoOverviewFilter" Inline="true" Layout="Grid" HelpContext="Empty">
+                <!-- KO-Overview-Filter -->
+                <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid" HelpContext="Empty">
                   <Rows>
                     <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
                   </Rows>
@@ -1358,37 +1359,53 @@
                   <ParameterRefRef RefId="%AID%_P-%TT%00168_R-%TT%0016801" Cell="1,2" />
                   <ParameterRefRef RefId="%AID%_P-%TT%00166_R-%TT%0016601" Cell="1,3" />
                 </ParameterBlock>
-                <ParameterBlock Id="%AID%_PB-nnn" Name="fIntKoOverview" Inline="true" Layout="Grid" HelpContext="Empty">
+                <!-- Table-Header -->
+                <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid" HelpContext="Empty">
                   <Rows>
                     <Row Id="%AID%_PB-nnn_R-1" Name="Row1" />
+                    <Row Id="%AID%_PB-nnn_R-2" Name="Row2" />
+                    <Row Id="%AID%_PB-nnn_R-3" Name="Row3" />
                   </Rows>
                   <Columns>
                     <Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="11%" />
                     <Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="37%" />
                     <Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="45%" />
                     <Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="37%" />
-                    <Column Id="%AID%_PB-nnn_C-5" Name="Col5" Width="15%" />
-                    <Column Id="%AID%_PB-nnn_C-6" Name="Col6" Width="45%" />
+                    <Column Id="%AID%_PB-nnn_C-5" Name="Col5" Width="60%" />
                   </Columns>
+                  <!-- Horizontal ruler -->
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,1" Text="" UIHint="HorizontalRuler" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,2" Text="" UIHint="HorizontalRuler" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,3" Text="" UIHint="HorizontalRuler" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,4" Text="" UIHint="HorizontalRuler" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,5" Text="" UIHint="HorizontalRuler" />
+                  <!-- KO-Overview-Header -->
                   <choose ParamRefId="%AID%_P-%TT%00168_R-%TT%0016801">
                     <when test="0">
-                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Logiktext / Eingang" UIHint="Headline" Cell="1,2" />
+                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Logiktext / Eingang" UIHint="Headline" Cell="2,2" />
                     </when>
                     <when test="1">
-                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang" UIHint="Headline" Cell="1,2" />
+                      <ParameterSeparator Id="%AID%_PS-nnn" Text="Eingang" UIHint="Headline" Cell="2,2" />
                     </when>
                   </choose>
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="KO / Interner Eingang" UIHint="Headline" Cell="1,3" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Ausgang" UIHint="Headline" Cell="1,4" />
-                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Kommunikationsobjekt" UIHint="Headline" Cell="1,6" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Text="KO / Interner Eingang" UIHint="Headline" Cell="2,3" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Ausgang" UIHint="Headline" Cell="2,4" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Text="Kommunikationsobjekt" UIHint="Headline" Cell="2,5" />
+                  <!-- Horizontal ruler -->
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="3,1" Text="" UIHint="HorizontalRuler" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="3,2" Text="" UIHint="HorizontalRuler" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="3,3" Text="" UIHint="HorizontalRuler" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="3,4" Text="" UIHint="HorizontalRuler" />
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="3,5" Text="" UIHint="HorizontalRuler" />
                 </ParameterBlock>
+                <!-- KO-Overview-Table -->
                 <op:include href="Logikmodul.overview-intko.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Channel-List']/*" type="template" prefix="LOG" IsInner="true" />
               </ParameterBlock>
               <!-- followed by all logic channels -->
               <op:include href="Logikmodul.templ.xml" xpath="//ApplicationProgram/Dynamic/ChannelIndependentBlock/*" type="template" prefix="LOG" IsInner="true" />
               <choose ParamRefId="%AID%_UP-%TT%00164_R-%TT%0016401">
                 <when test="&lt;%N%">
-                  <ParameterBlock Id="%AID%_PB-nnn" Name="fAdditionalChannels" Text="(mehr)" Icon="dots-horizontal" HelpContext="Empty">
+                  <ParameterBlock Id="%AID%_PB-nnn" Text="(mehr)" Icon="dots-horizontal" HelpContext="Empty">
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
                     <ParameterRefRef RefId="%AID%_UP-%TT%00164_R-%TT%0016401" HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" />
                   </ParameterBlock>
