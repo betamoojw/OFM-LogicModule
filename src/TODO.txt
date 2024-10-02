@@ -1,0 +1,1 @@
+- NEU: Interne Eingänge sollten auch einen Eingangskonverter "Trigger" haben

@@ -66,7 +66,7 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
       * [Ein-/Ausschaltverzögerung](#ein-ausschaltverzögerung)
       * [Wiederholungsfilter](#wiederholungsfilter)
       * [Zyklisch senden](#zyklisch-senden)
-      * [Interne Eingänge](#interne-eingc3a4nge-1)
+      * [Interne Eingänge](#interne-eingänge-1)
       * [Wert für Ausgang](#wert-für-ausgang)
         * [ReadRequest senden](#ja---readrequest-senden)
         * [Gerät zurücksetzen senden](#ja---ger%C3%A4t-zur%C3%BCcksetzen-senden)
@@ -1522,7 +1522,7 @@ Wenn absolut ausgewählt wird, muss die Nummer des Kanals, dessen Ausgang mit di
 Wenn relativ ausgewählt wird, muss angegeben werden, wie viele Kanäle vor (positive Zahl) oder zurück (negative Zahl) der Kanal liegt, dessen Ausgang mit diesem Eingang verknüpft werden soll. In einem weiteren Feld wird die Nummer des Zielkanals ausgerechnet und ausgegeben.
 
 <!-- DOC -->
-### **Internen Eingang verbinden mit Kanalausgang Nr.**
+### **Internen Eingang verbinden mit Kanal Nr.**
 
 Als Eingabe wird hier die Nummer der Logik erwartet, deren Ausgang als interner Eingang genutzt werden soll. Solange der Eingang nicht verbunden ist (Wert im Eingabefeld ist 0) erscheint eine Warnmeldung, dass der Eingang inaktiv (undefiniert) ist.
 
@@ -1530,6 +1530,13 @@ Es kann auch der Ausgang des aktuellen Kanals als interner Eingang verwendet wer
 
 <!-- DOC Skip="1" -->
 <kbd>![Warnung Rückkopplung](pics/Rueckkopplung.PNG)</kbd>
+
+<!-- DOC -->
+### **Internen Eingang als Trigger nutzen (ist immer logisch EIN)**
+
+Man kann einen internen Eingang auch als reinen Trigger nutzen, unabhängig von seinem Wert. Dies entspricht genau dem Eingangskonverter eines Normalen (KO-Basierten) Eingangs.
+
+Wird diese Funktion gewählt, wird jeder Wert, den der Eingang bekommt, in ein EIN gewandelt und damit die Logik getriggert. Falls die Logik ein AUS erfordert, kann man den Eingang invertiert aktivieren.  
 
 ## **Schaltzeiten: unbenannt**
 

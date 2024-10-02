@@ -21,9 +21,6 @@
                           <when test="1 3">
                             <Assign TargetParamRefRef="%AID%_P-%TT%%CC%456_R-%TT%%CC%45601" Value="1" />
                           </when>
-                          <when default="true">
-                            <Assign TargetParamRefRef="%AID%_P-%TT%%CC%456_R-%TT%%CC%45601" Value="0" />
-                          </when>
                         </choose>
                       </when>
                       <when test="!=0">
@@ -39,9 +36,6 @@
                           <when test="1 3">
                             <Assign TargetParamRefRef="%AID%_P-%TT%%CC%457_R-%TT%%CC%45701" Value="1" />
                           </when>
-                          <when default="true">
-                            <Assign TargetParamRefRef="%AID%_P-%TT%%CC%457_R-%TT%%CC%45701" Value="0" />
-                          </when>
                         </choose>
                       </when>
                       <when test="!=0">
@@ -50,8 +44,12 @@
                     </choose>
                     <!-- eval channel display filter -->
                     <choose ParamRefId="%AID%_P-%TT%00166_R-%TT%0016601">
+                      <when test="0">
+                        <!-- Show all channels -->
+                        <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="1" />
+                      </when>
                       <when test="1">
-                        <!-- true case -->
+                        <!-- Show only channels with internal references -->
                         <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
                           <when test="1 2">
                             <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="1" />
@@ -92,43 +90,6 @@
                             <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="1" />
                           </when>
                         </choose>
-                        <!-- false case -->
-                        <choose ParamRefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701">
-                          <when test="0">
-                            <choose ParamRefId="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901">
-                              <when test="0">
-                                <choose ParamRefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001">
-                                  <when test="0">
-                                    <choose ParamRefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101">
-                                      <when test="0">
-                                        <choose ParamRefId="%AID%_UP-%TT%%CC%048_R-%TT%%CC%04801">
-                                          <when test="0">
-                                            <choose ParamRefId="%AID%_UP-%TT%%CC%050_R-%TT%%CC%05001">
-                                              <when test="0">
-                                                <choose ParamRefId="%AID%_UP-%TT%%CC%136_R-%TT%%CC%13601">
-                                                  <when test="!=9">
-                                                    <choose ParamRefId="%AID%_UP-%TT%%CC%139_R-%TT%%CC%13901">
-                                                      <when test="!=9">
-                                                        <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="0" />
-                                                      </when>
-                                                    </choose>
-                                                  </when>
-                                                </choose>
-                                              </when>
-                                            </choose>
-                                          </when>
-                                        </choose>
-                                      </when>
-                                    </choose>
-                                  </when>
-                                </choose>
-                              </when>
-                            </choose>
-                          </when>
-                        </choose>
-                      </when>
-                      <when test="0">
-                        <Assign TargetParamRefRef="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801" Value="1" />
                       </when>
                     </choose>
                     <choose ParamRefId="%AID%_P-%TT%%CC%458_R-%TT%%CC%45801">

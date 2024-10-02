@@ -1902,6 +1902,7 @@ void LogicChannel::processOnOffRepeat()
 void LogicChannel::processInternalInputs(uint8_t iChannelId, bool iValue)
 {
     uint8_t lInput1 = ParamLOG_fI1;
+    bool lValue;
     if (lInput1 > 0)
     {
         uint8_t lIsRelative = ParamLOG_fI1Kind - 1;
@@ -1914,7 +1915,11 @@ void LogicChannel::processInternalInputs(uint8_t iChannelId, bool iValue)
             if (debugFilter())
                 logChannel("processInternalInputs: Input I1, Value %i", iValue);
 #endif
-            startLogic(BIT_INT_INPUT_1, iValue);
+            if (ParamLOG_fI1AsTrigger)
+                lValue = true;
+            else
+                lValue = iValue;
+            startLogic(BIT_INT_INPUT_1, lValue);
             // we also add that this input was used and is now valid
             pValidActiveIO |= BIT_INT_INPUT_1;
         }
@@ -1932,7 +1937,11 @@ void LogicChannel::processInternalInputs(uint8_t iChannelId, bool iValue)
             if (debugFilter())
                 logChannel("processInternalInputs: Input I2, Value %i", iValue);
 #endif
-            startLogic(BIT_INT_INPUT_2, iValue);
+            if (ParamLOG_fI2AsTrigger)
+                lValue = true;
+            else
+                lValue = iValue;
+            startLogic(BIT_INT_INPUT_2, lValue);
             // we also add that this input was used and is now valid
             pValidActiveIO |= BIT_INT_INPUT_2;
         }
