@@ -558,9 +558,11 @@
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-YearDay" Name="YearDay">
-                <TypeRestriction Base="Value" SizeInBit="1">
+                <TypeRestriction Base="Value" SizeInBit="2">
                   <Enumeration Text="Tagesschaltuhr" Value="0" Id="%ENID%" />
                   <Enumeration Text="Jahresschaltuhr" Value="1" Id="%ENID%" />
+                  <Enumeration Text="Tagesschaltuhr (verbunden)" Value="2" Id="%ENID%" />
+                  <Enumeration Text="Jahresschaltuhr (verbunden)" Value="3" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-Holiday" Name="Holiday">
@@ -1238,6 +1240,7 @@
                 <ParameterRefRef RefId="%AID%_UP-%TT%00121_R-%TT%0012101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00122_R-%TT%0012201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00123_R-%TT%0012301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00172_R-%TT%0017201" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00124_R-%TT%0012401" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00125_R-%TT%0012501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00126_R-%TT%0012601" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
@@ -1245,6 +1248,7 @@
                 <ParameterRefRef RefId="%AID%_UP-%TT%00127_R-%TT%0012701" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00128_R-%TT%0012801" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00129_R-%TT%0012901" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
+                <ParameterRefRef RefId="%AID%_UP-%TT%00173_R-%TT%0017301" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00155_R-%TT%0015501" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00130_R-%TT%0013001" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />
                 <ParameterRefRef RefId="%AID%_UP-%TT%00131_R-%TT%0013101" HelpContext="LOG-Auswahlfelder-fuer-Feiertage" IndentLevel="1" />

@@ -1,5 +1,7 @@
 ﻿### Feiertagsbehandlung
 
+Erscheint nur bei Zeitschaltuhren, die nicht verbunden sind. Bei verbundenen Zeitschaltuhren gilt die Definition der ersten (nicht verbundenen) Zeitschaltuhr.
+
 Über dieses Auswahlfeld kann man definieren, wie sich die Zeitschaltuhr (also alle Schaltpunkte) bei einem Feiertag verhalten.
 
 #### Feiertage nicht beachten

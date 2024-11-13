@@ -599,21 +599,31 @@ LogicValue LogicChannel::getParamByDpt(uint8_t iDpt, uint16_t iParamIndex)
 // DPT9 => transport as float
 LogicValue LogicChannel::getInputValue(uint8_t iIOIndex, uint8_t *eDpt)
 {
-    // check for constant
-    uint16_t lParamIndex = (iIOIndex == IO_Input1) ? LOG_fE1Convert : LOG_fE2Convert;
-    uint8_t lConvert = (getByteParam(lParamIndex) & LOG_fE1ConvertMask) >> LOG_fE1ConvertShift;
-    lParamIndex = (iIOIndex == IO_Input1) ? LOG_fE1Dpt : LOG_fE2Dpt;
-    *eDpt = getByteParam(lParamIndex);
-    if (lConvert == VAL_InputConvert_Constant)
+    // check for timer
+    if (ParamLOG_fLogic == VAL_Logic_Timer && iIOIndex == IO_Input1)
     {
-        // input value is a constant stored in param memory
-        uint16_t lParamIndex = (iIOIndex == IO_Input1) ? LOG_fE1LowDelta : LOG_fE2LowDelta;
-        LogicValue lValue = getParamByDpt(*eDpt, lParamIndex);
-        return lValue;
+        *eDpt = VAL_DPT_5;      
+        LogicValue lValue = pCurrentTimerValueNum;
+        return lValue;  
     }
     else
     {
-        return getKoValue(iIOIndex, *eDpt);
+        // check for constant
+        uint16_t lParamIndex = (iIOIndex == IO_Input1) ? LOG_fE1Convert : LOG_fE2Convert;
+        uint8_t lConvert = (getByteParam(lParamIndex) & LOG_fE1ConvertMask) >> LOG_fE1ConvertShift;
+        lParamIndex = (iIOIndex == IO_Input1) ? LOG_fE1Dpt : LOG_fE2Dpt;
+        *eDpt = getByteParam(lParamIndex);
+        if (lConvert == VAL_InputConvert_Constant)
+        {
+            // input value is a constant stored in param memory
+            uint16_t lParamIndex = (iIOIndex == IO_Input1) ? LOG_fE1LowDelta : LOG_fE2LowDelta;
+            LogicValue lValue = getParamByDpt(*eDpt, lParamIndex);
+            return lValue;
+        }
+        else
+        {
+            return getKoValue(iIOIndex, *eDpt);
+        }
     }
 }
 
@@ -2237,9 +2247,26 @@ void LogicChannel::prepareChannel()
     // logChannel("       prepareChannel");
     if (lLogicFunction == 5)
     {
-        // timer implementation, timer is on ext input 2
-        pValidActiveIO |= BIT_EXT_INPUT_2 >> 4;
-        startStartup();
+        if (ParamLOG_fTYearDay >= VAL_Tim_Timer_Daily_Linked)
+        {
+            // prepare linked timer channels
+            uint8_t lAbsRel = ParamLOG_fI1Kind;
+            int8_t lChannelIndex = ParamLOG_fI1FunctionRel;
+            if (lAbsRel == VAL_AbsRel_Relative)
+                lChannelIndex += _channelIndex + 1;
+            if (lAbsRel > 0 && lChannelIndex > 0 && lChannelIndex < 100 && lChannelIndex != _channelIndex + 1)
+            {
+                LogicChannel *lLinkedChannel = openknxLogic.getChannel(lChannelIndex - 1);
+                if (lLinkedChannel != nullptr)
+                    lLinkedChannel->pLinkedTimerChannel = this;
+            }
+        } 
+        else
+        {
+            // timer implementation, timer is on ext input 2
+            pValidActiveIO |= BIT_EXT_INPUT_2 >> 4;
+            startStartup();
+        }
     }
     else if (lLogicFunction > 0)
     {
@@ -2462,11 +2489,9 @@ void LogicChannel::startTimerInput()
 // called every minute, finds the next timer to process and marks it
 void LogicChannel::processTimerInput()
 {
-    bool lIsYearTimer = ParamLOG_fTYearDay;
-    uint8_t lCountTimer = lIsYearTimer ? VAL_Tim_YearTimerCount : VAL_Tim_DayTimerCount; // there are 4 year timer or 8 day timer
-    bool lToday;                                                                         // if it is a day timer lToday=true
     bool lResult = false;
     bool lValue;
+    uint8_t lValueNum = 0;
     bool lEvaluate = true;
     // first we process settings valid for whole timer
     // vacation
@@ -2495,70 +2520,7 @@ void LogicChannel::processTimerInput()
     {
         bool lHandleAsSunday = (lHolidaySetting == VAL_Tim_Special_Sunday && (sTimer.holidayToday() > 0)) ||
                                (lVacationSetting == VAL_Tim_Special_Sunday && lIsVacation);
-
-        // loop through all timer
-        uint32_t lTimerFunctions = getIntParam(LOG_fTd1DuskDawn);
-        for (uint8_t lTimerIndex = 0; lTimerIndex < lCountTimer; lTimerIndex++)
-        {
-            // get timer function code
-            uint8_t lTimerFunction = (lTimerFunctions >> (28 - lTimerIndex * 4)) & 0xF;
-            if (lTimerFunction)
-            {
-                // timer function is active
-                lToday = !lIsYearTimer || checkTimerToday(sTimer, lTimerIndex, lHandleAsSunday);
-                if (lToday)
-                {
-                    uint16_t lBitfield = getWordParam(LOG_fTd1Value + 2 * lTimerIndex);
-                    lValue = lBitfield & 0x8000;
-                    switch (lTimerFunction)
-                    {
-                        case VAL_Tim_PointInTime:
-                            lResult = checkPointInTime(sTimer, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday);
-                            break;
-                        case VAL_Tim_Sunrise_Plus:
-                            lResult = checkSunAbs(sTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, false);
-                            break;
-                        case VAL_Tim_Sunrise_Minus:
-                            lResult = checkSunAbs(sTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, true);
-                            break;
-                        case VAL_Tim_Sunset_Plus:
-                            lResult = checkSunAbs(sTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, false);
-                            break;
-                        case VAL_Tim_Sunset_Minus:
-                            lResult = checkSunAbs(sTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, true);
-                            break;
-                        case VAL_Tim_Sunrise_Earliest:
-                            lResult = checkSunLimit(sTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, false);
-                            break;
-                        case VAL_Tim_Sunrise_Latest:
-                            lResult = checkSunLimit(sTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, true);
-                            break;
-                        case VAL_Tim_Sunset_Earliest:
-                            lResult = checkSunLimit(sTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, false);
-                            break;
-                        case VAL_Tim_Sunset_Latest:
-                            lResult = checkSunLimit(sTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, true);
-                            break;
-                        case VAL_Tim_Sunrise_DegreeUp:
-                            lResult = checkSunDegree(sTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, false);
-                            break;
-                        case VAL_Tim_Sunset_DegreeUp:
-                            lResult = checkSunDegree(sTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, false);
-                            break;
-                        case VAL_Tim_Sunrise_DegreeDown:
-                            lResult = checkSunDegree(sTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, true);
-                            break;
-                        case VAL_Tim_Sunset_DegreeDown:
-                            lResult = checkSunDegree(sTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, lHandleAsSunday, true);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            if (lResult)
-                break;
-        }
+        lResult = checkTimerAll(sTimer, lHandleAsSunday, &lValue, &lValueNum);
         if (lResult)
         {
 #if LOGIC_TRACE
@@ -2567,6 +2529,7 @@ void LogicChannel::processTimerInput()
                 logChannel("startTimerInput: Value %i", lValue);
             }
 #endif
+            pCurrentTimerValueNum = lValueNum;
             startLogic(BIT_EXT_INPUT_2, lValue);
             // we also add that this input was used and is now valid
             pValidActiveIO |= BIT_EXT_INPUT_2;
@@ -2576,6 +2539,82 @@ void LogicChannel::processTimerInput()
     }
     // we wait for next timer execution
     pCurrentPipeline &= ~PIP_TIMER_INPUT;
+}
+
+bool LogicChannel::checkTimerAll(Timer &iTimer, bool iHandleAsSunday, bool *iValue, uint8_t *iValueNum)
+{
+    bool lResult = false;
+    bool lIsYearTimer = ParamLOG_fTYearDay;
+    uint8_t lCountTimer = lIsYearTimer ? VAL_Tim_YearTimerCount : VAL_Tim_DayTimerCount; // there are 4 year timer or 8 day timer
+    bool lToday;                                                                         // if it is a day timer lToday=true
+    // loop through all timer
+    uint32_t lTimerFunctions = getIntParam(LOG_fTd1DuskDawn);
+    for (uint8_t lTimerIndex = 0; lTimerIndex < lCountTimer; lTimerIndex++)
+    {
+        // get timer function code
+        uint8_t lTimerFunction = (lTimerFunctions >> (28 - lTimerIndex * 4)) & 0xF;
+        if (lTimerFunction)
+        {
+            // timer function is active
+            lToday = !lIsYearTimer || checkTimerToday(sTimer, lTimerIndex, iHandleAsSunday);
+            if (lToday)
+            {
+                uint16_t lBitfield = getWordParam(LOG_fTd1Value + 2 * lTimerIndex);
+                *iValue = lBitfield & 0x8000;
+                *iValueNum = getByteParam(LOG_fTd1ValueNum + lTimerIndex);
+                switch (lTimerFunction)
+                {
+                    case VAL_Tim_PointInTime:
+                        lResult = checkPointInTime(iTimer, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday);
+                        break;
+                    case VAL_Tim_Sunrise_Plus:
+                        lResult = checkSunAbs(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
+                        break;
+                    case VAL_Tim_Sunrise_Minus:
+                        lResult = checkSunAbs(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
+                        break;
+                    case VAL_Tim_Sunset_Plus:
+                        lResult = checkSunAbs(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
+                        break;
+                    case VAL_Tim_Sunset_Minus:
+                        lResult = checkSunAbs(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
+                        break;
+                    case VAL_Tim_Sunrise_Earliest:
+                        lResult = checkSunLimit(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
+                        break;
+                    case VAL_Tim_Sunrise_Latest:
+                        lResult = checkSunLimit(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
+                        break;
+                    case VAL_Tim_Sunset_Earliest:
+                        lResult = checkSunLimit(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
+                        break;
+                    case VAL_Tim_Sunset_Latest:
+                        lResult = checkSunLimit(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
+                        break;
+                    case VAL_Tim_Sunrise_DegreeUp:
+                        lResult = checkSunDegree(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
+                        break;
+                    case VAL_Tim_Sunset_DegreeUp:
+                        lResult = checkSunDegree(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, false);
+                        break;
+                    case VAL_Tim_Sunrise_DegreeDown:
+                        lResult = checkSunDegree(iTimer, SUN_SUNRISE, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
+                        break;
+                    case VAL_Tim_Sunset_DegreeDown:
+                        lResult = checkSunDegree(iTimer, SUN_SUNSET, lTimerIndex, lBitfield, lIsYearTimer, iHandleAsSunday, true);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        if (lResult)
+        break;
+    }
+    // continue with linked timer channels
+    if (!lResult && pLinkedTimerChannel != nullptr)
+        lResult = pLinkedTimerChannel->checkTimerAll(iTimer, iHandleAsSunday, iValue, iValueNum);
+    return lResult;
 }
 
 // checks if timer is valid today
@@ -2631,15 +2670,11 @@ bool LogicChannel::checkWeekday(Timer &iTimer, uint8_t iWeekday, bool iHandleAsS
     if (iWeekday > 7)
         return false;
     if (iWeekday == 0)
-    {
         return true;
-    }
+    if (iHandleAsSunday)
+        return iWeekday == 7;
     if (iWeekday == 7)
-    {
-        iWeekday = 0;
-        if (iHandleAsSunday)
-            return true;
-    }
+        iWeekday = 0; // getWeekday() liefert für Sonntag eine 0
     return iWeekday == iTimer.getWeekday();
 }
 

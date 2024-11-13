@@ -556,7 +556,7 @@ uint64_t Logic::holidaysToUInt64(uint8_t *iData, uint8_t iCount)
     uint64_t l = 0;
     uint8_t *p = (uint8_t *)&l;
     for (uint8_t i = 0; i < iCount; i++)
-        p[i] = iData[i];
+        p[7-i] = iData[i];
     return l;
 }
 

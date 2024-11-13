@@ -1558,15 +1558,19 @@ Diese Feld erlaubt eine kurze Beschreibung, wozu diese Zeitschaltuhr verwendet w
 <!-- DOC -->
 ### **Typ der Zeitschaltuhr**
 
-Es werden genau 2 Typen von Zeitschaltuhren unterstützt:
+Es werden folgende Typen von Zeitschaltuhren unterstützt:
 
 * Tagesschaltuhr: Erlaubt die Angabe von Wochentag, Stunde und Minute und ist somit für tägliche/wöchentliche Schaltungen gedacht. Diese Schaltuhr erlaubt 8 Schaltzeiten zu definieren.
 * Jahresschaltuhr: Erlaubt die Angabe von Monat, Tag, Wochentag, Stunde und Minute und ist somit für seltener im Jahr/Monat vorkommende Schaltungen gedacht. Diese Schaltuhr erlaubt 4 Schaltzeiten zu definieren.
+* Tagesschaltuhr (verbunden): Wie Tagesschaltuhr, nur werden die Schaltzeiten dieser Zeitschaltuhr mit einer anderen Zeitschaltuhr verbunden und als eine Einheit behandelt.
+* Jahresschaltuhr (verbunden): Wie Jahresschaltuhr, nur werden die Schaltzeiten dieser Zeitschaltuhr mit einer anderen Zeitschaltuhr verbunden und als eine Einheit behandelt.
 
-Sollten die Schaltzeiten einer Zeitschaltuhr nicht ausreichen, kann man mehrere Kanäle als Zeitschaltuhr definieren und diese dann per ODER verknüpfen.
+Verbundene Zeitschaltuhren erlauben es, mehr als die möglichen 4 oder 8 Schaltzeiten zu definieren.
 
 <!-- DOC -->
 ### **Feiertagsbehandlung**
+
+Erscheint nur bei Zeitschaltuhren, die nicht verbunden sind. Bei verbundenen Zeitschaltuhren gilt die Definition der ersten (nicht verbundenen) Zeitschaltuhr.
 
 Über dieses Auswahlfeld kann man definieren, wie sich die Zeitschaltuhr (also alle Schaltpunkte) bei einem Feiertag verhalten.
 
@@ -1589,7 +1593,7 @@ Bei dieser Zeitschaltuhr werden die Schaltzeiten normal behandelt, an einem Feie
 <!-- DOC -->
 ### **Urlaubsbehandlung**
 
-Erscheint nur, wenn unter "Urlaub/Feiertage" die Einstellung "Urlaubsbehandlung aktivieren?" mit "Ja" eingestellt wurde.
+Erscheint nur bei Zeitschaltuhren, die nicht verbunden sind und unter "Urlaub/Feiertage" die Einstellung "Urlaubsbehandlung aktivieren?" mit "Ja" eingestellt wurde. Bei verbundenen Zeitschaltuhren gilt die Definition der ersten (nicht verbundenen) Zeitschaltuhr.
 
 Über dieses Auswahlfeld kann man definieren, wie sich die Zeitschaltuhr (also alle Schaltpunkte) bei einem Urlaubstag verhalten. Ein Urlaubstag muss dem Modul extern über das KO 4 mitgeteilt werden.
 
@@ -1612,6 +1616,8 @@ Bei dieser Zeitschaltuhr werden die Schaltzeiten normal behandelt, an einem Urla
 <!-- DOC -->
 ### **Bei Neustart letzte Schaltzeit nachholen**
 
+Erscheint nur bei Zeitschaltuhren, die nicht verbunden sind und die Urlaubsbehandlung aktiviert haben. Bei verbundenen Zeitschaltuhren gilt die Definition der ersten (nicht verbundenen) Zeitschaltuhr.
+
 Nach einem Neustart des Moduls kann die letzte Schaltzeit erneut ausgeführt werden. Sobald das Datum und die Uhrzeit erstmals über den Bus gesetzt worden sind, wird nach der spätesten Schaltzeit gesucht, die noch vor dem aktuellen Datum/Uhrzeit liegt. Dieser Schaltzeitpunkt wird dann ausgeführt.
 
 Da eine Nachberechnung aller Schaltzeiten für bis zu 99 Zeitschaltuhren inklusive Feiertagsbehandlung direkt nach dem ersten Setzen der Zeit über den Bus sehr lange dauern würde und in dieser Zeit (mehrere Sekunden) die Funktion des Moduls gestört wäre, wird die Nachberechnung der Schaltzeiten durch einen Nebenprozess während der normalen Funktion des Moduls durchgeführt. Der Nebenprozess funktioniert in kleinen Schritten, die wenig Rechenzeit kosten und die Normalfunktion nicht behindern. Als Konsequenz kann es etwas dauern, bis der entsprechende nachberechnete Zeitschaltpunkt nachgeholt wird.
@@ -1628,7 +1634,38 @@ Der Nebenprozess beendet sich selbst, sobald alle Zeitschaltuhren einen definier
 
 > **Achtung:** Zeitschaltuhren, die Urlaubstage berücksichtigen, können bei der Nachberechnung der Zeitschaltpunkte nicht mit einbezogen werden, da die Information "Urlaubstag" per KO von extern dem Modul über den Bus gemeldet wird und somit nicht für die (historische) Nachberechnung zur Verfügung steht. Somit werden bei der Nachberechnung alle Zeitschaltuhren mit einer anderen Angabe als "Urlaub nicht beachten" ignoriert.
 
-## Schaltzeitpunkte Tagesschaltuhr
+<!-- DOC -->
+### **Schaltzeiten fortsetzen von Kanal**
+
+Wenn bei einem Schaltkanal nicht genügend Schaltzeiten vorhanden sind oder man Jahres- und Tagesschaltuhren kombinieren möchte, dann man mehrere Zeitschaltuhr-Kanäle zu einem verbinden. Es werden dann alle Aktionen über die erste (unverbundene) Zeitschaltuhr abgehandelt. Die verbundene Zeitschaltuhr dient nur dazu, zusätzliche Schaltzeiten anzugeben. 
+
+Als Verbindung wird die Nummer des Schaltzeituhr-Kanals angegeben, der fortgesetzt werden soll. Es können auch mehrere Kanäle verbunden werden, dies muss dann immer als Fortsetzung der Fortsetzung formuliert werden, also 3 ist die Fortsetzung von 10, 5 die Fortsetzung von 3, 15 die Fortsetzung von 5 usw.
+
+Die Verbindung kann absolut oder relativ formuliert werden.
+
+<!-- DOC -->
+#### **Art der Verbindung**
+
+Man kann die Angabe absolut machen (direkt die Nummer des Logikkanals) oder relativ (wie viele Kanäle vor- oder zurückzuspringen sind).
+
+<!-- DOC -->
+#### **Relative Angabe**
+
+Als Eingabe wird Anzahl der Kanäle erwartet, die vor- oder zurückzuspringen sind. Dabei meint eine negative Zahl ein zurückspringen Richtung 1, eine positive Zahl ein Vorspringen Richtung 99.
+
+<!-- DOC -->
+#### **Absolute Ausgabe**
+
+Bei relativer Angabe wird die absolute Nummer des Kanals ausgerechnet, dessen Zeitschaltuhr fortgesetzt werden soll.
+
+<!-- DOC -->
+#### **Absolute Angabe**
+
+Als Eingabe wird die Nummer des Logikkanals erwartet, dessen Zeitschaltuhr fortgesetzt werden soll.
+
+
+
+## **Schaltzeitpunkte Tagesschaltuhr**
 
 Schaltzeitpunkte werden in einer Tabelle definiert, eine Zeile per Schaltpunkt. Im folgenden werden nur die Eingaben einer Zeile erklärt, da alle Zeilen gleich definiert werden.
 
@@ -1734,11 +1771,19 @@ Wird hier der Wert "jede" ausgewählt, wird der Schaltpunkt jede Minute ausgefü
 Bei Sonnenstandsangaben (Winkel über/unter dem Horizont) wird in dieser Spalte der Winkelbruchteil in (Winkel-)Minuten angegeben.
 
 <!-- DOC HelpContext="Schaltwert" -->
-### **Spalte: Wert**
+### **Spalte: Wert (Logik)**
 
 Ist sowohl bei Tagesschaltuhr und Jahresschaltuhr vorhanden.
 
-In dieser Spalte wird der Wert eingestellt, den der Schaltpunkt senden soll. Dieser (rein boolesche) Wert durchläuft dann das normale Ausgangs-Processing des Logikkanals und steht am Ausgangs-KO zur Verfügung.
+In dieser Spalte wird der Wert eingestellt, den der Schaltpunkt an den Ausgang senden soll. Dieser (rein boolesche) Wert durchläuft dann das normale Ausgangs-Processing des Logikkanals und steht am Ausgangs-KO zur Verfügung.
+
+<!-- DOC HelpContext="Zahlenwert" -->
+### **Spalte: Wert (als E1)**
+
+Ist sowohl bei Tagesschaltuhr und Jahresschaltuhr vorhanden.
+
+In dieser Spalte wird der Wert eingestellt, den der Schaltpunkt als Zahl repräsentieren soll. Es ist nur 1 Byte (0-255) mögliche. 
+Im Ausgangskonverter kann der Wert so angesprochen werden wie bei normalen Logiken der Wert vom Eingang E1. Man kann diesen Wert also über den Ausgang senden lassen, in Formeln verrechnen oder in Benutzerformeln als E1 nutzen.
 
 <!-- DOC HelpContext="Wochentag" -->
 ### **Spalte: Wochentag**

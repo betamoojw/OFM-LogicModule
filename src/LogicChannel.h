@@ -190,6 +190,8 @@
 
 #define VAL_Tim_Timer_Daily 0
 #define VAL_Tim_Timer_Yearly 1
+#define VAL_Tim_Timer_Daily_Linked 2
+#define VAL_Tim_Timer_Yearly_Linked 3
 
 #define VAL_Tim_Every_Minute 63
 #define VAL_Tim_Every_Hour 31
@@ -287,6 +289,7 @@ class LogicChannel : public OpenKNX::Channel
 
     // Start of Timer implementation
     void processTimerInput();
+    bool checkTimerAll(Timer &iTimer, bool iHandleAsSunday, bool *iValue, uint8_t *iValueNum);
     bool checkTimerToday(Timer &iTimer, uint8_t iTimerIndex, bool iHandleAsSunday);
     bool checkWeekday(Timer &iTimer, uint8_t iWeekday, bool iHandleAsSunday);
     bool checkTimerTime(Timer &iTimer, uint8_t iTimerIndex, uint16_t iBitfield, int8_t iHour, int8_t iMinute, bool iSkipWeekday, bool iHandleAsSunday, bool iWithGenericTime);
@@ -333,6 +336,8 @@ class LogicChannel : public OpenKNX::Channel
     uint32_t pCurrentPipeline; // Bitfield: indicator for current pipeline step
 
     uint8_t pCurrentIODebug; // Bitfield: current input (0-3), logic output (4)
+    uint8_t pCurrentTimerValueNum = 0;
+    LogicChannel *pLinkedTimerChannel = nullptr;
     // uint32_t pRepeatInput1Delay;  // used also for timer preparation
     // uint32_t pRepeatInput2Delay;  // used also for timer processing
     uInputProcessing pInputProcessing;

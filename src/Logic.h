@@ -51,6 +51,7 @@ class Logic : public OpenKNX::Module
     // instance
     void addKoLookup(uint16_t iKoNumber, uint8_t iChannelId, uint8_t iIOIndex);
     bool getKoLookup(uint16_t iKoNumber, sKoLookup **iKoLookup = nullptr);
+    LogicChannel *getChannel(uint8_t iChannelId);
 
     void processAllInternalInputs(LogicChannel *iChannel, bool iValue);
     void processAfterStartupDelay();
@@ -91,7 +92,6 @@ class Logic : public OpenKNX::Module
     uint16_t mNumKoLookups = 0;
     uint32_t readRequestDelay = 0;
 
-    LogicChannel *getChannel(uint8_t iChannelId);
     uint8_t getChannelId(LogicChannel *iChannel);
     void prepareChannels();
 

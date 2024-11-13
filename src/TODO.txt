@@ -1,3 +1,1 @@
 - BUG: Abs. interner Eingang funktioniert nicht richtig. Beispiel WC CH45 und 46 mit CH07 verbinden, funktioniert nicht
-- NEU: Zeitschaltuhren bekommen ein Feld: Fortsetzung von Kanal x, um mehrere ZS zu verketten
-- NEU: Zeitschaltuhren bekommen ein Ausgabefeld nummerisch (DPT5.x), das als E1 am Ausgang genutzt werden kann.
