@@ -69,8 +69,8 @@
                   <Enumeration Text="ODER" Value="2" Id="%ENID%" />
                   <Enumeration Text="EXCLUSIV-ODER" Value="3" Id="%ENID%" />
                   <Enumeration Text="TOR" Value="4" Id="%ENID%" />
-                  <Enumeration Text="ZEITSCHALTUHR" Value="5" Id="%ENID%" />
                   <Enumeration Text="SCHALTER (RS-FLIP-FLOP)" Value="6" Id="%ENID%" />
+                  <Enumeration Text="ZEITSCHALTUHR" Value="5" Id="%ENID%" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-Calculate" Name="Calculate">

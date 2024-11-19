@@ -341,6 +341,7 @@
               <Parameter Id="%AID%_P-%TT%%CC%456" Name="f%C%E1InputDeltaOrAll" ParameterType="%AID%_PT-OnOffYesNo" Text="E1 Delta oder Full (interner Wert)" Access="None" Value="0" />
               <Parameter Id="%AID%_P-%TT%%CC%457" Name="f%C%E2InputDeltaOrAll" ParameterType="%AID%_PT-OnOffYesNo" Text="E2 Delta oder Full (interner Wert)" Access="None" Value="0" />
               <Parameter Id="%AID%_P-%TT%%CC%458" Name="f%C%OverviewDisplay" ParameterType="%AID%_PT-OnOffYesNo" Text="Kanal anzeigen im Overview (interner Wert)" Access="None" Value="0" />
+              <Parameter Id="%AID%_P-%TT%%CC%490" Name="f%C%ODisplay" ParameterType="%AID%_PT-OnOffYesNo" Text="Ausgang anzeigen" Access="None" Value="0" />
             </Parameters>
             <ParameterRefs>
               <op:usePart name="INPUT" xpath="//ParameterRefs/*" />
@@ -605,6 +606,7 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%487_R-%TT%%CC%48701" RefId="%AID%_UP-%TT%%CC%487" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%488_R-%TT%%CC%48801" RefId="%AID%_UP-%TT%%CC%488" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%489_R-%TT%%CC%48901" RefId="%AID%_UP-%TT%%CC%489" />
+              <ParameterRef Id="%AID%_P-%TT%%CC%490_R-%TT%%CC%49001" RefId="%AID%_P-%TT%%CC%490" />
             </ParameterRefs>
             <ParameterCalculations>
               <op:usePart name="INPUT" xpath="//ParameterCalculations/*" />
@@ -814,6 +816,7 @@
                     <!-- Input/Output (subtree) -->
                     <choose ParamRefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301">
                       <when test="1 2 3 4 6">
+                        <Assign TargetParamRefRef="%AID%_P-%TT%%CC%490_R-%TT%%CC%49001" Value="1" />
                         <!-- Input 1 -->
                         <op:usePart name="INPUT" xpath="//Dynamic/ChannelIndependentBlock/*" instance="1" />
                         <!-- Input 2 -->
@@ -978,6 +981,8 @@
                           <ParameterRefRef RefId="%AID%_UP-%TT%%CC%272_R-%TT%%CC%27201" HelpContext="%DOC%" IndentLevel="1" />
                           <choose ParamRefId="%AID%_UP-%TT%%CC%272_R-%TT%%CC%27201">
                             <when test="0 1">
+                              <!-- Display output -->
+                              <Assign TargetParamRefRef="%AID%_P-%TT%%CC%490_R-%TT%%CC%49001" Value="1" />
                               <ParameterRefRef RefId="%AID%_UP-%TT%%CC%273_R-%TT%%CC%27301" HelpContext="%DOC%" IndentLevel="1" />
                               <choose ParamRefId="%AID%_UP-%TT%00138_R-%TT%0013801">
                                 <when test="1">
@@ -1425,8 +1430,10 @@
                           </choose>
                         </ParameterBlock>
                       </when>
+                    </choose>
+                    <choose ParamRefId="%AID%_P-%TT%%CC%490_R-%TT%%CC%49001">
                       <!-- Output -->
-                      <when test="!=0">
+                      <when test="1">
                         <ParameterBlock Id="%AID%_PB-%C%18" Name="f%C%Output" Text="Ausgang: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" Icon="chevron-left-circle-outline" HelpContext="Empty">
                           <ParameterSeparator Id="%AID%_PS-nnn" Text="Definition Ausgang" UIHint="Headline" />
                           <ParameterRefRef RefId="%AID%_P-%TT%%CC%132_R-%TT%%CC%13201" HelpContext="%DOC%" IndentLevel="1" />

@@ -297,6 +297,7 @@ class LogicChannel : public OpenKNX::Channel
     bool checkSunAbs(Timer &iTimer, uint8_t iSunInfo, uint8_t iTimerIndex, uint16_t iBitfield, bool iSkipWeekday, bool iHandleAsSunday, bool iMinus);
     bool checkSunLimit(Timer &iTimer, uint8_t iSunInfo, uint8_t iTimerIndex, uint16_t iBitfield, bool iSkipWeekday, bool iHandleAsSunday, bool iLatest);
     bool checkSunDegree(Timer &iTimer, uint8_t iSunInfo, uint8_t iTimerIndex, uint16_t iBitfield, bool iSkipWeekday, bool iHandleAsSunday, bool iDown);
+    int16_t getTimerAll(Timer &iTimer, bool iHandleAsSunday, bool *iValue, uint8_t *iValueNum);
     int16_t getTimerTime(Timer &iTimer, uint8_t iTimerIndex, uint16_t iBitfield, int8_t iHour, int8_t iMinute, bool iSkipWeekday, bool iHandleAsSunday);
     int16_t getPointInTime(Timer &iTimer, uint8_t iTimerIndex, uint16_t iBitfield, bool iSkipWeekday, bool iHandleAsSunday);
     int16_t getSunAbs(Timer &iTimer, uint8_t iSunInfo, uint8_t iTimerIndex, uint16_t iBitfield, bool iSkipWeekday, bool iHandleAsSunday, bool iMinus);

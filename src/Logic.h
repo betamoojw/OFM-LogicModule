@@ -78,9 +78,12 @@ class Logic : public OpenKNX::Module
     char gBuffer[14] = {0};
 
   private:
+    static const uint8_t helpCommandCount = 10;
+    
     static uint8_t sMagicWord[];
     static Timer &sTimer;
     static TimerRestore &sTimerRestore;
+    static const char* helpCommands[];
 
     LogicChannel *mChannel[LOG_ChannelCount];
     uint8_t mNumChannels; // Number of channels defined in knxprod

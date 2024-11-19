@@ -2856,7 +2856,7 @@ Ob ein Kanal durch die Endlosschleifen-Erkennung deaktiviert wurde, kann man erk
  
     logic limit
 
-sendet. Fall die Antwort 'LIM 50, CHnn' ist, dann ist Kanal nn deaktiviert, weil er mehr als 50 mal pro Sekunde aufgerufen worden ist. Es können auch mehr als dieser eine Kanal deaktiviert sein, man sieht nur den Kanal, der zuerst deaktiviert wurde.
+sendet. Falls die Antwort 'LIM 50, CHnn' ist, dann ist Kanal nn deaktiviert, weil er mehr als 50 mal pro Sekunde aufgerufen worden ist. Es können auch mehr als dieser eine Kanal deaktiviert sein, man sieht nur den Kanal, der zuerst deaktiviert wurde.
 
 Im Kapitel Diagnoseobjekt sind weitere Diagnosemöglichkeiten für die Endlosschleifen-Erkennung beschrieben.
 

@@ -338,13 +338,15 @@ void Logic::processInputKo(GroupObject &iKo)
     }
 }
 
+const char* Logic::helpCommands[Logic::helpCommandCount] = {"logic help", "logic time", "logic easter", "logic sun", "logic sun+DDMM", "logic lim", "logic lim res", "logic chNN", "logic chNN lim", "logic chNN res"};
+
 void Logic::showHelp()
 {
     if (!knx.configured())
         return;
 
     openknx.console.printHelpLine("logic time", "Print current time");
-    openknx.console.printHelpLine("logic easter", "Print calculated easter sunday date");
+    openknx.console.printHelpLine("logic easter", "Print calculated easter Sunday date");
     openknx.console.printHelpLine("logic sun", "Print sunrise and sunset times");
     openknx.console.printHelpLine("logic sun+DDMM", "Print sunrise/sunset at elevation +/- degree/minute");
 
@@ -354,6 +356,7 @@ void Logic::showHelp()
     openknx.console.printHelpLine("logic chNN lim", "Show if this cannel reached call limit");
     openknx.console.printHelpLine("logic chNN res", "Resets call limit counter for this channel");
 }
+
 
 bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
 {
@@ -390,7 +393,7 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
             logInfoP("Module ISO-Time: %04d-%02d-%02d %02d:%02d:%02d", lYear, lMonth, lDay, lHour, lMinute, lSecond);
             if (iDebugKo)
             {
-                openknx.console.writeDiagenoseKo("%02d:%02d:%02d %02d.%02d", lHour, lMinute, lSecond, lDay, lMonth);
+                openknx.console.writeDiagnoseKo("%02d:%02d:%02d %02d.%02d", lHour, lMinute, lSecond, lDay, lMonth);
             }
         }
         lResult = true;
@@ -414,7 +417,7 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
                 logInfoP("Sunrise: %02d:%02d Sunset: %02d:%02d", lSunrise.hour, lSunrise.minute, lSunset.hour, lSunset.minute);
                 if (iDebugKo)
                 {
-                    openknx.console.writeDiagenoseKo("R%02d:%02d S%02d:%02d", lSunrise.hour, lSunrise.minute, lSunset.hour, lSunset.minute);
+                    openknx.console.writeDiagnoseKo("R%02d:%02d S%02d:%02d", lSunrise.hour, lSunrise.minute, lSunset.hour, lSunset.minute);
                 }
                 lResult = true;
             }
@@ -429,7 +432,7 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
             {
                 logInfoP("Sunrise: %02d:%02d Sunset: %02d:%02d", lSunrise->hour, lSunrise->minute, lSunset->hour, lSunset->minute);
                 if (iDebugKo)
-                    openknx.console.writeDiagenoseKo("R%02d:%02d S%02d:%02d", lSunrise->hour, lSunrise->minute, lSunset->hour, lSunset->minute);
+                    openknx.console.writeDiagnoseKo("R%02d:%02d S%02d:%02d", lSunrise->hour, lSunrise->minute, lSunset->hour, lSunset->minute);
                 lResult = true;
             }
         }
@@ -437,7 +440,7 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
         {
             logInfoP("Command format is logic sun[+-]DDMM");
             if (iDebugKo)
-                openknx.console.writeDiagenoseKo("-> sun+-DDMM");
+                openknx.console.writeDiagnoseKo("-> sun+-DDMM");
         }
     }
     else if (iCmd.length() >= 7 && iCmd.substr(6, 1) == "e") // easter
@@ -445,7 +448,7 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
         // calculate easter date
         logInfoP("Easter date: %02d.%02d", sTimer.getEaster()->day, sTimer.getEaster()->month);
         if (iDebugKo)
-            openknx.console.writeDiagenoseKo("O%02d.%02d", sTimer.getEaster()->day, sTimer.getEaster()->month);
+            openknx.console.writeDiagnoseKo("O%02d.%02d", sTimer.getEaster()->day, sTimer.getEaster()->month);
         lResult = true;
     }
     else if (iCmd.length() >= 7 && iCmd.length() <= 9 && iCmd.substr(6, 1) == "l") // limit
@@ -453,7 +456,7 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
         // display max call limit and according channel
         logInfoP("Call limit %02d on channel %02d", LogicChannel::pLoadCounterMax, LogicChannel::pLoadChannel + 1);
         if (iDebugKo)
-            openknx.console.writeDiagenoseKo("LIM %02d, CH %02d", LogicChannel::pLoadCounterMax, LogicChannel::pLoadChannel + 1);
+            openknx.console.writeDiagnoseKo("LIM %02d, CH %02d", LogicChannel::pLoadCounterMax, LogicChannel::pLoadChannel + 1);
         lResult = true;
     }
     else if (iCmd.length() >= 7 && iCmd.substr(6, 5) == "lim r") // limit
@@ -461,7 +464,7 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
         initLoadCounter(true);
         logInfoP("All call counters were reset!");
         if (iDebugKo)
-            openknx.console.writeDiagenoseKo("Reset all");
+            openknx.console.writeDiagnoseKo("Reset all");
         lResult = true;
     }
     else if (iCmd.length() >= 7 && iCmd.substr(6, 1) == "h") // help
@@ -469,23 +472,23 @@ bool Logic::processCommand(const std::string iCmd, bool iDebugKo)
         showHelp();
         if (iDebugKo)
         {
-            openknx.console.writeDiagenoseKo("-> time");
-            openknx.console.writeDiagenoseKo(""); // workaround, on mass output each 2nd line ist skipped
-            openknx.console.writeDiagenoseKo("-> easter");
-            openknx.console.writeDiagenoseKo("");
-            openknx.console.writeDiagenoseKo("-> sun");
-            openknx.console.writeDiagenoseKo("");
-            openknx.console.writeDiagenoseKo("-> sun[+-]DDMM");
-            openknx.console.writeDiagenoseKo("");
-            openknx.console.writeDiagenoseKo("-> lim");
-            openknx.console.writeDiagenoseKo("");
-            openknx.console.writeDiagenoseKo("-> lim res");
-            openknx.console.writeDiagenoseKo("");
-            openknx.console.writeDiagenoseKo("-> chNN");
-            openknx.console.writeDiagenoseKo("");
-            openknx.console.writeDiagenoseKo("-> chNN lim");
-            openknx.console.writeDiagenoseKo("");
-            openknx.console.writeDiagenoseKo("-> chNN res");
+            openknx.console.writeDiagnoseKo("-> time");
+            openknx.console.writeDiagnoseKo(""); // workaround, on mass output each 2nd line ist skipped
+            openknx.console.writeDiagnoseKo("-> easter");
+            openknx.console.writeDiagnoseKo("");
+            openknx.console.writeDiagnoseKo("-> sun");
+            openknx.console.writeDiagnoseKo("");
+            openknx.console.writeDiagnoseKo("-> sun[+-]DDMM");
+            openknx.console.writeDiagnoseKo("");
+            openknx.console.writeDiagnoseKo("-> lim");
+            openknx.console.writeDiagnoseKo("");
+            openknx.console.writeDiagnoseKo("-> lim res");
+            openknx.console.writeDiagnoseKo("");
+            openknx.console.writeDiagnoseKo("-> chNN");
+            openknx.console.writeDiagnoseKo("");
+            openknx.console.writeDiagnoseKo("-> chNN lim");
+            openknx.console.writeDiagnoseKo("");
+            openknx.console.writeDiagnoseKo("-> chNN res");
         }
         lResult = true;
     }
