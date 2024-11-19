@@ -1637,7 +1637,7 @@ Der Nebenprozess beendet sich selbst, sobald alle Zeitschaltuhren einen definier
 <!-- DOC -->
 ### **Schaltzeiten fortsetzen von Kanal**
 
-Wenn bei einem Schaltkanal nicht genügend Schaltzeiten vorhanden sind oder man Jahres- und Tagesschaltuhren kombinieren möchte, dann man mehrere Zeitschaltuhr-Kanäle zu einem verbinden. Es werden dann alle Aktionen über die erste (unverbundene) Zeitschaltuhr abgehandelt. Die verbundene Zeitschaltuhr dient nur dazu, zusätzliche Schaltzeiten anzugeben. 
+Wenn bei einem Schaltkanal nicht genügend Schaltzeiten vorhanden sind oder man Jahres- und Tagesschaltuhren kombinieren möchte, dann kann man mehrere Zeitschaltuhr-Kanäle zu einem verbinden. Es werden dann alle Aktionen über die erste (unverbundene) Zeitschaltuhr abgehandelt. Die verbundene Zeitschaltuhr dient nur dazu, zusätzliche Schaltzeiten anzugeben. 
 
 Als Verbindung wird die Nummer des Schaltzeituhr-Kanals angegeben, der fortgesetzt werden soll. Es können auch mehrere Kanäle verbunden werden, dies muss dann immer als Fortsetzung der Fortsetzung formuliert werden, also 3 ist die Fortsetzung von 10, 5 die Fortsetzung von 3, 15 die Fortsetzung von 5 usw.
 
@@ -1782,7 +1782,7 @@ In dieser Spalte wird der Wert eingestellt, den der Schaltpunkt an den Ausgang s
 
 Ist sowohl bei Tagesschaltuhr und Jahresschaltuhr vorhanden.
 
-In dieser Spalte wird der Wert eingestellt, den der Schaltpunkt als Zahl repräsentieren soll. Es ist nur 1 Byte (0-255) mögliche. 
+In dieser Spalte wird der Wert eingestellt, den der Schaltpunkt als Zahl repräsentieren soll. Es ist nur 1 Byte (0-255) möglich. 
 Im Ausgangskonverter kann der Wert so angesprochen werden wie bei normalen Logiken der Wert vom Eingang E1. Man kann diesen Wert also über den Ausgang senden lassen, in Formeln verrechnen oder in Benutzerformeln als E1 nutzen.
 
 <!-- DOC HelpContext="Wochentag" -->
