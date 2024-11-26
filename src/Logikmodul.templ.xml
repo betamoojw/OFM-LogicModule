@@ -987,7 +987,7 @@
                               <choose ParamRefId="%AID%_UP-%TT%00138_R-%TT%0013801">
                                 <when test="1">
                                   <ParameterRefRef RefId="%AID%_UP-%TT%%CC%276_R-%TT%%CC%27601" HelpContext="%DOC%" IndentLevel="1" />
-                                  <choose ParamRefId="%AID%_UP-%TT%00138_R-%TT%0013801">
+                                  <choose ParamRefId="%AID%_UP-%TT%%CC%276_R-%TT%%CC%27601">
                                     <when test="0">
                                       <!-- Nachholen bei Urlaub nicht beachten oder... -->
                                       <ParameterRefRef RefId="%AID%_UP-%TT%%CC%274_R-%TT%%CC%27401" HelpContext="%DOC%" IndentLevel="1" />                                      
