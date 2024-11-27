@@ -2834,7 +2834,7 @@ void LogicChannel::processTimerRestoreState(TimerRestore &iTimer)
         return;
 
     bool lHandleAsSunday = (lHolidaySetting == VAL_Tim_Special_Sunday && (iTimer.holidayToday() > 0));
-    lResult = getTimerAll(sTimer, lHandleAsSunday, &lValue, &lValueNum);
+    lResult = getTimerAll(iTimer, lHandleAsSunday, &lValue, &lValueNum);
     if (lResult > -1)
     {
         logInfoP("TimerRestore: Found timer %04d with value %d, starting processing", lResult, lValue);
