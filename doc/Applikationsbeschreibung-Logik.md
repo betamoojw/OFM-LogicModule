@@ -83,7 +83,7 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
-23.08.2024: Firmware 3.4, Applikation 3.4
+01.12.2024: Firmware 3.4, Applikation 3.4
 
 * NEU: Standardfunktion A = ABS(E1) (Betrag von E1) und A = ABS(E2) (Betrag von E2)
 * NEU: Standardfunktion A = -E1 (Negiere E1) und A = -E2 (Negiere E2)
@@ -91,6 +91,14 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 * NEU: Alle internen KO-Verknüpfungen können auch relativ zum eigenen KO angegeben werden
 * NEU: Alle internen Eingänge können auch relativ zum eigenen Kanal angegeben werden
 * NEU: Die Feiertage Totensonntag und Schweizer Nationalfeiertag sind neu
+* NEU: Zeitschaltuhren können jetzt neben einem binären Wert auch einen Zahlenwert (1 Byte) enthalten, der als "Wert vom Eingang 1" im Ausgangskonverter genutzt werden kann [Zeitschaltuhr: Wert (als E1)](#spalte-wert-als-e1)
+* NEU: Zeitschaltuhren können jetzt über mehrere Logikkanäle verbunden werden (sowohl relativ wie auch absolut). Sie werden dann wie eine Zeitschaltuhr behandelt. Das ist vor allem wichtig, wenn man bei Neustart Schaltzeiten nachholen will, erlaubt aber auch mehr als 8 Schaltzeiten pro Zeitschaltuhr [Schaltzeiten fortsetzen von Kanal](#schaltzeiten-fortsetzen-von-kanal)
+* NEU: Jahres- und Tageszeitschaltuhren können verbunden werden und somit wie eine Zeitschaltuhr fungieren. Ermöglicht eine Kombination von Tages- und Jahresschaltungen in einer Zeitschaltuhr.
+* FIX: Zeitschaltuhren mit "Feiertage wie Sonntage behandeln" haben (leider) nicht immer zu den Sonntags-Schaltzeiten geschaltet.
+* FIX: Zeitschaltuhren (und verbundene Zeitschaltuhren) werden jetzt korrekt in der "Übersicht interner Verknüpfungen" angezeigt. 
+* FIX: Bei Zeitschaltuhren, die im Urlaub schalten sollen, kann man nicht mehr die Einstellung "Schaltzeiten nachholen" vornehmen. Das Feld was schon immer funktionslos, da noch nie Urlaubs-Schaltzeiten nachgeholt werden konnten.
+* NEU: Interne Eingänge können jetzt auch als Trigger definiert werden [Internen Eingang als Trigger nutzen](#internen-eingang-als-trigger-nutzen-ist-immer-logisch-ein)
+* NEU: Alle Firmware-Varianten haben ein neues Script zum KNX-Firmware-Update bekommen, das einen Upload über den KNX-Bus erlaubt.
 
 24.07.2024: Firmware 3.3.1, Applikation 3.3
 
