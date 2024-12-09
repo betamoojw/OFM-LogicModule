@@ -1814,13 +1814,13 @@ void LogicChannel::startOutputFilter(bool iOutput)
             lContinue = true;
             break;
         case VAL_AllowRepeat_On:
-            lContinue = (iOutput || iOutput != lLastOutput || lInitialOutput);
+            lContinue = (iOutput || (iOutput != lLastOutput) || lInitialOutput);
             break;
         case VAL_AllowRepeat_Off:
-            lContinue = (!iOutput || iOutput != lLastOutput || lInitialOutput);
+            lContinue = (!iOutput || (iOutput != lLastOutput) || lInitialOutput);
             break;
         default: // VAL_AllowRepeat_None
-            lContinue = (iOutput != lLastOutput || lInitialOutput);
+            lContinue = ((iOutput != lLastOutput) || lInitialOutput);
             break;
     }
     if (lContinue)

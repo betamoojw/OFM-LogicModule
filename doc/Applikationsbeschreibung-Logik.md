@@ -83,6 +83,10 @@ Eine Übersicht über die verfügbaren Konfigurationsseiten und Links zur jeweil
 
 Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer das Gesamtdokument lesen muss, um Neuerungen zu erfahren.
 
+07.12.2024: Firmware 3.5, Applikation 3.5
+
+* FIX: Das neue Sendeverhalten am Ausgang und der Wiederholungsfilter haben sich leider gegenseitig beeinflusst und zu unerwarteten Ergebnissen geführt, die Logiken kaputt machen konnten. Deswegen ein Hotfix. 
+
 01.12.2024: Firmware 3.4, Applikation 3.4
 
 * NEU: Standardfunktion A = ABS(E1) (Betrag von E1) und A = ABS(E2) (Betrag von E2)
