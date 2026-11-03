@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #include "TimerHoliday.h"
 #include "Arduino.h"
 #include <ctime>
@@ -269,3 +270,4 @@ void TimerHoliday::sendHoliday()
         KoLOG_Holiday2.objectWritten();
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #include "LogicFunction.h"
 #include "OpenKNX.h"
 #include "knx.h"
@@ -698,3 +699,4 @@ void LogicFunction::handleFunctionPropertyTestFormula(uint8_t *iData, uint8_t *e
     logDebug("Logic<FormulaTest>", "Function property: Test user formula");
     processFunctionPropertyFormula("Logic<FormulaTest>", true, iData, eResultData, eResultLength);
 }
+#endif

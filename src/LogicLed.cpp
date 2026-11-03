@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #include "LogicLed.h"
 
 LogicLed::LogicLed(LogicChannel *iChannel, uint8_t iIOIndex)
@@ -9,3 +10,4 @@ LogicLed::LogicLed(LogicChannel *iChannel, uint8_t iIOIndex)
 void LogicLed::on(bool active) {
     mLogicChannel->processInternalInput(mIOIndex, active);
 }
+#endif

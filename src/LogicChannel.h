@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #pragma once
 #include "LogicValue.h"
 #include "OpenKNX.h"
@@ -286,3 +287,4 @@ class LogicChannel : public OpenKNX::Channel
     void prepareInternalInput(uint8_t iIOindex, uint16_t iParamIndex);
     void loop();
 };
+#endif

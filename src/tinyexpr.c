@@ -33,6 +33,7 @@ For a^b^c = a^(b^c) and -a^b = -(a^b) uncomment the next line.*/
 For log = base 10 log do nothing
 For log = natural log uncomment the next line. */
 /* #define TE_NAT_LOG */
+#ifndef OPENKNX_LOGIC_IGNORE
 
 #include "tinyexpr.h"
 #include <stdlib.h>
@@ -770,3 +771,4 @@ static void pn (const te_expr *n, int depth) {
 void te_print(const te_expr *n) {
     pn(n, 0);
 }
+#endif

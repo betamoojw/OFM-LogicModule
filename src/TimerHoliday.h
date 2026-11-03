@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #pragma once
 
 /***********************************
@@ -66,4 +67,4 @@ class TimerHoliday
     uint8_t holidayTomorrow();
     void sendHoliday();
 };
-
+#endif

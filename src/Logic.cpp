@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #include <algorithm>
 #include "Logic.h"
 #include "LogicFunction.h"
@@ -588,4 +589,4 @@ bool Logic::processFunctionProperty(uint8_t objectIndex, uint8_t propertyId, uin
             return false;
     }
 }
-
+#endif

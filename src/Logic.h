@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #pragma once
 #include "LogicChannel.h"
 #include "OpenKNX.h"
@@ -92,3 +93,4 @@ class Logic : public OpenKNX::Module
 };
 
 extern Logic openknxLogic;
+#endif

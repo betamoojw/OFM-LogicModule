@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #include "LogicChannel.h"
 #include "Logic.h"
 #include "LogicFunction.h"
@@ -3188,3 +3189,4 @@ const std::string LogicChannel::name()
 {
     return "LogicChannel";
 }
+#endif

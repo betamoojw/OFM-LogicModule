@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #pragma once
 
 #include <cstdint>
@@ -126,3 +127,4 @@ class LogicValue
     Value _value;
     bool _isInitial = false;
 };
+#endif

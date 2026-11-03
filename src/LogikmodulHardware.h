@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #pragma once
 
 #ifndef KNX_UART_NUM
@@ -385,4 +386,5 @@
 // #define KNX_UART_RX_PIN 13
 // #endif
 
+#endif
 #endif

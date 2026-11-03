@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #pragma once
 
 /***********************************
@@ -109,4 +110,4 @@ class Timer
     uint8_t holidayTomorrow();
     eTimeValid isTimerValid();
 };
-
+#endif

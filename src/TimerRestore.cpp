@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #include "TimerRestore.h"
 #include "Arduino.h"
 #include "OpenKNX.h"
@@ -59,3 +60,4 @@ uint16_t TimerRestore::getDayIteration()
 {
     return mDayIteration;
 }
+#endif

@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #pragma once
 #include "OpenKNX/Led/Base.h"
 #include "Logic.h"
@@ -34,4 +35,5 @@ class LogicLed : public OpenKNX::Led::Base
 
         std::string logPrefix() override { return "LogicLed"; }
 
-    };
+};
+#endif

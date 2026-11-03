@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #pragma once
 
 /***********************************
@@ -25,4 +26,4 @@ class TimerRestore : public Timer
     void decreaseDay();
     uint16_t getDayIteration();
 };
-
+#endif

@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #include "Timer.h"
 #include "OpenKNX/Sun/SunRiseAndSet.h"
 #include "Arduino.h"
@@ -256,3 +257,4 @@ void Timer::debug()
     }
 #endif
 }
+#endif

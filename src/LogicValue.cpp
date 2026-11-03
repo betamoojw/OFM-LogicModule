@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #include "LogicValue.h"
 #include "Logic.h"
 
@@ -1028,3 +1029,4 @@ void LogicValue::isInitial(bool iValue)
 {
     _isInitial = iValue;
 }
+#endif

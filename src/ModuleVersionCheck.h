@@ -1,3 +1,4 @@
+#ifndef OPENKNX_LOGIC_IGNORE
 #include "versions.h"
 
 // Change the following 3 lines and adopt to your module names
@@ -13,4 +14,5 @@
 #if ModuleVersion_knxprod_h != ModuleVersion_version_h
     #pragma message "\n\n\nYou need to >>> INCREASE YOUR <<< ETS ApplicationVersion and manually synchronize op:verify of " ModuleVersion_ModuleName " to " VALUE(ModuleVersion_version_h) "\n\n(see https://github.com/OpenKNX/OpenKNX/wiki/Versionierung-von-Modulen-(OFM)#fehler-vom-compiler )\n\n\n"
     #pragma GCC error "\n\nETS Application Version problem (see next message)\n\n"
+#endif
 #endif

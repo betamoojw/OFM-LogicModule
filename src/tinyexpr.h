@@ -22,6 +22,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+#ifndef OPENKNX_LOGIC_IGNORE
+
 #ifndef __TINYEXPR_H__
 #define __TINYEXPR_H__
 
@@ -84,3 +86,4 @@ void te_free(te_expr *n);
 #endif
 
 #endif /*__TINYEXPR_H__*/
+#endif
