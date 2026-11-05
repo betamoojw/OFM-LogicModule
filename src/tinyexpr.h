@@ -1,7 +1,8 @@
+// SPDX-License-Identifier: Zlib
 /*
  * TINYEXPR - Tiny recursive descent parser and evaluation engine in C
  *
- * Copyright (c) 2015-2018 Lewis Van Winkle
+ * Copyright (c) 2015-2026 Lewis Van Winkle
  *
  * http://CodePlea.com
  *
@@ -21,11 +22,10 @@
  * misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  */
-
 #ifndef OPENKNX_LOGIC_IGNORE
 
-#ifndef __TINYEXPR_H__
-#define __TINYEXPR_H__
+#ifndef TINYEXPR_H
+#define TINYEXPR_H
 
 
 #ifdef __cplusplus
@@ -33,11 +33,15 @@ extern "C" {
 #endif
 
 
+#ifdef __CC_ARM
+#pragma anon_unions
+#endif
+
 
 typedef struct te_expr {
     int type;
     union {double value; const double *bound; const void *function;};
-    void *parameters[1];
+    void *parameters[];
 } te_expr;
 
 
@@ -85,5 +89,5 @@ void te_free(te_expr *n);
 }
 #endif
 
-#endif /*__TINYEXPR_H__*/
+#endif /*TINYEXPR_H*/
 #endif
