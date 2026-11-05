@@ -86,6 +86,7 @@ Im folgenden werden Änderungen an dem Dokument erfasst, damit man nicht immer d
 * FIX: Wenn ein Eingang vorbelegt wurde mit EIN- oder AUS-Signal, wurde der zugehörige Wert (1 bzw. 0) als Eingangswert in Formeln verwendet, obwohl nur 0 erwartungskonform ist. Das ist jetzt korrigiert.
 * FIX: Wenn ein Eingang vorbelegt wurde mit EIN- oder AUS-Signal, und dieser Eingang über interne KO-Verknüpfung mit einem anderen Eingang verknüpft war, wurde der KO-Wert des verknüpften Eingangs mit 1 bzw. 0 überschrieben, auch wenn er einen gespeicherten und wiederhergestellten Wert tragen sollte. Das ist jetzt korrigiert.
 * NEU: Benutzerformeln werden jetzt mit [TinyExpr v1.1.1](https://github.com/codeplea/tinyexpr/releases#release-v1.1.1) geparsed. ACHTUNG: Benutzerformeln, die bisher ungeklammert && bzw || verwendet haben, könnten zu anderen Ergebnissen führen, da jetzt && stärker bindet als ||.
+* FIX: Interne KO-Verknüpfung mit dem letzten verfügbaren KO hat nicht funktioniert
 
 25.08.2026: Firmware 4.4.2, Applikation 4.4:
 
